@@ -45,9 +45,7 @@ hs_err_pid*
 
 .idea
 =======
-node_modules
 *.iml
 target
-.idea
-*.log
+
 >>>>>>> heroku_support
