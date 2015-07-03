@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,13 +48,13 @@ public class User implements Serializable {
     private STATUS status;
 
     @OneToMany(mappedBy = "user")
-    private List<Authorities> authorities = Collections.emptyList();
+    private List<Authorities> authorities = new ArrayList<>();
 
     protected User() {
         // no-args constructor required by JPA spec
     }
 
-    public String getMatricule() {
+    public String getPersonalNumber() {
         return username;
     }
 

@@ -1,2 +1,2 @@
-insert into users(username, password, enabled, firstname, lastname, email) values ('1234', '1234', TRUE, 'aurelien', 'leboulanger', 'n27@3ds.com');
-insert into authorities(username, authority) values ('1234', 'USER');
+insert into users(username, password, enabled, firstname, lastname, email) values ('1234', '1234', TRUE, 'aurelien', 'leboulanger', 'aurelien.leboulanger@3ds.com');
+insert into authorities(username, authority) values ('1234', 'USER, ADMIN');

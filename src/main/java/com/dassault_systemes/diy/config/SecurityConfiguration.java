@@ -1,5 +1,7 @@
 package com.dassault_systemes.diy.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -19,6 +21,8 @@ import javax.sql.DataSource;
 @ConditionalOnWebApplication
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
+
     @Autowired
     private SecurityProperties security;
 
@@ -32,9 +36,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/bower_components/bootstrap/**").permitAll().antMatchers("/css/**")
-            .permitAll().anyRequest().fullyAuthenticated().antMatchers("/", "/account").hasRole("USER")
-            .antMatchers("/admin").hasRole("ADMIN").and().formLogin().loginPage("/login").permitAll().and().logout()
-            .permitAll();
+        http.authorizeRequests().antMatchers("/bower_components/**").permitAll().anyRequest().fullyAuthenticated()
+            .antMatchers("/account").hasRole("USER").antMatchers("/admin").hasRole("ADMIN").and().formLogin()
+            .loginPage("/login").permitAll().successHandler((request, response, authentication) -> logger
+                .info("Success login of {} with credentials : [{}]", authentication.getName(),
+                      authentication.getAuthorities())).defaultSuccessUrl("/account").and().logout().permitAll();
+
+        if (!security.isEnableCsrf()) {
+            http.csrf().disable();
+        }
     }
 }
