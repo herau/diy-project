@@ -36,11 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
         http.authorizeRequests().antMatchers("/bower_components/**").permitAll().anyRequest().fullyAuthenticated()
             .antMatchers("/account").hasRole("USER").antMatchers("/admin").hasRole("ADMIN").and().formLogin()
             .loginPage("/login").permitAll().successHandler((request, response, authentication) -> logger
                 .info("Success login of {} with credentials : [{}]", authentication.getName(),
                       authentication.getAuthorities())).defaultSuccessUrl("/account").and().logout().permitAll();
+        // @formatter:on
 
         if (!security.isEnableCsrf()) {
             http.csrf().disable();
