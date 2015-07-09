@@ -2,7 +2,6 @@ package com.dassault_systemes.diy.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 /**
@@ -23,10 +23,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
 
-    @Autowired
+    @Inject
     private SecurityProperties security;
 
-    @Autowired
+    @Inject
     private DataSource dataSource;
 
     @Override
