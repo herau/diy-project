@@ -1,6 +1,7 @@
 package com.dassault_systemes.diy.config;
 
 import com.dassault_systemes.diy.web.EndPoint;
+import com.dassault_systemes.diy.web.resources.UserResource;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -18,5 +19,6 @@ public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() throws IOException {
         register(EndPoint.class);
+        register(UserResource.class);
     }
 }

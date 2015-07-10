@@ -1,6 +1,6 @@
 package com.dassault_systemes.diy.domain;
 
-public enum STATUS {
+public enum State {
     INVALID,
     VALID
 }

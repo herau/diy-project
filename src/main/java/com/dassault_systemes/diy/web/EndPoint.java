@@ -5,7 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @Named
-@Path("hello")
+@Path("test")
 public class EndPoint {
 
     @GET

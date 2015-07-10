@@ -1,5 +1,9 @@
 package com.dassault_systemes.diy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Column;
@@ -11,28 +15,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 // #TODO add creationDate, lastUpdatedDate
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
 
     @Id
-    @Column(updatable = false, nullable = false, unique = true, length = 50)
-    private String username;
+    @Column(updatable = false, nullable = false, unique = true, length = 11, name = "username")
+    private String personalNumber;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 25)
     private String password;
 
     @Column(nullable = false)
     private boolean enabled;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 55)
     private String firstname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 55)
     private String lastname;
 
     @Column(nullable = false)
@@ -45,28 +49,72 @@ public class User implements Serializable {
 
     @Column(columnDefinition = "NUMBER(1) DEFAULT 0 NOT NULL")
     @Enumerated(EnumType.ORDINAL)
-    private STATUS status;
+    private State state;
 
+    @Column(columnDefinition = "NUMBER(1) DEFAULT 0 NOT NULL")
+    @Enumerated(EnumType.ORDINAL)
+    private Company company;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
-    private List<Authorities> authorities = new ArrayList<>();
+    private List<Authorities> authorities;
 
     protected User() {
-        // no-args constructor required by JPA spec
+        // no-args constructor required by JPA spec and Jackson
+    }
+
+    public User(String personalNumber, String firstname, String lastname, String password, String email,
+                Company company, State state) {
+        this.personalNumber = personalNumber;
+        this.firstname = firstname;
+        this.password = password;
+        this.lastname = lastname;
+        this.email = email;
+        this.company = company;
+        this.state = state;
     }
 
     public String getPersonalNumber() {
-        return username;
+        return personalNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public String getLastname() {
+        return lastname;
     }
 
-    public List<Authorities> getAuthorities() {
-        return authorities;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPersonalEmail() {
+        return personalEmail;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        User user = (User) o;
+
+        return new EqualsBuilder().append(personalNumber, user.personalNumber).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(personalNumber).toHashCode();
     }
 }

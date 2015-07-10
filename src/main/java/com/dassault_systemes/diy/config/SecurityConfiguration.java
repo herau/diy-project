@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeRequests().antMatchers("/bower_components/**").permitAll().anyRequest().fullyAuthenticated()
-            .antMatchers("/account").hasRole("USER").antMatchers("/admin").hasRole("ADMIN").and().formLogin()
+            .antMatchers("/account").hasRole(Roles.USER).antMatchers("/admin").hasRole(Roles.ADMIN).and().formLogin()
             .loginPage("/login").permitAll().successHandler((request, response, authentication) -> logger
                 .info("Success login of {} with credentials : [{}]", authentication.getName(),
                       authentication.getAuthorities())).defaultSuccessUrl("/account").and().logout().permitAll();
