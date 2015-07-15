@@ -5,10 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -18,7 +23,9 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableWebMvcSecurity
+@EnableWebSecurity
 @ConditionalOnWebApplication
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -29,17 +36,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Inject
     private DataSource dataSource;
 
+    @Inject
+    private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
+
+        // custom user detail service
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeRequests().antMatchers("/bower_components/**").permitAll().anyRequest().fullyAuthenticated()
-            .antMatchers("/account").hasRole(Roles.USER).antMatchers("/admin").hasRole(Roles.ADMIN).and().formLogin()
-            .loginPage("/login").permitAll().successHandler((request, response, authentication) -> logger
+            .antMatchers("/account").hasRole(Role.USER.name()).antMatchers("/admin").hasRole(Role.ADMIN.name()).and().formLogin()
+            .loginPage("/login")
+                .usernameParameter("personalNumber")
+                .permitAll().successHandler((request, response, authentication) -> logger
                 .info("Success login of {} with credentials : [{}]", authentication.getName(),
                       authentication.getAuthorities())).defaultSuccessUrl("/account").and().logout().permitAll();
         // @formatter:on

@@ -8,6 +8,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByPersonalNumber(String personalNumber);
 
-    //    User findByFirstnameOrLastname(String firstnameOrLastname);
+//    User findByFirstnameStartWithOrLastnameStartWithIgnorecase(String firstnameOrLastname);
 
 }

@@ -1,6 +1,6 @@
 package com.dassault_systemes.diy.web.resources;
 
-import com.dassault_systemes.diy.config.Roles;
+import com.dassault_systemes.diy.config.Role;
 import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.service.UserService;
 
@@ -26,7 +26,7 @@ public class UserResource {
 
     @GET
     @Path("{id}")
-    @RolesAllowed(Roles.ADMIN)
+    @RolesAllowed(Role.ADMIN)
     public User getById(@PathParam("id") String id) {
         return service.findById(id);
     }
