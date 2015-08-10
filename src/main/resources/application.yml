@@ -1,0 +1,50 @@
+spring:
+  profiles:
+    active: development
+  main:
+    show-banner: false
+  data:
+    rest:
+      base-uri: /api
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
+
+security:
+  enable-csrf: false
+
+---
+
+spring:
+  profiles: development
+  jackson:
+    serialization:
+      indent_output: true
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.data.rest: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate: ERROR
+
+security:
+  basic:
+    enabled: false
+
+---
+
+spring:
+    profiles: production
+
+server:
+    port: 9001
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    org.springframework.data.rest: ERROR
+    org.springframework.security: ERROR
+    org.hibernate: ERROR

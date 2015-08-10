@@ -1,23 +1,20 @@
 package com.dassault_systemes.diy.service;
 
 import com.dassault_systemes.diy.domain.User;
-import com.dassault_systemes.diy.repositories.UserRepository;
+import com.dassault_systemes.diy.dto.UserDTO;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.List;
+import java.util.Optional;
 
-@Named
-public class UserService {
+public interface UserService {
 
-    private final UserRepository repository;
+    Optional<User> getByPersonalNumber(String personalNumber);
 
-    @Inject
-    public UserService(UserRepository userRepository) {
-        this.repository = userRepository;
-    }
+    List<User> getAll();
 
-    public User getByPersonalNumber(String personalNumber) {
-        return repository.findByPersonalNumber(personalNumber);
-    }
+    void delete(String personalNumber);
 
+    User create(UserDTO userDTO);
+
+    void update(String id, UserDTO user);
 }

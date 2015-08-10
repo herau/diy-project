@@ -4,10 +4,15 @@ import com.dassault_systemes.diy.domain.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, String> {
+import java.util.Optional;
 
-    User findByPersonalNumber(String personalNumber);
+//@RepositoryRestResource(collectionResourceRel = "users", path = "users")
+public interface UserRepository extends JpaRepository<User, Long> {
 
-//    User findByFirstnameStartWithOrLastnameStartWithIgnorecase(String firstnameOrLastname);
+    Optional<User> findByPersonalNumber(String personalNumber);
+
+    void deleteByPersonalNumber(String personalNumber);
+
+    //    List<User> findByFirstnameOrLastname(String firstnameOrLastname);
 
 }
