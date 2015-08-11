@@ -45,12 +45,15 @@ public class Tool implements Serializable {
     private Supplier supplier;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column
     private Energy energy;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column
     private Localization localization;
 
     @Size
+    @Column
     private Double weight;
 
     @Column(name = "documentation_url")

@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -68,7 +69,8 @@ public class User implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Company company;
 
-    @OneToOne(mappedBy = "id", cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE, optional = false)
+    @JoinColumn(name = "account_id", unique = true, nullable = false, updatable = false)
     private Account account;
 
     //    @Column(name = "created_date", nullable = false)
@@ -92,6 +94,7 @@ public class User implements Serializable {
         this.email = email;
         this.company = company;
         this.state = state;
+        this.account = new Account();
         //this.createdDate = LocalDateTime.now();
     }
 
@@ -150,6 +153,10 @@ public class User implements Serializable {
     @JsonIgnore
     public Role getRole() {
         return role;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     @Override

@@ -6,13 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-//@RepositoryRestResource(collectionResourceRel = "users", path = "users")
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByPersonalNumber(String personalNumber);
-
-    void deleteByPersonalNumber(String personalNumber);
-
-    //    List<User> findByFirstnameOrLastname(String firstnameOrLastname);
 
 }
