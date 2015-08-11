@@ -10,19 +10,31 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users", indexes = {@Index(columnList = "personal_number", name = "user_personal_number_hidx")})
 //TODO test creationDate, lastUpdatedDate
 //TODO see if possible to add this configuration for the all application (via Spring auto-configuration)
 @JsonInclude(Include.NON_NULL)
-public class User extends AbstractEntity {
+public class User implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, updatable = false, name = "user_id")
+    private Integer id;
 
     @Column(updatable = false, nullable = false, unique = true, length = 11, name = "personal_number")
     private String personalNumber;
@@ -55,6 +67,9 @@ public class User extends AbstractEntity {
     @Column(columnDefinition = "NUMBER(1) DEFAULT 0 NOT NULL")
     @Enumerated(EnumType.ORDINAL)
     private Company company;
+
+    @OneToOne(mappedBy = "id", cascade = CascadeType.REMOVE)
+    private Account account;
 
     //    @Column(name = "created_date", nullable = false)
     //    @CreatedDate
