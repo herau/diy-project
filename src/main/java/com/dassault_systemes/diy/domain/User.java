@@ -69,8 +69,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Company company;
 
-    @OneToOne(cascade = CascadeType.REMOVE, optional = false)
-    @JoinColumn(name = "account_id", unique = true, nullable = false, updatable = false)
+    // TODO ADMIN user not have accou
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "account_id", unique = true)
     private Account account;
 
     //    @Column(name = "created_date", nullable = false)

@@ -39,8 +39,7 @@ public class Tool implements Serializable {
     @Column(name = "purchase_date", nullable = false)
     private LocalDateTime purchaseDate;
 
-    @Column(nullable = false)
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, optional = false)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
