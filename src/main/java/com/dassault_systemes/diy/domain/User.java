@@ -14,25 +14,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users", indexes = {@Index(columnList = "personal_number", name = "user_personal_number_hidx")})
 //TODO test creationDate, lastUpdatedDate
 //TODO see if possible to add this configuration for the all application (via Spring auto-configuration)
 @JsonInclude(Include.NON_NULL)
-public class User implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
+public class User extends AbstractEntity {
 
     @Column(updatable = false, nullable = false, unique = true, length = 11, name = "personal_number")
     private String personalNumber;
@@ -140,11 +130,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @JsonIgnore
-    public Long getId() {
-        return id;
     }
 
     @JsonIgnore
