@@ -1,4 +1,4 @@
-# diy   [![Build Status](https://travis-ci.org/herau/diy.svg)](https://travis-ci.org/herau/diy)
+# diy   [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project)
 
 Powered by [Spring boot](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/)
 
