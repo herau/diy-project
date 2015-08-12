@@ -1,7 +1,7 @@
 package com.dassault_systemes.diy.service;
 
-import com.dassault_systemes.diy.config.Role;
 import com.dassault_systemes.diy.domain.CurrentUser;
+import com.dassault_systemes.diy.domain.Role;
 
 import org.springframework.stereotype.Service;
 

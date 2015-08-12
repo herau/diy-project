@@ -4,6 +4,7 @@ import com.dassault_systemes.diy.web.exceptions.EntityAlreadyExistException;
 import com.dassault_systemes.diy.web.exceptions.EntityNotFoundException;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import org.hibernate.search.exception.EmptyQueryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -43,7 +44,7 @@ public final class ExceptionsHandler {
     }
 
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler({IllegalArgumentException.class})
+    @ExceptionHandler({IllegalArgumentException.class, EmptyQueryException.class})
     public
     @ResponseBody
     ErrorResponse handleBadRequest(Exception e) {

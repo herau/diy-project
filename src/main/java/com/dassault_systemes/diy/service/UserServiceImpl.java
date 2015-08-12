@@ -5,6 +5,7 @@ import com.dassault_systemes.diy.domain.State;
 import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.dto.UserDTO;
 import com.dassault_systemes.diy.repositories.UserRepository;
+import com.dassault_systemes.diy.repositories.UserSearchRepository;
 import com.dassault_systemes.diy.web.exceptions.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
@@ -19,11 +20,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
+    private final UserSearchRepository searchRepository;
+
     private final PasswordService passwordService;
 
     @Inject
-    public UserServiceImpl(UserRepository userRepository, PasswordService passwordService) {
+    public UserServiceImpl(UserRepository userRepository, UserSearchRepository searchRepository,
+                           PasswordService passwordService) {
         this.repository = userRepository;
+        this.searchRepository = searchRepository;
         this.passwordService = passwordService;
     }
 
@@ -71,6 +76,11 @@ public class UserServiceImpl implements UserService {
         }
 
         repository.save(user);
+    }
+
+    @Override
+    public List<User> search(String searchQuery) {
+        return searchRepository.search(searchQuery);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.dassault_systemes.diy.domain;
 
-import com.dassault_systemes.diy.config.Role;
-
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 

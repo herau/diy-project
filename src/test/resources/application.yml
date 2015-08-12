@@ -1,0 +1,9 @@
+spring:
+  main:
+    show-banner: false
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
+
+security:
+  enable-csrf: false

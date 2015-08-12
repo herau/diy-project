@@ -1,13 +1,21 @@
 package com.dassault_systemes.diy.domain;
 
-import com.dassault_systemes.diy.config.Role;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramTokenizerFactory;
+import org.apache.lucene.analysis.standard.StandardFilterFactory;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.CascadeType;
@@ -30,6 +38,12 @@ import java.io.Serializable;
 //TODO test creationDate, lastUpdatedDate
 //TODO see if possible to add this configuration for the all application (via Spring auto-configuration)
 @JsonInclude(Include.NON_NULL)
+@Indexed
+@AnalyzerDef(name = "nGrams",
+        tokenizer = @TokenizerDef(factory = NGramTokenizerFactory.class, params = {
+                @Parameter(name = "minGramSize", value = "2"), @Parameter(name = "maxGramSize", value = "15")}),
+        filters = {@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                   @TokenFilterDef(factory = StandardFilterFactory.class)})
 public class User implements Serializable {
 
     @Id
@@ -38,15 +52,21 @@ public class User implements Serializable {
     private Integer id;
 
     @Column(updatable = false, nullable = false, unique = true, length = 11, name = "personal_number")
+    @Field
+    @Analyzer(definition = "nGrams")
     private String personalNumber;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, length = 55)
+    @Field
+    @Analyzer(definition = "nGrams")
     private String firstname;
 
     @Column(nullable = false, length = 55)
+    @Analyzer(definition = "nGrams")
+    @Field
     private String lastname;
 
     @Column(nullable = false)

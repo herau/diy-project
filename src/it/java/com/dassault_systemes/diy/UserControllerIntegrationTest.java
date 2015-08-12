@@ -2,6 +2,7 @@ package com.dassault_systemes.diy;
 
 import com.dassault_systemes.diy.domain.User;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -26,6 +27,7 @@ public class UserControllerIntegrationTest {
     RestTemplate restTemplate = new TestRestTemplate();
 
     @Test
+    @Ignore
     public void getUsersNotEmpty() {
         String url = "http://localhost:9000/api/users";
 

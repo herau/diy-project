@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -72,6 +73,15 @@ public class UserController extends AbstractController {
     @ResponseStatus(NO_CONTENT)
     void delete(@PathVariable String id) {
         service.delete(id);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/search", method = GET)
+    List<User> search(@RequestParam("query") String searchQuery) {
+        if (searchQuery == null || searchQuery.length() < 2) {
+            throw new IllegalArgumentException("search query must be contains at least two characters.");
+        }
+        return service.search(searchQuery);
     }
 
 }

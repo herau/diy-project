@@ -17,4 +17,13 @@ public interface UserService {
     User create(UserDTO userDTO);
 
     void update(String id, UserDTO user);
+
+    /**
+     * search a User by its firstname, lastname or personal number
+     *
+     * @param searchQuery full text search query
+     *
+     * @return users that match the search query
+     */
+    List<User> search(String searchQuery);
 }
