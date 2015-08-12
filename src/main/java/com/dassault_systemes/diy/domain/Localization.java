@@ -1,7 +1,8 @@
 package com.dassault_systemes.diy.domain;
 
 public enum Localization {
+    NONE,
     UNDERGROUND,
-    UNDERGROUND_SHELF,
-    SECTION_PREMISE
+    SECTION_PREMISE,
+    UNDERGROUND_SHELF
 }

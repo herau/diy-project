@@ -1,18 +1,19 @@
 package com.dassault_systemes.diy.domain;
 
-import org.hibernate.validator.constraints.Email;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "suppliers")
@@ -27,12 +28,7 @@ public class Supplier implements Serializable {
     @NotNull
     private String name;
 
-    @Column(nullable = false)
-    @NotNull
-    @Email
-    private String email;
-
-    @Column(nullable = false)
+    @Column
     @Pattern(regexp = "[0-9]{10}")
     private String phone;
 
@@ -40,12 +36,13 @@ public class Supplier implements Serializable {
     @Pattern(regexp = "(^$|[0-9]{10})")
     private String fax;
 
-    @Column
-    @Pattern(regexp = "(^$|[0-9]{10})")
-    private String mobile;
-
     @Embedded
+    @NotNull
     private Address address;
+
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "supplier_id")
+    private List<Contact> contacts;
 
     protected Supplier() {}
 

@@ -58,6 +58,10 @@ public class Tool implements Serializable {
     @Column(name = "documentation_url")
     private String documentationUrl;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     protected Tool(){}
 
 }

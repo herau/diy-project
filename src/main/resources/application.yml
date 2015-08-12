@@ -3,6 +3,9 @@ spring:
     active: development
   main:
     show-banner: false
+  data:
+    rest:
+      base-uri: /api
   jackson:
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
@@ -30,7 +33,7 @@ logging:
   level:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
-    org.hibernate: ERROR
+    org.hibernate: DEBUG
 
 security:
   basic:
