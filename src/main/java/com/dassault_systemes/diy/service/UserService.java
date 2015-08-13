@@ -10,8 +10,6 @@ public interface UserService {
 
     Optional<User> getByPersonalNumber(String personalNumber);
 
-    List<User> getAll();
-
     void delete(String personalNumber);
 
     User create(UserDTO userDTO);

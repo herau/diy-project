@@ -38,11 +38,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return repository.findAll();
-    }
-
-    @Override
     public void delete(String personalNumber) {
         User user =
                 getByPersonalNumber(personalNumber).orElseThrow(() -> new EntityNotFoundException("User not found"));

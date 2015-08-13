@@ -56,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("personalNumber")
                 .permitAll()
                 .successHandler((request, response, authentication) -> logger
-                .info("Success login of {} with credentials : [{}]", authentication.getName(),
-                      authentication.getAuthorities()))
+                        .info("Success login of {} with credentials : [{}]", authentication.getName(),
+                              authentication.getAuthorities()))
                 .defaultSuccessUrl("/account")
             .and()
             .logout().permitAll();

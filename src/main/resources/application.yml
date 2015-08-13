@@ -37,7 +37,7 @@ logging:
 
 security:
   basic:
-    enabled: false
+    enabled: true
 
 ---
 
