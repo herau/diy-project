@@ -56,13 +56,13 @@ public class UserController extends AbstractController {
         return service.getAll();
     }
 
-    @PreAuthorize("@currentUserService.canAccessUser(principal, #id)")
+    @PreAuthorize("hasAuthority('ADMIN') or principal.id = #id")
     @RequestMapping(value = "{id}", method = GET)
     User get(@PathVariable String id) {
         return service.getByPersonalNumber(id).orElseThrow(() -> new EntityNotFoundException(id));
     }
 
-    @PreAuthorize("@currentUserService.canAccessUser(principal, #id)")
+    @PreAuthorize("hasAuthority('ADMIN') or principal.id = #id")
     @RequestMapping(value = "{id}", method = PATCH)
     void update(@PathVariable String id, @Valid @RequestBody UserDTO userDTO) {
         service.update(id, userDTO);

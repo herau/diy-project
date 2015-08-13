@@ -162,6 +162,10 @@ public class User implements Serializable {
         return state;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     @JsonIgnore
     public String getPassword() {
         return password;
@@ -176,6 +180,7 @@ public class User implements Serializable {
         return role;
     }
 
+    @JsonIgnore
     public Account getAccount() {
         return account;
     }

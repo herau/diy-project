@@ -39,24 +39,28 @@ public class Tool implements Serializable {
     @Column(name = "purchase_date", nullable = false)
     private LocalDateTime purchaseDate;
 
-    @ManyToOne(fetch = LAZY, optional = false)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
+    private Energy energy;
+
+    @Size
+    @Column(nullable = false)
+    private Double weight;
+
+    @Size
+    @Column(nullable = false)
+    private Double maxSize;
+
+    @Column(name = "documentation_url")
+    private String documentationUrl;
+
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @Enumerated(EnumType.ORDINAL)
     @Column
-    private Energy energy;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column
     private Localization localization;
-
-    @Size
-    @Column
-    private Double weight;
-
-    @Column(name = "documentation_url")
-    private String documentationUrl;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
