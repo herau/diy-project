@@ -20,8 +20,9 @@ spring:
   jackson:
     serialization:
       indent_output: true
+  datasource:
+    data: classpath:/sql/import-*.sql
   jpa:
-    show-sql: true
     properties:
       hibernate:
         search:
@@ -43,6 +44,8 @@ security:
 
 spring:
     profiles: production
+    jpa:
+      show-sql: false
 
 server:
     port: 9001

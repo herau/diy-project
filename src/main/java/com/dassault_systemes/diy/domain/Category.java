@@ -1,5 +1,7 @@
 package com.dassault_systemes.diy.domain;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ public class Category {
 
     @Column(nullable = false, unique = true)
     @NotNull
+    @Field
     private String name;
 
     protected Category() {

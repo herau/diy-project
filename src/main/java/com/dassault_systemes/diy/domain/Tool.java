@@ -1,5 +1,9 @@
 package com.dassault_systemes.diy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,12 +12,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -26,29 +33,40 @@ public class Tool implements Serializable {
     @Column(nullable = false, updatable = false, name = "tool_id")
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 30)
+    @Field
     private String name;
 
     @Size(min = 1)
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
+    @Size(min = 1)
+    @Column(nullable = false, name = "rental_price")
+    private Double rentalPrice;
+
+    @Column(nullable = false, length = 500)
+    @Field
     private String description;
 
-    @Column(name = "purchase_date", nullable = false)
+    //TODO should be not nullable
+    @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
+    //TODO should be not nullable
+    @Column
+    @Field
     private Energy energy;
 
     @Size
-    @Column(nullable = false)
+    @Column
+    //TODO due to existing data, can be null
     private Double weight;
 
     @Size
-    @Column(nullable = false)
+    @Column(name = "max_size")
+    //TODO due to existing data, can be null
     private Double maxSize;
 
     @Column(name = "documentation_url")
@@ -62,10 +80,46 @@ public class Tool implements Serializable {
     @Column
     private Localization localization;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "categories_tools",
+            joinColumns = @JoinColumn(name = "tool_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
+    @IndexedEmbedded
+    private List<Category> category;
 
     protected Tool(){}
 
+    public String getName() {
+        return name;
+    }
+
+    public Double getRentalPrice() {
+        return rentalPrice;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Energy getEnergy() {
+        return energy;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public Double getMaxSize() {
+        return maxSize;
+    }
+
+    public String getDocumentationUrl() {
+        return documentationUrl;
+    }
+
+    @JsonIgnore
+    public List<Category> getCategory() {
+        return category;
+    }
 }
