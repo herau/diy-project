@@ -29,11 +29,15 @@ spring:
           default:
             directory_provider: filesystem
             indexBase: /tmp/diy/lucene/indexes/
+          users:
+            directory_provider: ram
+          tools:
+            directory_provider: ram
 
 logging:
   level:
     org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
+    org.springframework.security: ERROR
     org.hibernate: DEBUG
 
 security:

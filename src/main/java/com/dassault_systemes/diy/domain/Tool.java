@@ -2,6 +2,7 @@ package com.dassault_systemes.diy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import javax.persistence.Column;
@@ -26,6 +27,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "tools")
+@Indexed(index = "tools")
 public class Tool implements Serializable {
 
     @Id

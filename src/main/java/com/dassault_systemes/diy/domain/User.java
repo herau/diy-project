@@ -38,7 +38,7 @@ import java.io.Serializable;
 //TODO test creationDate, lastUpdatedDate
 //TODO see if possible to add this configuration for the all application (via Spring auto-configuration)
 @JsonInclude(Include.NON_NULL)
-@Indexed
+@Indexed(index = "users")
 @AnalyzerDef(name = "nGrams",
         tokenizer = @TokenizerDef(factory = NGramTokenizerFactory.class, params = {
                 @Parameter(name = "minGramSize", value = "2"), @Parameter(name = "maxGramSize", value = "15")}),
