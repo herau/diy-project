@@ -26,6 +26,7 @@ spring:
     properties:
       hibernate:
         search:
+          generate_statistics: true
           default:
             directory_provider: filesystem
             indexBase: /tmp/diy/lucene/indexes/
@@ -38,9 +39,9 @@ spring:
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.springframework.security: ERROR
-    org.hibernate: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.hibernate: INFO
 
 security:
   basic:
@@ -52,6 +53,10 @@ spring:
     profiles: production
     jpa:
       show-sql: false
+      properties:
+        hibernate:
+          search:
+            generate_statistics: true
 
 server:
     port: 9001
@@ -62,3 +67,4 @@ logging:
     org.springframework.data.rest: ERROR
     org.springframework.security: ERROR
     org.hibernate: ERROR
+
