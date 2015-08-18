@@ -7,4 +7,8 @@ package com.dassault_systemes.diy.service;
 public interface PasswordService {
 
     String generateRandom();
+
+    String encode(String password);
+
+    boolean match(String password, String encodedPassword);
 }

@@ -1,8 +1,6 @@
 package com.dassault_systemes.diy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -33,11 +31,9 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 
+//TODO test creationDate, lastUpdatedDate
 @Entity
 @Table(name = "users", indexes = {@Index(columnList = "personal_number", name = "user_personal_number_hidx")})
-//TODO test creationDate, lastUpdatedDate
-//TODO see if possible to add this configuration for the all application (via Spring auto-configuration)
-@JsonInclude(Include.NON_NULL)
 @Indexed(index = "users")
 @AnalyzerDef(name = "nGrams",
         tokenizer = @TokenizerDef(factory = NGramTokenizerFactory.class, params = {
@@ -115,7 +111,6 @@ public class User implements Serializable {
         this.email = email;
         this.company = company;
         this.state = state;
-        this.account = new Account();
         //this.createdDate = LocalDateTime.now();
     }
 
@@ -183,6 +178,10 @@ public class User implements Serializable {
     @JsonIgnore
     public Account getAccount() {
         return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

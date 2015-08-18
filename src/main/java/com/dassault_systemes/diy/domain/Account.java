@@ -21,7 +21,7 @@ public class Account implements Serializable {
     @Column
     private Double balance = 0.0;
 
-    protected Account() {}
+    public Account() {}
 
     /**
      * credit the account

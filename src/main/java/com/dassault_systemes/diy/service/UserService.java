@@ -12,11 +12,13 @@ public interface UserService {
 
     List<User> getAll();
 
-    void delete(String personalNumber);
+    void delete(Integer id);
+
+    User get(Integer id);
 
     User create(UserDTO userDTO);
 
-    void update(String id, UserDTO user);
+    void update(Integer id, UserDTO user);
 
     /**
      * search a User by its firstname, lastname or personal number

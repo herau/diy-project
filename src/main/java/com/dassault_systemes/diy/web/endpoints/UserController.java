@@ -4,7 +4,6 @@ import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.dto.UserDTO;
 import com.dassault_systemes.diy.service.UserService;
 import com.dassault_systemes.diy.web.exceptions.EntityAlreadyExistException;
-import com.dassault_systemes.diy.web.exceptions.EntityNotFoundException;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,20 +57,20 @@ public class UserController extends AbstractController {
 
     @PreAuthorize("hasAuthority('ADMIN') or principal.id = #id")
     @RequestMapping(value = "{id}", method = GET)
-    User get(@PathVariable String id) {
-        return service.getByPersonalNumber(id).orElseThrow(() -> new EntityNotFoundException(id));
+    User get(@PathVariable Integer id) {
+        return service.get(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or principal.id = #id")
     @RequestMapping(value = "{id}", method = PATCH)
-    void update(@PathVariable String id, @Valid @RequestBody UserDTO userDTO) {
+    void update(@PathVariable Integer id, @Valid @RequestBody UserDTO userDTO) {
         service.update(id, userDTO);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "{id}", method = DELETE)
     @ResponseStatus(NO_CONTENT)
-    void delete(@PathVariable String id) {
+    void delete(@PathVariable Integer id) {
         service.delete(id);
     }
 

@@ -11,6 +11,8 @@ public class UserDTO {
 
     private String password;
 
+    private String oldPassword;
+
     public String getPersonalNumber() {
         return personalNumber;
     }
@@ -21,5 +23,9 @@ public class UserDTO {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
     }
 }

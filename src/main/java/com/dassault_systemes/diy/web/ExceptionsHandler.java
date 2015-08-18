@@ -35,7 +35,7 @@ public final class ExceptionsHandler {
     }
 
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler({EntityNotFoundException.class})
+    @ExceptionHandler({EntityNotFoundException.class, javax.persistence.EntityNotFoundException.class})
     public
     @ResponseBody
     ErrorResponse handleNotFound(Exception e) {
