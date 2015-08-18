@@ -88,7 +88,7 @@ public class Tool implements Serializable {
             joinColumns = @JoinColumn(name = "tool_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
     @IndexedEmbedded
-    private List<Category> category;
+    private List<Category> categories;
 
     protected Tool(){}
 
@@ -121,7 +121,7 @@ public class Tool implements Serializable {
     }
 
     @JsonIgnore
-    public List<Category> getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 }

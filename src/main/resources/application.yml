@@ -33,6 +33,8 @@ spring:
             directory_provider: ram
           tools:
             directory_provider: ram
+          categories:
+            directory_provider: ram
 
 logging:
   level:

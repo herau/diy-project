@@ -1,6 +1,7 @@
 package com.dassault_systemes.diy.domain;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "categories")
+@Indexed(index = "categories")
 public class Category {
 
     @Id
