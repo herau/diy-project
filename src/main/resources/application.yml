@@ -9,6 +9,7 @@ spring:
   jackson:
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
+    serialization-inclusion: NON_NULL
 
 security:
   enable-csrf: false
@@ -25,8 +26,6 @@ spring:
   jpa:
     properties:
       hibernate:
-        search:
-          generate_statistics: true
           default:
             directory_provider: filesystem
             indexBase: /tmp/diy/lucene/indexes/

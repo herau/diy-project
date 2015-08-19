@@ -3,7 +3,6 @@ package com.dassault_systemes.diy.search;
 import org.hibernate.search.jpa.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,8 +19,6 @@ import javax.persistence.PersistenceContext;
  * @author herau
  */
 @Component
-@ConditionalOnProperty(prefix = "spring.jpa.properties",
-        name = {"hibernate.search.default.directory_provider", "hibernate.search.default.indexBase"})
 @ConditionalOnWebApplication
 public class BuildSearchIndex implements ApplicationListener<ContextRefreshedEvent> {
 

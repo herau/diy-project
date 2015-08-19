@@ -74,7 +74,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(Integer id, UserDTO userDTO) {
-        User user = repository.getOne(id);
+        User user = repository.findOne(id);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User not found [" + id + "]");
+        }
 
         String password = userDTO.getPassword();
         if (password != null) {
