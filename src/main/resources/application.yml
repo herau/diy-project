@@ -56,6 +56,12 @@ spring:
         hibernate:
           search:
             generate_statistics: true
+    # only keep remote restart/debugging
+    devtools:
+      restart:
+        enabled: false
+      livereload:
+        enabled: false
 
 server:
     port: 9001
