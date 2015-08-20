@@ -3,6 +3,7 @@ package com.dassault_systemes.diy.search;
 import org.hibernate.search.jpa.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,6 +21,7 @@ import javax.persistence.PersistenceContext;
  */
 @Component
 @ConditionalOnWebApplication
+@ConditionalOnProperty(name = "search.index.build-startup", havingValue = "true")
 public class BuildSearchIndex implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(BuildSearchIndex.class);

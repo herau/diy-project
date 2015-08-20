@@ -1,28 +1,9 @@
 spring:
   profiles:
     active: development
-  main:
-    show-banner: false
   data:
     rest:
-      base-uri: /api
-  jackson:
-    deserialization:
-      FAIL_ON_UNKNOWN_PROPERTIES: true
-    serialization-inclusion: NON_NULL
-
-security:
-  enable-csrf: false
-
----
-
-spring:
-  profiles: development
-  jackson:
-    serialization:
-      indent_output: true
-  datasource:
-    data: classpath:/sql/import-*.sql
+      base-path: /api
   jpa:
     properties:
       hibernate:
@@ -35,6 +16,27 @@ spring:
             directory_provider: ram
           categories:
             directory_provider: ram
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
+    serialization-inclusion: NON_NULL
+
+security:
+  enable-csrf: false
+
+search:
+  index:
+    build-startup: false
+
+---
+
+spring:
+  profiles: development
+  jackson:
+    serialization:
+      indent_output: true
+  datasource:
+    data: classpath:/sql/import-*.sql
 
 logging:
   level:
@@ -50,6 +52,8 @@ security:
 
 spring:
     profiles: production
+    main:
+      show-banner: false
     jpa:
       show-sql: false
       properties:

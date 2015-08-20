@@ -14,7 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @PreAuthorize("hasAuthority('ADMIN')")
 public interface ToolRepository extends CrudRepository<Tool, Integer>, SearchRepository<Tool> {
 
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER, ADMIN')")
     @Override
     Tool findOne(Integer integer);
+
 }

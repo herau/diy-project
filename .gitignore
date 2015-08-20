@@ -42,4 +42,9 @@ hs_err_pid*
 target
 
 ### IDE
-.idea/**
+.idea
+
+## Hibernate search
+categories
+tools
+users

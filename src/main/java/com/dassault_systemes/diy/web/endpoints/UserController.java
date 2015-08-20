@@ -22,10 +22,11 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@RequestMapping(value = "/api/users")
+@RequestMapping(value = "/api/users", produces = APPLICATION_JSON_VALUE)
 public class UserController extends AbstractController {
 
     private final UserService service;
@@ -74,7 +75,7 @@ public class UserController extends AbstractController {
         service.delete(id);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @RequestMapping(value = "/search", method = GET)
     List<User> search(@RequestParam("query") String searchQuery) {
         if (searchQuery == null || searchQuery.length() < 2) {

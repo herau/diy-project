@@ -10,7 +10,7 @@ import java.util.List;
 public interface SearchRepository<T> {
 
     /**
-     * search in all @Field annotated fields of the entity
+     * search in all @Field annotated fields of the @Indexed annotated entity
      *
      * @param query string query
      *
