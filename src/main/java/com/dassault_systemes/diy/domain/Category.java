@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "categories")
 @Indexed(index = "categories")
-public class Category {
+public class Category extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

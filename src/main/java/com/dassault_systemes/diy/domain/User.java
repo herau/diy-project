@@ -15,10 +15,12 @@ import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -31,16 +33,16 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 
-//TODO test creationDate, lastUpdatedDate
 @Entity
 @Table(name = "users", indexes = {@Index(columnList = "personal_number", name = "user_personal_number_hidx")})
+@EntityListeners({AuditingEntityListener.class})
 @Indexed(index = "users")
 @AnalyzerDef(name = "nGrams",
         tokenizer = @TokenizerDef(factory = NGramTokenizerFactory.class, params = {
                 @Parameter(name = "minGramSize", value = "2"), @Parameter(name = "maxGramSize", value = "15")}),
         filters = {@TokenFilterDef(factory = LowerCaseFilterFactory.class),
                    @TokenFilterDef(factory = StandardFilterFactory.class)})
-public class User implements Serializable {
+public class User extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -85,18 +87,10 @@ public class User implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Company company;
 
-    // TODO ADMIN user not have accou
+    // TODO ADMIN user not have account
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "account_id", unique = true)
     private Account account;
-
-    //    @Column(name = "created_date", nullable = false)
-    //    @CreatedDate
-    //    private LocalDateTime createdDate;
-    //
-    //    @Column(name = "modified_date")
-    //    @LastModifiedDate
-    //    private LocalDateTime modifiedDate;
 
     protected User() {
         // no-args constructor required by JPA spec and Jackson
@@ -111,7 +105,6 @@ public class User implements Serializable {
         this.email = email;
         this.company = company;
         this.state = state;
-        //this.createdDate = LocalDateTime.now();
     }
 
     public String getPersonalNumber() {
@@ -141,17 +134,6 @@ public class User implements Serializable {
     public Company getCompany() {
         return company;
     }
-
-    //    @JsonProperty("created_date")
-    //    @JsonIgnore
-    //    public LocalDateTime getCreatedDate() {
-    //        return createdDate;
-    //    }
-    //
-    //    @JsonIgnore
-    //    public LocalDateTime getModifiedDate() {
-    //        return modifiedDate;
-    //    }
 
     public State getState() {
         return state;

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "suppliers")
-public class Supplier implements Serializable {
+public class Supplier extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

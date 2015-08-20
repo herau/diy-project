@@ -47,7 +47,7 @@ public class UserController extends AbstractController {
 
         User result = service.create(user);
 
-        response.setHeader(HttpHeaders.LOCATION, getLocationHeader(result.getPersonalNumber()));
+        response.setHeader(HttpHeaders.LOCATION, getLocationHeader(String.valueOf(result.getId())));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

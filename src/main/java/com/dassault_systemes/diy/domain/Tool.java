@@ -28,7 +28,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "tools")
 @Indexed(index = "tools")
-public class Tool implements Serializable {
+public class Tool extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

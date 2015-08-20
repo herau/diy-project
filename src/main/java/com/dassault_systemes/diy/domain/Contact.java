@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "contacts")
-public class Contact implements Serializable {
+public class Contact extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
