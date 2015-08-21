@@ -1,6 +1,7 @@
 package com.dassault_systemes.diy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -37,6 +38,7 @@ public class Tool extends AbstractAuditableEntity implements Serializable {
 
     @Column(nullable = false, unique = true, length = 30)
     @Field
+    @Analyzer(definition = "nGrams")
     private String name;
 
     @Size(min = 1)
@@ -49,6 +51,7 @@ public class Tool extends AbstractAuditableEntity implements Serializable {
 
     @Column(nullable = false, length = 500)
     @Field
+    @Analyzer(definition = "nGrams")
     private String description;
 
     //TODO should be not nullable
@@ -58,7 +61,9 @@ public class Tool extends AbstractAuditableEntity implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     //TODO should be not nullable
     @Column
-    @Field
+    //TODO fix java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Enum for search behavior
+    //    @Field
+    //    @Analyzer(definition = "nGrams")
     private Energy energy;
 
     @Size

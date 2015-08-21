@@ -1,5 +1,6 @@
 package com.dassault_systemes.diy.domain;
 
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -26,6 +27,7 @@ public class Category extends AbstractAuditableEntity implements Serializable {
     @Column(nullable = false, unique = true)
     @NotNull
     @Field
+    @Analyzer(definition = "nGrams")
     private String name;
 
     protected Category() {

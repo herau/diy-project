@@ -26,10 +26,6 @@ spring:
 security:
   enable-csrf: false
 
-search:
-  index:
-    build-startup: false
-
 ---
 
 spring:
@@ -49,6 +45,10 @@ logging:
 security:
   basic:
     enabled: false
+
+search:
+  index:
+    build-startup: true
 
 ---
 
