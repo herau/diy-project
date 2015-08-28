@@ -12,4 +12,4 @@ Documentation
 
 * [Markdown syntax for issues and comments](https://guides.github.com/features/mastering-markdown/)
 * [a Git cheat-sheet](https://training.github.com/kit/downloads/fr/github-git-cheat-sheet.pdf)
-* [one git about Git](http://rogerdudler.github.io/git-guide/)
+* [a guide for Git](http://rogerdudler.github.io/git-guide/)
