@@ -7,3 +7,9 @@ Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-th
 Containerized to [Docker](https://www.docker.com/) Image, thanks to the [Spotify Maven plugin](https://github.com/spotify/docker-maven-plugin)
 
 Full-text search is available on users and tools entities through [Hibernate Search](http://hibernate.org/search/) and [Apache Solr](http://lucene.apache.org/solr/)
+
+Documentation
+
+* [Markdown syntax for issues and comments](https://guides.github.com/features/mastering-markdown/)
+* [a Git cheat-sheet](https://training.github.com/kit/downloads/fr/github-git-cheat-sheet.pdf)
+* [one git about Git](http://rogerdudler.github.io/git-guide/)
