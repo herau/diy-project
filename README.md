@@ -5,7 +5,6 @@
 Several quick start options are available:
 
 * Clone the repo: `git clone https://github.com/herau/diy-project.git`.
-* Install Maven (and check that Java 8 is used by maven).
 * Fetch & Build the Frontend part: `npm install`.
 * Run the Project with Maven : `mvn spring-boot:run`.
 
