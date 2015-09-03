@@ -23,9 +23,15 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
-# Dependency directory
+# Node Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
+
+# TSD Dependency directory
+typings
+
+# Bower Dependency directory
+src/main/resources/static/bower_components
 
 ### Java
 *.class

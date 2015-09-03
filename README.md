@@ -2,17 +2,17 @@
 
 ## Quick start
 
-Several quick start options are available:
+To start, follow those steps:
 
 * Clone the repo: `git clone https://github.com/herau/diy-project.git`.
-* Fetch & Build the Frontend part: `npm install`.
+* Fetch & Build the frontend ressources: `npm install`.
 * Run the Project with Maven : `mvn spring-boot:run`.
 
 ## Under the hood
 
 Powered by [Spring boot](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/)
 
-Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NodeJS(npm)](https://www.npmjs.com/) and [Bower](http://bower.io/)
+Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [npm](https://www.npmjs.com), [Bower](http://bower.io/) and [TSD](https://github.com/DefinitelyTyped/tsd)
 
 Containerized to [Docker](https://www.docker.com/) Image, thanks to the [Spotify Maven plugin](https://github.com/spotify/docker-maven-plugin)
 

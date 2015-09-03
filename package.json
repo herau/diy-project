@@ -1,11 +1,17 @@
 {
   "name": "diy",
-  "description": "diy app",
+  "description": "Do it yourself app",
   "version": "0.0.1",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/herau/diy-project.git"
+  },
   "dependencies": {
-    "bower": "1.4.x"
+    "bower": "1.4.x",
+    "tsd": "0.6.4",
+    "typescript": "1.5.x"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "node_modules/.bin/bower install; node_modules/.bin/tsd install; node_modules/.bin/tsc -m commonjs -t es5 --emitDecoratorMetadata --experimentalDecorators  src/main/resources/static/*.ts"
   }
 }
