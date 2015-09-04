@@ -4,9 +4,16 @@
 
 To start, follow those steps:
 
-* Clone the repo: `git clone https://github.com/herau/diy-project.git`.
-* Fetch & Build the frontend ressources: `npm install`.
-* Run the Project with Maven : `mvn spring-boot:run`.
+* Clone the repository.
+* Fetch & Build the frontend ressources.
+* Run the Project with Maven.
+
+```bash
+$ git clone https://github.com/herau/diy-project.git
+$ cd diy-project
+$ npm install
+$ mvn spring-boot:run
+```
 
 ## Under the hood
 
