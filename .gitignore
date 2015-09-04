@@ -47,8 +47,10 @@ hs_err_pid*
 ### Maven
 target
 
-### IDE
-.idea
+## Jetbrains
+# Directory-based project format
+.idea/
+.iml
 
 ## Hibernate search
 categories
