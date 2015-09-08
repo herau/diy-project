@@ -1,11 +1,24 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
-import {Component, View, bootstrap} from 'angular2/angular2';
+/// <reference path="typings/_custom.d.ts" />
+
+import {Component, View} from 'angular2/angular2';
+import {Tools} from './tools';
+
 @Component({
-  selector: 'my-app'
+  selector: 'app',
 })
+
 @View({
-  template: '<h1>My first Angular 2 App</h1>'
+  template: `
+  <p>App name: {{ name }}</p>
+  <tool-list></tool-list>
+  `,
+  directives: [Tools]
 })
-class AppComponent {
+
+export class App {
+  name: string;
+  constructor() {
+    this.name = "DIY";
+  }
+  
 }
-bootstrap(AppComponent);

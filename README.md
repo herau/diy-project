@@ -11,8 +11,7 @@ To start, follow those steps:
 ```bash
 $ git clone https://github.com/herau/diy-project.git
 $ cd diy-project
-$ npm install
-$ mvn spring-boot:run
+$ npm start
 ```
 
 ## Under the hood

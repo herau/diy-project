@@ -2,20 +2,26 @@
   "version": "v4",
   "repo": "borisyankov/DefinitelyTyped",
   "ref": "master",
-  "path": "typings",
-  "bundle": "typings/tsd.d.ts",
+  "path": "tsd_typings",
+  "bundle": "tsd_typings/tsd.d.ts",
   "installed": {
-    "es6-promise/es6-promise.d.ts": {
-      "commit": "7c228c09302f51d19b6b93fcfc5decaf8e8bbaa2"
-    },
-    "rx/rx.d.ts": {
-      "commit": "7c228c09302f51d19b6b93fcfc5decaf8e8bbaa2"
-    },
-    "rx/rx-lite.d.ts": {
-      "commit": "7c228c09302f51d19b6b93fcfc5decaf8e8bbaa2"
-    },
-    "angular2/angular2.d.ts": {
-      "commit": "7c228c09302f51d19b6b93fcfc5decaf8e8bbaa2"
-    }
+      "jasmine/jasmine.d.ts": {
+        "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+      },
+      "angular-protractor/angular-protractor.d.ts": {
+        "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+      },
+      "selenium-webdriver/selenium-webdriver.d.ts": {
+        "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+      },
+      "es6-promise/es6-promise.d.ts": {
+        "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+      },
+      "rx/rx.d.ts": {
+        "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+      },
+      "rx/rx-lite.d.ts": {
+        "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+      }
   }
 }
