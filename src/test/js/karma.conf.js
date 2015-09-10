@@ -12,8 +12,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: './src/main/resources/static/lib/es6-shim.js', watched: false },
-      // { pattern: 'test/**/*.spec.ts', watched: false }
+      { pattern: '../../main/resources/static/lib/es6-shim.js', watched: false },
       { pattern: 'spec.bundle.js', watched: false }
     ],
 
@@ -48,7 +47,6 @@ module.exports = function(config) {
               /node_modules/
             ]
           },
-          { test: /reflect-metadata/, loader: "imports?require=>false" },
           { test: /\.json$/, loader: 'json' },
           { test: /\.html$/, loader: 'raw' },
           { test: /\.css$/,  loader: 'raw' }

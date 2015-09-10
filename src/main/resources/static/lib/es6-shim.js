@@ -1,9 +1,10 @@
  /*!
+  * Extended es6-shim with Symbol and Function.bind
   * https://github.com/paulmillr/es6-shim
   * @license es6-shim Copyright 2013-2015 by Paul Miller (http://paulmillr.com)
   *   and contributors,  MIT License
-  * es6-shim: v0.33.3
-  * see https://github.com/paulmillr/es6-shim/blob/0.33.3/LICENSE
+  * es6-shim: v0.32.3
+  * see https://github.com/paulmillr/es6-shim/blob/0.32.3/LICENSE
   * Details and documentation:
   * https://github.com/paulmillr/es6-shim/
   */
@@ -26,6 +27,25 @@
   }
 }(this, function () {
   'use strict';
+
+  if (typeof Function.prototype.bind != 'function') {
+    Function.prototype.bind = function bind(obj) {
+        var args = Array.prototype.slice.call(arguments, 1),
+            self = this,
+            nop = function() {
+            },
+            bound = function() {
+                return self.apply(
+                    this instanceof nop ? this : (obj || {}), args.concat(
+                        Array.prototype.slice.call(arguments)
+                    )
+                );
+            };
+        nop.prototype = this.prototype || {};
+        bound.prototype = new nop();
+        return bound;
+    };
+  }
 
   var _apply = Function.call.bind(Function.apply);
   var _call = Function.call.bind(Function.call);
@@ -174,7 +194,66 @@
   var ArrayIterator; // make our implementation private
   var noop = function () {};
 
-  var Symbol = globals.Symbol || {};
+  function uid(len) {
+    len = len || 7;
+    return Math.random().toString(35).substr(2, len);
+  }
+
+  function SymbolShim() {
+    // allow usage without `new`
+    if (!(this instanceof Symbol)) return new Symbol();
+
+    // create a unique key based on a long uid for this symbol
+    var key = this.__key__ = "__symbol__" + uid(32);
+
+    // define a property on Object.prototype, so that whenever a property
+    // with the key we just generated is set on any object, it's automatically
+    // marked as non-enumerable. this is technically global, but shouldn't matter
+    // since it's unique and non-enumerable
+    Object.defineProperty(Object.prototype, key, {
+      enumerable: false,
+      get: function() {},
+      set: setter(key)
+    });
+  }
+
+  /**
+   * Returns the internal string representation of the Symbol object
+   */
+
+  SymbolShim.prototype.toString = function() {
+    return this.__key__;
+  };
+
+  /**
+   * Disposes the global Object.prototype property associated with this symbol
+   */
+
+  SymbolShim.prototype.dispose = function() {
+    delete Object.prototype[this.__key__];
+  };
+
+  /**
+   * Returns a `set` function. This is so that *only* this closure will be
+   * retained in memory. Leaving the actual `Symbol` instance to be eligible
+   * for garbage collection.
+   */
+
+  function setter (key) {
+    return function(value) {
+      // Store the received value and mark it as non-enumerable
+      Object.defineProperty(this, key, {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: value
+      });
+    };
+  }
+
+  var Symbol = globals.Symbol || SymbolShim;
+  defineProperties(globals, { Symbol: Symbol });
+
   var symbolSpecies = Symbol.species || '@@species';
 
   var Value = {
@@ -221,20 +300,6 @@
     }
   };
 
-  var wrapConstructor = function wrapConstructor(original, replacement, keysToSkip) {
-    Value.preserveToString(replacement, original);
-    if (Object.setPrototypeOf) {
-      // sets up proper prototype chain where possible
-      Object.setPrototypeOf(original, replacement);
-    }
-    _forEach(Object.getOwnPropertyNames(original), function (key) {
-      if (key in noop || keysToSkip[key]) { return; }
-      Value.proxy(original, key, replacement);
-    });
-    replacement.prototype = original.prototype;
-    Value.redefine(original.prototype, 'constructor', replacement);
-  };
-
   var defaultSpeciesGetter = function () { return this; };
   var addDefaultSpecies = function (C) {
     if (supportsDescriptors && !_hasOwnProperty(C, symbolSpecies)) {
@@ -242,7 +307,6 @@
     }
   };
   var Type = {
-    primitive: function (x) { return x === null || (typeof x !== 'function' && typeof x !== 'object'); },
     object: function (x) { return x !== null && typeof x === 'object'; },
     string: function (x) { return _toString(x) === '[object String]'; },
     regex: function (x) { return _toString(x) === '[object RegExp]'; },
@@ -1132,49 +1196,6 @@
     }, true);
   }
 
-  if (Number('0o10') !== 8 || Number('0b10') !== 2) {
-    var OrigNumber = Number;
-    var isBinary = Function.bind.call(Function.call, RegExp.prototype.test, /^0b/i);
-    var isOctal = Function.bind.call(Function.call, RegExp.prototype.test, /^0o/i);
-    var toPrimitive = function (O) { // need to replace this with `es-to-primitive/es6`
-      var result;
-      if (typeof O.valueOf === 'function') {
-        result = O.valueOf();
-        if (Type.primitive(result)) {
-          return result;
-        }
-      }
-      if (typeof O.toString === 'function') {
-        result = O.toString();
-        if (Type.primitive(result)) {
-          return result;
-        }
-      }
-      throw new TypeError('No default value');
-    };
-    var NumberShim = function Number(value) {
-      var primValue = Type.primitive(value) ? value : toPrimitive(value, 'number');
-      if (typeof primValue === 'string') {
-        if (isBinary(primValue)) {
-          primValue = parseInt(_strSlice(primValue, 2), 2);
-        } else if (isOctal(primValue)) {
-          primValue = parseInt(_strSlice(primValue, 2), 8);
-        }
-      }
-      if (this instanceof Number) {
-        return new OrigNumber(primValue);
-      }
-      /* jshint newcap: false */
-      return OrigNumber(primValue);
-      /* jshint newcap: true */
-    };
-    wrapConstructor(OrigNumber, NumberShim, {});
-    /*globals Number: true */
-    Number = NumberShim;
-    Value.redefine(globals, 'Number', NumberShim);
-    /*globals Number: false */
-  }
-
   var maxSafeInteger = Math.pow(2, 53) - 1;
   defineProperties(Number, {
     MAX_SAFE_INTEGER: maxSafeInteger,
@@ -1495,9 +1516,18 @@
       }
       return new OrigRegExp(pattern, flags);
     };
-    wrapConstructor(OrigRegExp, RegExpShim, {
-      $input: true // Chrome < v39 & Opera < 26 have a nonstandard "$input" property
+    Value.preserveToString(RegExpShim, OrigRegExp);
+    if (Object.setPrototypeOf) {
+      // sets up proper prototype chain where possible
+      Object.setPrototypeOf(OrigRegExp, RegExpShim);
+    }
+    _forEach(Object.getOwnPropertyNames(OrigRegExp), function (key) {
+      if (key === '$input') { return; } // Chrome < v39 & Opera < 26 have a nonstandard "$input" property
+      if (key in noop) { return; }
+      Value.proxy(OrigRegExp, key, RegExpShim);
     });
+    RegExpShim.prototype = OrigRegExp.prototype;
+    Value.redefine(OrigRegExp.prototype, 'constructor', RegExpShim);
     /*globals RegExp: true */
     RegExp = RegExpShim;
     Value.redefine(globals, 'RegExp', RegExpShim);
@@ -1770,9 +1800,6 @@
   // Simplest possible implementation; use a 3rd-party library if you
   // want the best possible speed and/or long stack traces.
   var PromiseShim = (function () {
-    var setTimeout = globals.setTimeout;
-    // some environments don't have setTimeout - no way to shim here.
-    if (typeof setTimeout !== 'function') { return; }
 
     ES.IsPromise = function (promise) {
       if (!ES.TypeIsObject(promise)) {
@@ -1805,6 +1832,7 @@
     };
 
     // find an appropriate setImmediate-alike
+    var setTimeout = globals.setTimeout;
     var makeZeroTimeout;
     /*global window */
     if (typeof window !== 'undefined' && ES.IsCallable(window.postMessage)) {
@@ -2173,37 +2201,35 @@
     delete globals.Promise.prototype.chain;
   }
 
-  if (typeof PromiseShim === 'function') {
-    // export the Promise constructor.
-    defineProperties(globals, { Promise: PromiseShim });
-    // In Chrome 33 (and thereabouts) Promise is defined, but the
-    // implementation is buggy in a number of ways.  Let's check subclassing
-    // support to see if we have a buggy implementation.
-    var promiseSupportsSubclassing = supportsSubclassing(globals.Promise, function (S) {
-      return S.resolve(42).then(function () {}) instanceof S;
-    });
-    var promiseIgnoresNonFunctionThenCallbacks = !throwsError(function () { globals.Promise.reject(42).then(null, 5).then(null, noop); });
-    var promiseRequiresObjectContext = throwsError(function () { globals.Promise.call(3, noop); });
-    // Promise.resolve() was errata'ed late in the ES6 process.
-    // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1170742
-    //      https://code.google.com/p/v8/issues/detail?id=4161
-    // It serves as a proxy for a number of other bugs in early Promise
-    // implementations.
-    var promiseResolveBroken = (function (Promise) {
-      var p = Promise.resolve(5);
-      p.constructor = {};
-      var p2 = Promise.resolve(p);
-      return (p === p2); // This *should* be false!
-    }(globals.Promise));
-    if (!promiseSupportsSubclassing || !promiseIgnoresNonFunctionThenCallbacks ||
-        !promiseRequiresObjectContext || promiseResolveBroken) {
-      /*globals Promise: true */
-      Promise = PromiseShim;
-      /*globals Promise: false */
-      overrideNative(globals, 'Promise', PromiseShim);
-    }
-    addDefaultSpecies(Promise);
+  // export the Promise constructor.
+  defineProperties(globals, { Promise: PromiseShim });
+  // In Chrome 33 (and thereabouts) Promise is defined, but the
+  // implementation is buggy in a number of ways.  Let's check subclassing
+  // support to see if we have a buggy implementation.
+  var promiseSupportsSubclassing = supportsSubclassing(globals.Promise, function (S) {
+    return S.resolve(42).then(function () {}) instanceof S;
+  });
+  var promiseIgnoresNonFunctionThenCallbacks = !throwsError(function () { globals.Promise.reject(42).then(null, 5).then(null, noop); });
+  var promiseRequiresObjectContext = throwsError(function () { globals.Promise.call(3, noop); });
+  // Promise.resolve() was errata'ed late in the ES6 process.
+  // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1170742
+  //      https://code.google.com/p/v8/issues/detail?id=4161
+  // It serves as a proxy for a number of other bugs in early Promise
+  // implementations.
+  var promiseResolveBroken = (function (Promise) {
+    var p = Promise.resolve(5);
+    p.constructor = {};
+    var p2 = Promise.resolve(p);
+    return (p === p2); // This *should* be false!
+  }(globals.Promise));
+  if (!promiseSupportsSubclassing || !promiseIgnoresNonFunctionThenCallbacks ||
+      !promiseRequiresObjectContext || promiseResolveBroken) {
+    /*globals Promise: true */
+    Promise = PromiseShim;
+    /*globals Promise: false */
+    overrideNative(globals, 'Promise', PromiseShim);
   }
+  addDefaultSpecies(Promise);
 
   // Map and Set require a true ES5 environment
   // Their fast path also requires that the environment preserve
@@ -3189,14 +3215,6 @@
       return true;
     })) {
       overrideNative(globals.Reflect, 'defineProperty', ReflectShims.defineProperty);
-    }
-  }
-  if (globals.Reflect.construct) {
-    if (!valueOrFalseIfThrows(function () {
-      var F = function F() {};
-      return globals.Reflect.construct(function () {}, [], F) instanceof F;
-    })) {
-      overrideNative(globals.Reflect, 'construct', ReflectShims.construct);
     }
   }
 
