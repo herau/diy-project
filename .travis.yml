@@ -1,11 +1,16 @@
 language: java
 
-before_install:
-  - npm install
-
 jdk:
   - oraclejdk8
 
+env:
+  - NODE_VERSION=0.12
+
+before_install:
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
+  - npm install
+  
 branches:
   only:
   - master

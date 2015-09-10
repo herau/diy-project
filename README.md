@@ -1,12 +1,15 @@
 # DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project)
 
+## Installation (Prequisite)
+
+* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Git](https://git-scm.com/)
+* [Maven](http://maven.apache.org/install.html)
+* [NodeJs](https://nodejs.org/en/)
+
 ## Quick start
 
 To start, follow those steps:
-
-* Clone the repository.
-* Fetch & Build the frontend ressources.
-* Run the Project with Maven.
 
 ```bash
 $ git clone https://github.com/herau/diy-project.git
@@ -18,7 +21,7 @@ $ npm start
 
 Powered by [Spring Boot](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/) and [Angular 2](https://angular.io/)
 
-Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com), [Bower](http://bower.io/) and [TSD](https://github.com/DefinitelyTyped/tsd)
+Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com) and [TSD](https://github.com/DefinitelyTyped/tsd)
 
 Containerized to [Docker](https://www.docker.com/) Image, thanks to the [Spotify Maven plugin](https://github.com/spotify/docker-maven-plugin)
 
