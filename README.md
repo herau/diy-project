@@ -1,17 +1,15 @@
 # DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project)
 
-## Install
+## Installation (Prequisite)
 
+* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Git](https://git-scm.com/)
 * [Maven](http://maven.apache.org/install.html)
+* [NodeJs](https://nodejs.org/en/)
 
 ## Quick start
 
 To start, follow those steps:
-
-* Clone the repository.
-* Fetch & Build the frontend ressources.
-* Run the Project with Maven.
 
 ```bash
 $ git clone https://github.com/herau/diy-project.git
