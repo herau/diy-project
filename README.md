@@ -18,7 +18,7 @@ $ npm start
 
 Powered by [Spring Boot](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/) and [Angular 2](https://angular.io/)
 
-Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com), [Bower](http://bower.io/) and [TSD](https://github.com/DefinitelyTyped/tsd)
+Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com) and [TSD](https://github.com/DefinitelyTyped/tsd)
 
 Containerized to [Docker](https://www.docker.com/) Image, thanks to the [Spotify Maven plugin](https://github.com/spotify/docker-maven-plugin)
 
