@@ -1,5 +1,10 @@
 # DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project)
 
+## Install
+
+* [Git](https://git-scm.com/)
+* [Maven](http://maven.apache.org/install.html)
+
 ## Quick start
 
 To start, follow those steps:
