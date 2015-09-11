@@ -44,7 +44,7 @@ logging:
 
 security:
   basic:
-    enabled: true
+    enabled: false
 
 search:
   index:
