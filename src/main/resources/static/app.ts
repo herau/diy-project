@@ -20,5 +20,5 @@ export class App {
   constructor() {
     this.name = "DIY";
   }
-  
+
 }
