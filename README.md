@@ -1,11 +1,12 @@
 # DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project)
 
-## Installation (Prequisite)
+## Prerequisites
 
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Git](https://git-scm.com/)
 * [Maven](http://maven.apache.org/install.html)
-* [NodeJs](https://nodejs.org/en/)
+* [NodeJs](https://nodejs.org/en/) (v0.12.0+)
+* [TSD](http://definitelytyped.org/tsd/) (v0.6.4+)
 
 ## Quick start
 

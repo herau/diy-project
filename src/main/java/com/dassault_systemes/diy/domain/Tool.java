@@ -16,15 +16,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "tools")
@@ -78,14 +75,6 @@ public class Tool extends AbstractAuditableEntity implements Serializable {
 
     @Column(name = "documentation_url")
     private String documentationUrl;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column
-    private Localization localization;
 
     @ManyToMany
     @JoinTable(
