@@ -1,6 +1,9 @@
 spring:
   profiles:
     active: development
+  mail:
+    properties:
+      mail.smtp.from: bricolage@ce-ds-sections.fr
   data:
     rest:
       base-path: /api
@@ -26,6 +29,12 @@ spring:
 security:
   enable-csrf: false
 
+# Application configuration
+app:
+  email:
+    registration:
+      tokenExpiryTime: 3600
+
 ---
 
 spring:
@@ -35,6 +44,8 @@ spring:
       indent_output: true
   datasource:
     data: classpath:/sql/import-*.sql
+  mail:
+    host: smtp.paris.exalead.com
 
 logging:
   level:

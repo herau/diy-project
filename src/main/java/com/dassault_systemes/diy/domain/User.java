@@ -92,6 +92,9 @@ public class User extends AbstractAuditableEntity implements Serializable {
     @JoinColumn(name = "account_id", unique = true)
     private Account account;
 
+    @OneToOne(mappedBy = "user")
+    private VerificationToken token;
+
     protected User() {
         // no-args constructor required by JPA spec and Jackson
     }
@@ -164,6 +167,10 @@ public class User extends AbstractAuditableEntity implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public void addVerificationToken(final VerificationToken token) {
+        this.token = token;
     }
 
     @Override
