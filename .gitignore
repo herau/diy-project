@@ -35,10 +35,6 @@ node_modules
 # TSD Dependency directory
 tsd_typings
 
-# Bower Dependency directory
-src/main/resources/static/bower_components
-bower_components
-
 # Maven Build
 target
 

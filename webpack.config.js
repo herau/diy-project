@@ -71,14 +71,13 @@ module.exports = {
       'angular2/debug',
       'angular2/di'
     ],
+    'mdl': [
+      'node_modules/material-design-lite/material.min.js',
+      'node_modules/material-design-lite/material.min.css'
+    ],
     'app': [
       // App
-
-      /*
-       * include any 3rd party js lib here
-       */
-
-      './src/main/resources/static/bootstrap'
+      'src/main/resources/static/bootstrap'
     ]
   },
 
@@ -101,10 +100,6 @@ module.exports = {
     root: __dirname,
     extensions: ['','.ts','.js','.json'],
     alias: {
-      // should be angular2/http in next release
-      // 'angular2/http': 'node_modules/ngHttp/http.js',
-
-
       // 'app': 'src/app',
       // 'common': 'src/common',
       // 'bindings': 'src/bindings',
@@ -120,7 +115,7 @@ module.exports = {
       { test: /\.json$/,  loader: 'json' },
 
       // Support for CSS as raw text
-      { test: /\.css$/,   loader: 'raw' },
+      { test: /\.css$/,   loader: 'style-loader!css-loader' },
 
       // support for .html as raw text
       { test: /\.html$/,  loader: 'raw' },
