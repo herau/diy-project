@@ -1,4 +1,6 @@
 spring:
+  main:
+    show-banner: false
   profiles:
     active: development
   mail:
@@ -32,6 +34,7 @@ security:
 # Application configuration
 app:
   email:
+    subject: Section Bricolage
     registration:
       tokenExpiryTime: 3600
 

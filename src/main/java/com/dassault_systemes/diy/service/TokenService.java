@@ -3,6 +3,8 @@ package com.dassault_systemes.diy.service;
 import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.domain.VerificationToken;
 
+import java.net.URISyntaxException;
+
 /**
  * @author herau
  *         Responsible for generating tokens, persisting them, communicating with the email services gateway and
@@ -10,11 +12,29 @@ import com.dassault_systemes.diy.domain.VerificationToken;
  */
 public interface TokenService {
 
-    VerificationToken sendEmailRegistrationToken(User user);
+    /**
+     * @param user
+     *
+     * @return
+     *
+     * @throws URISyntaxException
+     */
+    VerificationToken sendEmailRegistrationToken(User user) throws URISyntaxException;
 
     //    TODO implement it
 
     //    VerificationToken sendEmailLostPasswordToken(User user);
 
     //    VerificationToken sendEmailVerificationToken(User user);
+
+    /**
+     * verify and return the token, according to the type of the token
+     *
+     * @param token String token (Base64 encoded)
+     *
+     * @return verified token or null if the token isn't valid
+     *
+     * @throws com.dassault_systemes.diy.web.exceptions.EntityNotFoundException if the token hasn't been found
+     */
+    VerificationToken verifyToken(String token);
 }

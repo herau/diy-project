@@ -2,6 +2,7 @@ package com.dassault_systemes.diy.web.endpoints;
 
 import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.dto.UserDTO;
+import com.dassault_systemes.diy.service.TokenService;
 import com.dassault_systemes.diy.service.UserService;
 import com.dassault_systemes.diy.web.exceptions.EntityAlreadyExistException;
 
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -30,6 +32,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class UserController extends AbstractController {
 
     private final UserService service;
+
+    @Inject
+    TokenService tokenService;
 
     @Inject
     UserController(UserService userService) {
@@ -75,6 +80,8 @@ public class UserController extends AbstractController {
         service.delete(id);
     }
 
+    //TODO remove
+
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @RequestMapping(value = "/search", method = GET)
     List<User> search(@RequestParam("query") String searchQuery) {
@@ -82,6 +89,13 @@ public class UserController extends AbstractController {
             throw new IllegalArgumentException("search query must be contains at least two characters.");
         }
         return service.search(searchQuery);
+    }
+
+    @RequestMapping(value = "/import", method = POST)
+    void test() throws URISyntaxException {
+        User user = service.getByPersonalNumber("1234").get();
+
+        tokenService.sendEmailRegistrationToken(user);
     }
 
 }

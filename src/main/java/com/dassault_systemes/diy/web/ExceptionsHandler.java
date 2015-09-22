@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.net.URISyntaxException;
 import java.util.Collection;
 
 import static org.springframework.http.HttpStatus.*;
@@ -71,4 +72,9 @@ public final class ExceptionsHandler {
         return new ErrorResponse(BAD_REQUEST, message, e.getClass());
     }
 
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    @ExceptionHandler({URISyntaxException.class})
+    ErrorResponse handleInternalError(Exception e) {
+        return new ErrorResponse(INTERNAL_SERVER_ERROR, e.getMessage(), e.getClass());
+    }
 }
