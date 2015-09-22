@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tokens", indexes = {@Index(columnList = "token", name = "token_value_hidx")},
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"user", "type"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "type"})})
 public class VerificationToken {
 
     @Id

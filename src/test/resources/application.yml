@@ -7,3 +7,9 @@ spring:
 
 security:
   enable-csrf: false
+
+app:
+  email:
+    subject: Subject
+    registration:
+      tokenExpiryTime: 0
