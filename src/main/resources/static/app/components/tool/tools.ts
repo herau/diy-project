@@ -1,26 +1,7 @@
-/// <reference path="typings/_custom.d.ts" />
+/// <reference path="../../../typings/_custom.d.ts" />
 
 import {Component, View, NgFor} from 'angular2/angular2';
-import {Http, HTTP_BINDINGS} from 'angular2/http';
-import { Injectable } from 'angular2/angular2';
-
-@Injectable()
-class ToolService {
-  tools: Array<Object> = []
-  constructor(http: Http) {
-    let self = this;
-    http.get('api/tools')
-    // Get the RxJS Subject.
-    .toRx()
-    // Call map on the response observable to get the parsed people object.
-    .map(res => res.json())
-    // Subscribe to the observable to get the parsed people object and attach it to the component.
-    .subscribe(tools => {
-        self.tools.push.apply(self.tools, tools._embedded.tools);
-    });
-  }
-}
-
+import {ToolService} from '../../services/tool';
 
 @Component({
   selector: 'tool-list',
@@ -49,10 +30,13 @@ class ToolService {
 })
 
 export class Tools {
-  tools: Array<Object> = [];
 
-  constructor(ts: ToolService) {
-    this.tools = ts.tools;
-  }
+    tools: Array<Object> = [];
+
+    constructor(ts: ToolService) {
+        ts.getAll().then(tools => {
+            this.tools.push.apply(this.tools, tools);
+        })
+    }
 
 }

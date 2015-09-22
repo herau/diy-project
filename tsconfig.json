@@ -16,7 +16,7 @@
   "files": [
     "node_modules/typescript/bin/lib.dom.d.ts",
     "tsd_typings/_custom.d.ts",
-    "src/main/ressources/static/app.ts",
-    "src/main/ressources/static/bootstrap.ts"
+    "src/main/ressources/static/app/components/app.ts",
+    "src/main/ressources/static/app/bootstrap.ts"
   ]
 }

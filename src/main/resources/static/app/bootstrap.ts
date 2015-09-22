@@ -16,7 +16,7 @@ import {HTTP_BINDINGS} from 'angular2/http';
  * App Component
  * our top level component that holds all of our components
  */
-import {App} from './app';
+import {App} from './components/app';
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
