@@ -3,35 +3,36 @@
   "description": "Do it yourself app",
   "version": "0.0.2",
   "license": "Apache-2.0",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/herau/diy-project.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/herau/diy-project.git"
   },
   "scripts": {
-      "build": "webpack --colors --display-error-details --display-cached",
-      "build-watch": "webpack --watch",
-      "build-server": "webpack-dev-server --inline --colors --display-error-details --display-cached --port 3000",
-      "webpack": "webpack",
-      "clean": "rimraf node_modules tsd_typings",
-      "clean-install": "npm run clean && npm install",
-      "clean-start": "npm run clean && npm start",
-      "webdriver-update": "webdriver-manager update",
-      "webdriver-start": "webdriver-manager start",
-      "preprotractor": "npm run webdriver-update",
-      "protractor": "protractor",
-      "e2e": "npm run protractor",
-      "test": "karma start src/test/js/karma.conf.js",
-      "remove-tsd-loader-typings": "rimraf node_modules/typescript-simple-loader/typescript-simple-loader.d.ts",
-      "tsd-update": "npm run remove-tsd-loader-typings && tsd reinstall --overwrite",
-      "postinstall": "npm run tsd-update && tsd install && tsd link",
-      "prestart": "npm install && npm run build",
-      "start": "mvn spring-boot:run"
+    "build": "webpack --colors --display-error-details --display-cached",
+    "build-watch": "webpack --watch",
+    "build-server": "webpack-dev-server --inline --colors --display-error-details --display-cached --port 3000",
+    "webpack": "webpack",
+    "clean": "rimraf node_modules tsd_typings",
+    "clean-install": "npm run clean && npm install",
+    "clean-start": "npm run clean && npm start",
+    "webdriver-update": "webdriver-manager update",
+    "webdriver-start": "webdriver-manager start",
+    "preprotractor": "npm run webdriver-update",
+    "protractor": "protractor",
+    "e2e": "npm run protractor",
+    "test": "karma start src/test/js/karma.conf.js",
+    "remove-tsd-loader-typings": "rimraf node_modules/typescript-simple-loader/typescript-simple-loader.d.ts",
+    "tsd-update": "npm run remove-tsd-loader-typings && tsd reinstall --overwrite",
+    "postinstall": "npm run tsd-update && tsd install && tsd link",
+    "prestart": "npm install && npm run build",
+    "start": "mvn spring-boot:run"
   },
   "dependencies": {
-      "angular2": "2.0.0-alpha.37",
-      "reflect-metadata": "^0.1.1",
-      "rx": "^2.5.3",
-      "zone.js": "^0.5.4"
+    "angular2": "2.0.0-alpha.37",
+    "material-design-lite": "^1.0.4-2",
+    "reflect-metadata": "^0.1.1",
+    "rx": "^2.5.3",
+    "zone.js": "^0.5.4"
   },
   "devDependencies": {
     "css-loader": "^0.18.0",
