@@ -5,6 +5,7 @@ jdk:
 
 env:
   - NODE_VERSION=0.12
+  - TSD_GITHUB_TOKEN=c4f46c8baad7202104943aa4c369bfc26a520010
 
 before_install:
   - nvm install $NODE_VERSION
