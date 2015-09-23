@@ -12,7 +12,8 @@ import javax.inject.Inject;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@Controller(value = "/api/tokens")
+@Controller
+@RequestMapping(value = "/tokens")
 public class TokenController {
 
     private final TokenService tokenService;

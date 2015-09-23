@@ -80,8 +80,6 @@ public class UserController extends AbstractController {
         service.delete(id);
     }
 
-    //TODO remove
-
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @RequestMapping(value = "/search", method = GET)
     List<User> search(@RequestParam("query") String searchQuery) {
@@ -91,6 +89,7 @@ public class UserController extends AbstractController {
         return service.search(searchQuery);
     }
 
+    //TODO remove
     @RequestMapping(value = "/import", method = POST)
     void test() throws URISyntaxException {
         User user = service.getByPersonalNumber("1234").get();
