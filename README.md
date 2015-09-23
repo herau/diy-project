@@ -15,6 +15,8 @@ To start, follow those steps:
 ```bash
 $ git clone https://github.com/herau/diy-project.git
 $ cd diy-project
+$ npm install
+$ npm run build
 $ npm start
 ```
 

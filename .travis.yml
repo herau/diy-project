@@ -10,6 +10,7 @@ before_install:
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
   - npm install
+  - npm run build
 
 before_script:
   - pip install --user codecov
@@ -20,4 +21,3 @@ after_success:
 branches:
   only:
   - master
-

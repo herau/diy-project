@@ -24,7 +24,6 @@
     "remove-tsd-loader-typings": "rimraf node_modules/typescript-simple-loader/typescript-simple-loader.d.ts",
     "tsd-update": "npm run remove-tsd-loader-typings && tsd reinstall --overwrite",
     "postinstall": "npm run tsd-update && tsd install && tsd link",
-    "prestart": "npm install && npm run build",
     "start": "mvn spring-boot:run"
   },
   "dependencies": {
