@@ -2,11 +2,12 @@
 
 import {Component, View} from 'angular2/angular2';
 import {RouteConfig, RouterLink, RouterOutlet} from 'angular2/router';
+import {LoginForm} from './login';
 import {ToolList} from './tool/tools';
 import {UserList} from './user/users';
 
 @Component({
-    selector: 'app',
+    selector: 'app'
 })
 
 @View({
@@ -55,6 +56,7 @@ import {UserList} from './user/users';
     //{ path: '/',                  redirectTo: '/search' },
     //{ path: '/search',            as: 'search',     component: Search },
     //{ path: '/artist/:id',        as: 'artist',     component: Artist }
+    { path: '/login',               as: 'login',     component: LoginForm },
     { path: '/users',               as: 'users',     component: UserList },
     { path: '/tools',               as: 'tools',     component: ToolList }
 ])

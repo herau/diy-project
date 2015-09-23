@@ -35,6 +35,32 @@ export class UserService {
         });
     }
 
+    login(login: String, password: String) {
+        let self = this;
+
+        return new Promise((resolve, reject) => {
+            self.http.post(
+                '/login',
+                'personalNumber=' + login + '&password=' + password,
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+                }
+            )
+            // Get the RxJS Subject.
+            .toRx()
+            // Call map on the response observable to get the parsed people object.
+            .map(res => res.json())
+            // Subscribe to the observable to get the parsed people object and attach it to the component.
+            .subscribe(user => {
+                self.user = user;
+                resolve(user);
+            })
+        });
+    }
+
+    logout() {
+    }
+
     current() {
     }
 }
