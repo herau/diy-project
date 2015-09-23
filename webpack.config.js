@@ -77,7 +77,7 @@ module.exports = {
     ],
     'app': [
       // App
-      'src/main/resources/static/bootstrap'
+      'src/main/resources/static/app/bootstrap'
     ]
   },
 

@@ -1,14 +1,15 @@
-/// <reference path="typings/_custom.d.ts" />
+/// <reference path="../../typings/_custom.d.ts" />
 
 import {Component, View} from 'angular2/angular2';
-import {Tools} from './tools';
+import {RouteConfig, RouterLink, RouterOutlet} from 'angular2/router';
+import {Tools} from './tool/tools';
 
 @Component({
-  selector: 'app',
+    selector: 'app',
 })
 
 @View({
-  template: `
+    template: `
     <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header">
@@ -19,7 +20,7 @@ import {Tools} from './tools';
           <div class="mdl-layout-spacer"></div>
           <!-- Navigation. We hide it in small screens. -->
           <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" [router-link]="['/tools']">Tools</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
@@ -37,7 +38,7 @@ import {Tools} from './tools';
       </div>
       <main class="mdl-layout__content">
         <div class="page-content">
-        <tool-list></tool-list>
+        <router-outlet></router-outlet>
         <footer class="mdl-mini-footer">
           <div class="mdl-mini-footer__left-section">
             <div class="mdl-logo">{{ name }}</div>
@@ -50,14 +51,23 @@ import {Tools} from './tools';
         </div>
       </main>
     </div>
-  `,
-  directives: [Tools]
+    `,
+    directives: [RouterLink, RouterOutlet]
 })
 
+@RouteConfig([
+    //{ path: '/',                  redirectTo: '/search' },
+    //{ path: '/search',            as: 'search',     component: Search },
+    //{ path: '/artist/:id',        as: 'artist',     component: Artist }
+    { path: '/tools',               as: 'tools',     component: Tools }
+])
+
 export class App {
-  name: string;
-  constructor() {
-    this.name = "DIY";
-  }
+
+    name: string;
+
+    constructor() {
+        this.name = "DIY";
+    }
 
 }

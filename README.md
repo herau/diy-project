@@ -1,4 +1,4 @@
-# DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project)
+# DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project) [![codecov.io](http://codecov.io/github/herau/diy-project/coverage.svg?branch=master)](http://codecov.io/github/herau/diy-project?branch=master)
 
 ## Prerequisites
 
