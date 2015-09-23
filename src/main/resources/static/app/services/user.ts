@@ -12,12 +12,13 @@ export class UserService {
 
     users: Array<Object>;
 
+    user: Object;
+
     constructor(http: Http) {
         this.http = http;
     }
 
-    getAll() {
-
+    all() {
         let self = this;
 
         return new Promise((resolve, reject) => {
@@ -27,11 +28,13 @@ export class UserService {
             // Call map on the response observable to get the parsed people object.
             .map(res => res.json())
             // Subscribe to the observable to get the parsed people object and attach it to the component.
-            .subscribe(tools => {
-                //self.tools.push.apply(self.tools, tools._embedded.tools);
-                self.tools = tools._embedded.users;
+            .subscribe(users => {
+                self.users = users;
                 resolve(self.users);
             })
         });
+    }
+
+    current() {
     }
 }

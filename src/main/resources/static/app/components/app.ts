@@ -2,7 +2,8 @@
 
 import {Component, View} from 'angular2/angular2';
 import {RouteConfig, RouterLink, RouterOutlet} from 'angular2/router';
-import {Tools} from './tool/tools';
+import {ToolList} from './tool/tools';
+import {UserList} from './user/users';
 
 @Component({
     selector: 'app',
@@ -21,18 +22,13 @@ import {Tools} from './tool/tools';
           <!-- Navigation. We hide it in small screens. -->
           <nav class="mdl-navigation mdl-layout--large-screen-only">
             <a class="mdl-navigation__link" [router-link]="['/tools']">Tools</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" [router-link]="['/users']">Users</a>
           </nav>
         </div>
       </header>
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="">Home</a>
-          <a class="mdl-navigation__link" href="">Tools</a>
-          <a class="mdl-navigation__link" href="">Reservation</a>
           <a class="mdl-navigation__link" href="">Profil</a>
         </nav>
       </div>
@@ -59,7 +55,8 @@ import {Tools} from './tool/tools';
     //{ path: '/',                  redirectTo: '/search' },
     //{ path: '/search',            as: 'search',     component: Search },
     //{ path: '/artist/:id',        as: 'artist',     component: Artist }
-    { path: '/tools',               as: 'tools',     component: Tools }
+    { path: '/users',               as: 'users',     component: UserList },
+    { path: '/tools',               as: 'tools',     component: ToolList }
 ])
 
 export class App {

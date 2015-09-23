@@ -1,27 +1,28 @@
 /// <reference path="../../../typings/_custom.d.ts" />
 
 import {Component, View, NgFor, NgIf} from 'angular2/angular2';
-import {ToolService} from '../../services/tool';
+import {UserService} from '../../services/user';
 
 @Component({
-  selector: 'tool-list',
-  bindings: [ToolService]
+  selector: 'user-list',
+  bindings: [UserService]
 })
 
 @View({
   template: `
   <div *ng-if="fetching" class="mdl-spinner mdl-js-spinner is-active"></div>
   <div class="mdl-grid">
-    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" *ng-for="#tool of tools">
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" *ng-for="#user of users">
       <div class="mdl-card__title mdl-card--expand">
-        <h2 class="mdl-card__title-text">{{ tool.name }}</h2>
+        <h2 class="mdl-card__title-text">{{ user.firstname }} {{ user.lastname }}</h2>
+        <h3 class="mdl-card__subtitle-text">{{ user.personalNumber }}</h3>
       </div>
       <div class="mdl-card__supporting-text">
-        {{ tool.description }}
+        {{ user.email }}
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Details
+          View
         </a>
       </div>
     </div>
@@ -30,17 +31,17 @@ import {ToolService} from '../../services/tool';
   directives: [NgFor, NgIf]
 })
 
-export class ToolList {
+export class UserList {
 
-    tools: Array<Object> = [];
+    users: Array<Object> = [];
 
     fetching: Boolean = false;
 
-    constructor(ts: ToolService) {
+    constructor(ts: UserService) {
         this.fetching = true;
-        ts.all().then(tools => {
+        ts.all().then(users => {
             this.fetching = false;
-            this.tools.push.apply(this.tools, tools);
+            this.users.push.apply(this.users, users);
         })
     }
 

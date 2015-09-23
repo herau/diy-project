@@ -16,7 +16,7 @@ export class ToolService {
         this.http = http;
     }
 
-    getAll() {
+    all() {
 
         let self = this;
 
@@ -28,7 +28,6 @@ export class ToolService {
             .map(res => res.json())
             // Subscribe to the observable to get the parsed people object and attach it to the component.
             .subscribe(tools => {
-                //self.tools.push.apply(self.tools, tools._embedded.tools);
                 self.tools = tools._embedded.tools;
                 resolve(self.tools);
             })
