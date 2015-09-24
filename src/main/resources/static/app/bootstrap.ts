@@ -1,14 +1,14 @@
 /// <reference path="../typings/_custom.d.ts" />
 
 // Angular 2
-import {bootstrap} from 'angular2/angular2';
+import {bootstrap, bind} from 'angular2/angular2';
 
 /*
  * Angular Bindings
  */
 
 import {FORM_BINDINGS} from 'angular2/angular2';
-import {ROUTER_BINDINGS} from 'angular2/router';
+import {ROUTER_BINDINGS, LocationStrategy, PathLocationStrategy} from 'angular2/router';
 import {ELEMENT_PROBE_BINDINGS} from 'angular2/debug';
 import {HTTP_BINDINGS} from 'angular2/http';
 
@@ -27,5 +27,6 @@ bootstrap(App, [
     FORM_BINDINGS,
     ROUTER_BINDINGS,
     HTTP_BINDINGS,
-    ELEMENT_PROBE_BINDINGS
+    ELEMENT_PROBE_BINDINGS,
+    bind(LocationStrategy).toClass(PathLocationStrategy)
 ]);

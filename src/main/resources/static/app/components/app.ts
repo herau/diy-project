@@ -1,7 +1,7 @@
 /// <reference path="../../typings/_custom.d.ts" />
 
 import {Component, View} from 'angular2/angular2';
-import {RouteConfig, RouterLink, RouterOutlet} from 'angular2/router';
+import {Router, Location, RouteConfig, RouterLink, RouterOutlet} from 'angular2/router';
 import {LoginForm} from './login';
 import {ToolList} from './tool/tools';
 import {UserList} from './user/users';
@@ -13,41 +13,12 @@ import {UserList} from './user/users';
 @View({
     template: `
     <!-- Always shows a header, even in smaller screens. -->
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-          <!-- Title -->
-          <span class="mdl-layout-title">{{ name }}</span>
-          <!-- Add spacer, to align navigation to the right -->
-          <div class="mdl-layout-spacer"></div>
-          <!-- Navigation. We hide it in small screens. -->
-          <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <a class="mdl-navigation__link" [router-link]="['/tools']">Tools</a>
-            <a class="mdl-navigation__link" [router-link]="['/users']">Users</a>
-          </nav>
-        </div>
-      </header>
-      <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Menu</span>
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="">Profil</a>
-        </nav>
-      </div>
-      <main class="mdl-layout__content">
-        <div class="page-content">
-        <router-outlet></router-outlet>
-        <footer class="mdl-mini-footer">
-          <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo">{{ name }}</div>
-            <ul class="mdl-mini-footer__link-list">
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Privacy & Terms</a></li>
-            </ul>
-          </div>
-        </footer>
-        </div>
-      </main>
+    <div class="ui three item menu">
+        <a class="item" [class.active]="location.path() === '/tools'" [router-link]="['/tools']">Tools</a>
+        <a class="item" [class.active]="location.path() === '/users'" [router-link]="['/users']">Users</a>
+        <a class="item">Profile</a>
     </div>
+     <router-outlet></router-outlet>
     `,
     directives: [RouterLink, RouterOutlet]
 })
@@ -63,10 +34,14 @@ import {UserList} from './user/users';
 
 export class App {
 
-    name: string;
+    name: String;
+    router: Router;
+    location: Location;
 
-    constructor() {
+    constructor(router: Router, location: Location) {
         this.name = "DIY";
+        this.router = router;
+        this.location = location;
     }
 
 }

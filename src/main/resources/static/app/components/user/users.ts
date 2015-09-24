@@ -11,21 +11,29 @@ import {UserService} from '../../services/user';
 @View({
   template: `
   <div *ng-if="fetching" class="mdl-spinner mdl-js-spinner is-active"></div>
-  <div class="mdl-grid">
-    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" *ng-for="#user of users">
-      <div class="mdl-card__title mdl-card--expand">
-        <h2 class="mdl-card__title-text">{{ user.firstname }} {{ user.lastname }}</h2>
-        <h3 class="mdl-card__subtitle-text">{{ user.personalNumber }}</h3>
+  <div class="ui grid">
+      <div class="four wide column" *ng-for="#user of users">
+          <div class="ui card">
+              <div class="image">
+                  <img src="/images/avatar2/large/kristy.png">
+              </div>
+              <div class="content">
+                  <a class="header">{{ user.firstname }} {{user.lastname}}</a>
+                  <div class="meta">
+                      <span class="date">{{ user.personalNumber }}</span>
+                  </div>
+                  <div class="description">
+                    {{ user.email }}
+                  </div>
+              </div>
+              <div class="extra content">
+                  <a>
+                      <i class="user icon"></i>
+                      22 Tools
+                  </a>
+              </div>
+          </div>
       </div>
-      <div class="mdl-card__supporting-text">
-        {{ user.email }}
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          View
-        </a>
-      </div>
-    </div>
   </div>
   `,
   directives: [NgFor, NgIf]
