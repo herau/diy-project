@@ -1,6 +1,6 @@
 package com.dassault_systemes.diy.config;
 
-import com.dassault_systemes.diy.domain.Role;
+import com.dassault_systemes.diy.web.EntryPoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,18 +48,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers("/build/**").permitAll()
             .antMatchers("/lib/**").permitAll()
+            .antMatchers(EntryPoint.TOKENS).permitAll()
             .anyRequest().fullyAuthenticated()
-            .antMatchers("/account").hasRole(Role.USER.toString())
-            .antMatchers("/admin").hasRole(Role.ADMIN.toString())
             .and()
             .formLogin()
                 .loginPage("/login")
-                .usernameParameter("personalNumber")
                 .permitAll()
+                .usernameParameter("personalNumber")
                 .successHandler((request, response, authentication) -> logger
                 .info("Success login of {} with credentials : [{}]", authentication.getName(),
                       authentication.getAuthorities()))
-                .defaultSuccessUrl("/account")
+                .defaultSuccessUrl("/")
             .and()
             .logout().permitAll();
         // @formatter:on

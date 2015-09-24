@@ -3,8 +3,6 @@ package com.dassault_systemes.diy.service;
 import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.domain.VerificationToken;
 
-import java.net.URISyntaxException;
-
 /**
  * @author herau
  *         Responsible for generating tokens, persisting them, communicating with the email services gateway and
@@ -17,9 +15,8 @@ public interface TokenService {
      *
      * @return
      *
-     * @throws URISyntaxException
      */
-    VerificationToken sendEmailRegistrationToken(User user) throws URISyntaxException;
+    VerificationToken sendEmailRegistrationToken(User user);
 
     //    TODO implement it
 

@@ -57,11 +57,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    //FIXME the user should create by bash import ?
     public User create(UserDTO userDTO) {
         String personalNumber = userDTO.getPersonalNumber();
         Assert.notNull(personalNumber, "personalNumber should be not null");
 
-        //TODO how to retrieve information for the user ?
         String securedPassword = passwordService.generateRandom();
         User user = new User(personalNumber, "TODO", "TODO", passwordService.encode(securedPassword), "todo@3ds.com", Company.DS, State.INVALID);
 

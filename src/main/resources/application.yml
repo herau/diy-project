@@ -34,8 +34,8 @@ security:
 # Application configuration
 app:
   email:
-    subject: Section Bricolage
     registration:
+      subject: Activation de votre compte à la section bricolage
       tokenExpiryTime: 3600
 
 ---
@@ -49,6 +49,8 @@ spring:
     data: classpath:/sql/import-*.sql
   mail:
     host: smtp.paris.exalead.com
+  freemarker:
+    cache: false
 
 logging:
   level:

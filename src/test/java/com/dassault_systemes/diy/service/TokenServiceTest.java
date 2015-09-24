@@ -18,8 +18,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.net.URISyntaxException;
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -46,7 +44,7 @@ public class TokenServiceTest {
 
     @Before
     public void setUp() {
-        service = new TokenServiceImpl(this.appSettings, userRepository, tokenRepository, mailService);
+        service = new TokenServiceImpl(this.appSettings, userRepository, tokenRepository, mailService, null);
 
         // Mock settings
         AppSettings.Email email = mock(AppSettings.Email.class);
@@ -56,13 +54,13 @@ public class TokenServiceTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void tokenService_sendRegistrationToken_OutsideRequestContext_ko() throws URISyntaxException {
+    public void tokenService_sendRegistrationToken_OutsideRequestContext_ko()  {
         service.sendEmailRegistrationToken(new User());
     }
 
     @Test
     @Ignore
-    public void tokenService_sendRegistrationToken_ok() throws URISyntaxException {
+    public void tokenService_sendRegistrationToken_ok() {
         // Mock RequestContextHolder
         RequestContextHolder.setRequestAttributes(attrs);
         HttpServletRequest mockedRequest = mock(HttpServletRequest.class);

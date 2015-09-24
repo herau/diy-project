@@ -2,8 +2,9 @@ package com.dassault_systemes.diy.service;
 
 import com.dassault_systemes.diy.domain.User;
 
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -12,24 +13,22 @@ import javax.inject.Inject;
 @Service
 public class MailServiceImpl implements MailService {
 
-    private final MailSender mailSender;
-
-    private final SimpleMailMessage template;
+    private final JavaMailSender mailSender;
 
     @Inject
-    public MailServiceImpl(MailSender mailSender, SimpleMailMessage template) {
+    public MailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
-        this.template = template;
     }
 
     @Override
-    public void sendMail(User user, String content) {
-        SimpleMailMessage message = new SimpleMailMessage(template);
-        //TODO check that the sender name is correct according to configuraiton (spring.mail.properties)
-        // -> otherwise use JavaMailSender instead of mailSender and maybe MimeMessage instead of SimpleMailMessage
-        message.setTo(user.getEmail());
-        message.setText(content);
+    public void sendMail(User user, String subject, String content) {
+        MimeMessagePreparator preparator = mimeMessage -> {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            message.setTo(user.getEmail());
+            message.setSubject(subject);
+            message.setText(content, true);
+        };
 
-        mailSender.send(message);
+        mailSender.send(preparator);
     }
 }

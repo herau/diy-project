@@ -1,4 +1,4 @@
-package com.dassault_systemes.diy.web.endpoints;
+package com.dassault_systemes.diy.web.controllers;
 
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.stat.Statistics;

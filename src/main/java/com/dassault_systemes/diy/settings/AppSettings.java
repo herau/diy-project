@@ -31,16 +31,6 @@ public class AppSettings {
 
         private Registration registration;
 
-        private String subject;
-
-        public String getSubject() {
-            return subject;
-        }
-
-        public void setSubject(String subject) {
-            this.subject = subject;
-        }
-
         public Registration getRegistration() {
             return registration;
         }
@@ -52,6 +42,20 @@ public class AppSettings {
         public static class Registration {
 
             private int tokenExpiryTime;
+
+            private String subject;
+
+            /**
+             * Email Subject
+             * @return
+             */
+            public String getSubject() {
+                return subject;
+            }
+
+            public void setSubject(String subject) {
+                this.subject = subject;
+            }
 
             /**
              * @return Email registration Token Expiry Time in Minutes

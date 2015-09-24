@@ -1,4 +1,4 @@
-package com.dassault_systemes.diy.web.endpoints;
+package com.dassault_systemes.diy.web.controllers;
 
 import com.dassault_systemes.diy.domain.Tool;
 import com.dassault_systemes.diy.repositories.ToolRepository;

@@ -7,6 +7,6 @@ import com.dassault_systemes.diy.domain.User;
  */
 public interface MailService {
 
-    void sendMail(User user, String content);
+    void sendMail(User user, String subject, String content);
 
 }

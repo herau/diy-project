@@ -1,7 +1,10 @@
-package com.dassault_systemes.diy.web.endpoints;
+package com.dassault_systemes.diy.web.controllers;
 
+import com.dassault_systemes.diy.domain.Company;
+import com.dassault_systemes.diy.domain.State;
 import com.dassault_systemes.diy.domain.User;
 import com.dassault_systemes.diy.dto.UserDTO;
+import com.dassault_systemes.diy.repositories.UserRepository;
 import com.dassault_systemes.diy.service.TokenService;
 import com.dassault_systemes.diy.service.UserService;
 import com.dassault_systemes.diy.web.exceptions.EntityAlreadyExistException;
@@ -19,7 +22,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -33,12 +35,16 @@ public class UserController extends AbstractController {
 
     private final UserService service;
 
+    private final TokenService tokenService;
+
+    //TODO remove
     @Inject
-    TokenService tokenService;
+    UserRepository userRepository;
 
     @Inject
-    UserController(UserService userService) {
+    UserController(UserService userService, TokenService tokenService) {
         this.service = userService;
+        this.tokenService = tokenService;
     }
 
     @RequestMapping(method = POST)
@@ -89,12 +95,25 @@ public class UserController extends AbstractController {
         return service.search(searchQuery);
     }
 
-    //TODO remove
     @RequestMapping(value = "/import", method = POST)
-    void test() throws URISyntaxException {
-        User user = service.getByPersonalNumber("1234").get();
-
+    void test() {
+        User user = new User("test", "test", "test", "test", "n27@3ds.com", Company.DS, State.INVALID);
+        userRepository.save(user);
         tokenService.sendEmailRegistrationToken(user);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @RequestMapping(value = "/{id}/token/{type}", method = POST)
+        //TODO Test
+    void generateNewToken(@RequestParam(value = "type") String type, @RequestParam(value = "id") Integer userId) {
+        User user = service.get(userId);
+
+        switch (type) {
+            case "registration":
+                tokenService.sendEmailRegistrationToken(user);
+                break;
+            case "password":
+                break;
+        }
+    }
 }
