@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeRequests()
-            .antMatchers("/bower_components/**").permitAll()
+            .antMatchers("/build/**").permitAll()
+            .antMatchers("/lib/**").permitAll()
             .anyRequest().fullyAuthenticated()
             .antMatchers("/account").hasRole(Role.USER.toString())
             .antMatchers("/admin").hasRole(Role.ADMIN.toString())
