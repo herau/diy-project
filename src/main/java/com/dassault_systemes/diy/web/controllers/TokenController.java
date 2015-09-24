@@ -26,20 +26,11 @@ public class TokenController {
         VerificationToken verificationToken = tokenService.verifyToken(token);
 
         if (verificationToken == null) {
-            //TODO redirect to 404 page
-            throw new IllegalArgumentException("");
+            //TODO create a 404 page
+            return "404";
         }
 
-        //        switch (verificationToken.getType()) {
-//            case EMAIL_REGISTRATION:
-//                page = "/";
-//                break;
-//            default:
-//                // no default job
-//                break;
-//        }
-
-        return "app";
+        return "/";
     }
 
 }

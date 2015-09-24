@@ -95,6 +95,7 @@ public class UserController extends AbstractController {
         return service.search(searchQuery);
     }
 
+    //TODO Delete
     @RequestMapping(value = "/import", method = POST)
     void test() {
         User user = new User("test", "test", "test", "test", "n27@3ds.com", Company.DS, State.INVALID);
