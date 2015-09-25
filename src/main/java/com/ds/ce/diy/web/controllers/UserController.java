@@ -119,6 +119,7 @@ public class UserController extends AbstractController {
         tokenService.sendEmailRegistrationToken(user);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/upload", method = POST)
     void importUsers(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
