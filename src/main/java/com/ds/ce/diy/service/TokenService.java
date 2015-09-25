@@ -28,11 +28,11 @@ public interface TokenService {
     /**
      * verify and return the token, according to the type of the token
      *
-     * @param token String token (Base64 encoded)
+     * @param base64EncodedToken String token (Base64 encoded)
      *
      * @return verified token or null if the token isn't valid
      *
      * @throws EntityNotFoundException if the token hasn't been found
      */
-    VerificationToken verifyToken(String token);
+    VerificationToken verifyToken(String base64EncodedToken);
 }

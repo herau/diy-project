@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -80,19 +82,13 @@ public class UserController extends AbstractController {
         service.update(id, userDTO);
     }
 
+    @PermitAll
     @RequestMapping(value = "/token/{token}", method = PATCH)
-    void updateWithToken(@PathVariable String token, @Valid @RequestBody UserPasswordDTO userPasswordDTO,
-                         HttpServletResponse response) {
+    void updateWithToken(@PathVariable String token, @Valid @RequestBody UserPasswordDTO userPasswordDTO) {
         //TODO test
         VerificationToken verifiedToken = tokenService.verifyToken(token);
 
-        if (verifiedToken == null) {
-            response.setStatus(NOT_FOUND.value());
-            return;
-        }
-
         service.validUser(verifiedToken, userPasswordDTO.getPassword());
-
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -132,7 +128,7 @@ public class UserController extends AbstractController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/{id}/token/{type}", method = POST)
-        //TODO Test
+        //TODO Test. this api provide to the admin the possiblity to send a new token to a specific user
     void generateNewToken(@RequestParam(value = "type") String type, @RequestParam(value = "id") Integer userId) {
         User user = service.get(userId);
 

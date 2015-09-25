@@ -9,6 +9,8 @@ import com.ds.ce.diy.repositories.VerificationTokenRepository;
 import com.ds.ce.diy.settings.AppSettings;
 import com.ds.ce.diy.web.EntryPoint;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
+import com.ds.ce.diy.web.exceptions.TokenHasExpiredException;
+import com.ds.ce.diy.web.exceptions.UserAlreadyRegisteredException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -31,6 +33,8 @@ import java.net.URISyntaxException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.ds.ce.diy.domain.VerificationTokenType.EMAIL_REGISTRATION;
 
 @Service
 public class TokenServiceImpl implements TokenService {
@@ -61,7 +65,7 @@ public class TokenServiceImpl implements TokenService {
     public VerificationToken sendEmailRegistrationToken(User user) {
         //TODO create a service which remove tokens when expired
         AppSettings.Email.Registration registration = settings.getEmail().getRegistration();
-        VerificationToken token = new VerificationToken(user, VerificationTokenType.EMAIL_REGISTRATION,
+        VerificationToken token = new VerificationToken(user, EMAIL_REGISTRATION,
                                                         registration.getTokenExpiryTime());
         user.addVerificationToken(token);
         userRepository.save(user);
@@ -95,20 +99,19 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public VerificationToken verifyToken(String tokenString) {
-        VerificationToken token = tokenRepository.findByToken(new String(Base64.getDecoder().decode(tokenString)))
-                                                 .orElseThrow(() -> new EntityNotFoundException(
-                                                         "tokenString doesn't exist"));
+    public VerificationToken verifyToken(String base64EncodedToken) {
+        VerificationToken token =
+                tokenRepository.findByToken(new String(Base64.getDecoder().decode(base64EncodedToken)))
+                               .orElseThrow(() -> new EntityNotFoundException("token doesn't exist"));
 
-        switch (token.getType()) {
-            case EMAIL_REGISTRATION:
-                if (!token.isValid() || token.getUser().getState() == State.VALID) {
-                    return null;
-                }
-                break;
-            default:
-                // no default behavior
-                break;
+        if (token.isValid()) {
+            throw new TokenHasExpiredException();
+        }
+
+        VerificationTokenType type = token.getType();
+
+        if (EMAIL_REGISTRATION == type && State.VALID == token.getUser().getState()) {
+            throw new UserAlreadyRegisteredException();
         }
 
         return token;

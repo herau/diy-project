@@ -2,6 +2,8 @@ package com.ds.ce.diy.web;
 
 import com.ds.ce.diy.web.exceptions.EntityAlreadyExistException;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
+import com.ds.ce.diy.web.exceptions.TokenHasExpiredException;
+import com.ds.ce.diy.web.exceptions.UserAlreadyRegisteredException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.hibernate.search.exception.EmptyQueryException;
 import org.slf4j.Logger;
@@ -26,7 +28,6 @@ public final class ExceptionsHandler {
 
     @ResponseStatus(CONFLICT)
     @ExceptionHandler({EntityAlreadyExistException.class})
-    public
     @ResponseBody
     ErrorResponse handleConflict(Exception e) {
         logger.debug("conflict with %s", e.getMessage());
@@ -35,7 +36,6 @@ public final class ExceptionsHandler {
 
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler({EntityNotFoundException.class, javax.persistence.EntityNotFoundException.class})
-    public
     @ResponseBody
     ErrorResponse handleNotFound(Exception e) {
         logger.debug("not found with %s", e.getMessage());
@@ -44,7 +44,6 @@ public final class ExceptionsHandler {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class, EmptyQueryException.class})
-    public
     @ResponseBody
     ErrorResponse handleBadRequest(Exception e) {
         return new ErrorResponse(BAD_REQUEST, e.getMessage(), e.getClass());
@@ -52,7 +51,6 @@ public final class ExceptionsHandler {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler({HttpMessageNotReadableException.class})
-    public
     @ResponseBody
     ErrorResponse handleUnrecognizedFields(Exception e) {
         String message;
@@ -70,8 +68,17 @@ public final class ExceptionsHandler {
         return new ErrorResponse(BAD_REQUEST, message, e.getClass());
     }
 
-//    @ResponseStatus(INTERNAL_SERVER_ERROR)
-//    ErrorResponse handleInternalError(Exception e) {
-//        return new ErrorResponse(INTERNAL_SERVER_ERROR, e.getMessage(), e.getClass());
-//    }
+    @ResponseStatus(GONE)
+    @ExceptionHandler({TokenHasExpiredException.class})
+    @ResponseBody
+    ErrorResponse handleTokenExpired(Exception e) {
+        return new ErrorResponse(GONE, "Token has expired", e.getClass());
+    }
+
+    @ResponseStatus(CONFLICT)
+    @ExceptionHandler({UserAlreadyRegisteredException.class})
+    @ResponseBody
+    ErrorResponse handleUserAlreadyRegistered(Exception e) {
+        return new ErrorResponse(CONFLICT, "User already registered", e.getClass());
+    }
 }
