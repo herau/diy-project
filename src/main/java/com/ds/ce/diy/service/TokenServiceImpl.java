@@ -111,10 +111,6 @@ public class TokenServiceImpl implements TokenService {
                 break;
         }
 
-        token.setVerified();
-
-        tokenRepository.save(token);
-
         return token;
     }
 

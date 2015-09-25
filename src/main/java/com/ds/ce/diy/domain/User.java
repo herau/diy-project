@@ -142,6 +142,10 @@ public class User extends AbstractAuditableEntity implements Serializable {
         return state;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public Integer getId() {
         return id;
     }

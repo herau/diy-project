@@ -1,6 +1,7 @@
 package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.User;
+import com.ds.ce.diy.domain.VerificationToken;
 import com.ds.ce.diy.dto.UserDTO;
 
 import java.util.List;
@@ -28,4 +29,6 @@ public interface UserService {
      * @return users that match the search query
      */
     List<User> search(String searchQuery);
+
+    void validUser(VerificationToken verifiedToken, String password);
 }
