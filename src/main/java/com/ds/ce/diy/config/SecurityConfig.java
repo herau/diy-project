@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
                 .loginPage("/login")
+                .failureUrl("/login/error")
                 .permitAll()
                 .usernameParameter("personalNumber")
                 .successHandler((request, response, authentication) -> logger
@@ -59,7 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                       authentication.getAuthorities()))
                 .defaultSuccessUrl("/")
             .and()
-            .logout().permitAll();
+            .logout()
+                .logoutSuccessUrl("/login/logout")
+                .permitAll();
         // @formatter:on
 
         if (!security.isEnableCsrf()) {
