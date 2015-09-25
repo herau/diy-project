@@ -1,15 +1,20 @@
 // @AngularClass
 
-// Helper
+/*
+ * Helpers env(), getBanner(), root(), and rootDir()
+ * are defined at the bottom.
+ */
 var sliceArgs = Function.prototype.call.bind(Array.prototype.slice);
-var toString = Object.prototype.toString;
+var toString  = Function.prototype.call.bind(Object.prototype.toString);
+var NODE_ENV  = process.env.NODE_ENV || 'development';
+
+// Polyfill
 Object.assign = require('object-assign');
-var NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Node
-var webpack = require('webpack');
+var pkg = require('./package.json');
 var path = require('path');
-var pkg  = require('./package.json');
+var webpack = require('webpack');
 
 // Webpack Plugins
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
@@ -66,6 +71,8 @@ module.exports = {
       'reflect-metadata',
       // to ensure these modules are grouped together in one file
       'angular2/angular2',
+      'angular2/forms',
+      'angular2/core',
       'angular2/router',
       'angular2/http',
       'angular2/debug',
@@ -210,19 +217,18 @@ module.exports = {
 };
 
 
+// Helpers
+
 function env(configEnv) {
   if (configEnv === undefined) { return configEnv; }
-
-  if (toString.call(configEnv[NODE_ENV]) === '[object Object]') {
-    return Object.assign({}, configEnv.all || {}, configEnv[NODE_ENV])
+  switch (toString(configEnv[NODE_ENV])) {
+    case '[object Object]'    : return Object.assign({}, configEnv.all || {}, configEnv[NODE_ENV]);
+    case '[object Array]'     : return [].concat(configEnv.all || [], configEnv[NODE_ENV]);
+    case '[object Undefined]' : return configEnv.all;
+    default                   : return configEnv[NODE_ENV];
   }
-  else if (toString.call(configEnv[NODE_ENV]) === '[object Array]') {
-    return [].concat(configEnv.all || [], configEnv[NODE_ENV])
-  }
-  return configEnv[NODE_ENV] === undefined ? configEnv.all : configEnv[NODE_ENV];
 }
 
-// Helper functions
 function getBanner() {
   return 'DIY v'+ pkg.version +' by @f2i and @n27';
 }
