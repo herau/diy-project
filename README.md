@@ -1,4 +1,4 @@
-# DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project) [![codecov.io](http://codecov.io/github/herau/diy-project/coverage.svg?branch=master)](http://codecov.io/github/herau/diy-project?branch=master)
+# DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project) [![codecov.io](http://codecov.io/github/herau/diy-project/coverage.svg?branch=master)](http://codecov.io/github/herau/diy-project?branch=master) [![VersionEye](https://www.versioneye.com/user/projects/56081ebf5a262f001e000365/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56081ebf5a262f001e000365)
 
 ## Prerequisites
 
