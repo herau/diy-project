@@ -2,11 +2,18 @@
 
 ## Prerequisites
 
+### Global
+
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Git](https://git-scm.com/)
 * [Maven](http://maven.apache.org/install.html)
-* [NodeJs](https://nodejs.org/en/) (v0.12.0+)
-* [TSD](http://definitelytyped.org/tsd/) (v0.6.4+)
+* [NodeJs](https://nodejs.org/en/) (0.12.0+. For Windows < 4.0.0, see [websocket #13](https://github.com/websockets/utf-8-validate/issues/13))
+* [Python](http://definitelytyped.org/tsd/) (2.7+ and < 3.0, see [node-gyp #193](https://github.com/nodejs/node-gyp/issues/193) )
+
+### Windows specific (see [node-gyp #629](https://github.com/nodejs/node-gyp/issues/629))
+
+ * [Visual Studio](https://www.visualstudio.com/) (2013+ with C++ tools support. You may need to create a new C++ project to trigger such tools installation)
+ * [Windows 7 SDK](http://www.microsoft.com/en-us/download/details.aspx?id=8279)
 
 ## Quick start
 
@@ -19,6 +26,14 @@ $ npm install
 $ npm run build
 $ npm start
 ```
+
+> If your network is behind a **proxy**, you may need to config [npm](http://jjasonclark.com/how-to-setup-node-behind-web-proxy/) and [tsd](https://github.com/DefinitelyTyped/tsd#tsdrc) before run `npm install`:
+
+> ```bash
+> $ npm config set proxy http(s)://<user>:<password>@<host>:<port>
+> $ npm config set https-proxy http(s)://<user>:<password>@<host>:<port>
+> $ echo '{"proxy": "http(s)://<user>:<password>@<host>:<port>"}' > .tsdrc
+> ```
 
 ## Under the hood
 
