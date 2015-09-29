@@ -9,18 +9,21 @@ spring:
   data:
     rest:
       base-path: /api
+  datasource:
+    data: classpath:/sql/import-*.sql
   jpa:
     properties:
       hibernate:
-          default:
-            directory_provider: filesystem
-            indexBase: /tmp/diy/lucene/indexes/
-          users:
-            directory_provider: ram
-          tools:
-            directory_provider: ram
-          categories:
-            directory_provider: ram
+        naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        default:
+          directory_provider: filesystem
+          indexBase: /tmp/diy/lucene/indexes/
+        users:
+          directory_provider: ram
+        tools:
+          directory_provider: ram
+        categories:
+          directory_provider: ram
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
@@ -47,12 +50,12 @@ spring:
   jackson:
     serialization:
       indent_output: true
-  datasource:
-    data: classpath:/sql/import-*.sql
   mail:
     host: smtp.paris.exalead.com
   freemarker:
     cache: false
+  jpa:
+    database: H2
 
 logging:
   level:
@@ -76,10 +79,19 @@ spring:
       show-banner: false
     jpa:
       show-sql: false
+      hibernate:
+        ddl-auto: validate
       properties:
-        hibernate:
           search:
             generate_statistics: true
+    datasource:
+      url: jdbc:mysql://localhost:3306/diy_db
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password:
+    # TODO change smtp host
+    mail:
+      host: smtp.paris.exalead.com
     # only keep remote restart/debugging
     devtools:
       restart:
