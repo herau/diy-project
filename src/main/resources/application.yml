@@ -54,8 +54,6 @@ spring:
     host: smtp.paris.exalead.com
   freemarker:
     cache: false
-  jpa:
-    database: H2
 
 logging:
   level:
@@ -80,12 +78,13 @@ spring:
     jpa:
       show-sql: false
       hibernate:
+#        ddl-auto: create-drop
         ddl-auto: validate
       properties:
           search:
             generate_statistics: true
     datasource:
-      url: jdbc:mysql://localhost:3306/diy_db
+      url: jdbc:mysql://localhost/diy_db
       driver-class-name: com.mysql.jdbc.Driver
       username: root
       password:

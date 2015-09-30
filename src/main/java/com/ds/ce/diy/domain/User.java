@@ -79,11 +79,11 @@ public class User extends AbstractAuditableEntity implements Serializable {
     @Email
     private String personalEmail;
 
-    @Column(columnDefinition = "NUMBER(1) DEFAULT 0 NOT NULL")
+    @Column
     @Enumerated(EnumType.ORDINAL)
-    private State state;
+    private State state = State.INVALID;
 
-    @Column(columnDefinition = "NUMBER(1) DEFAULT 0 NOT NULL")
+    @Column
     @Enumerated(EnumType.ORDINAL)
     private Company company;
 
