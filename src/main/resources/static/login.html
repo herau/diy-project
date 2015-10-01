@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <form action="/login" method="post">
-            <label for="personalNumber" class="sr-only">Matricule</label>
-            <input type="text" id="personalNumber" name="personalNumber" class="form-control" placeholder="Matricule"
-                   pattern="[0-9]*" required autofocus/>
-            <label for="password" class="sr-only">Mot de passe</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe"
-                   required/>
-            <div class="btn-link">
-                <label>
-                    <a href="#">Mot de passe oublié</a>
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
-        </form>
-    </div>
-</body>
+<html lang="">
+    <head>
+        <title>DIY - Login</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Do It Yourself">
+
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <!-- base url -->
+        <base href="/">
+        <!-- styles -->
+        <style>
+        </style>
+        <!--
+            Angular 2
+            ES6 browser shim
+        -->
+        <script src="/lib/es6-shim.js"></script>
+    </head>
+    <body>
+          <login>
+            Loading...
+          </login>
+          <!-- Commmon files to be cached -->
+          <script src="/build/common.js"></script>
+          <!-- Angular 2 files -->
+          <script src="/build/angular2.js"></script>
+          <!-- Semantic UI files -->
+          <script src="/build/semantic.js"></script>
+          <!-- App script -->
+          <script src="/build/login.js"></script>
+    </body>
 </html>

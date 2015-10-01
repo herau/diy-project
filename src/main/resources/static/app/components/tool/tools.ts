@@ -10,21 +10,26 @@ import {ToolService} from '../../services/tool';
 
 @View({
   template: `
-  <div *ng-if="fetching" class="mdl-spinner mdl-js-spinner is-active"></div>
-  <div class="mdl-grid">
-    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" *ng-for="#tool of tools">
-      <div class="mdl-card__title mdl-card--expand">
-        <h2 class="mdl-card__title-text">{{ tool.name }}</h2>
+  <div class="ui grid">
+      <div class="four wide column" *ng-for="#tool of tools">
+          <div class="ui card">
+              <div class="image">
+                  <img src="/images/avatar2/large/kristy.png">
+              </div>
+              <div class="content">
+                  <a class="header">{{ tool.name }}</a>
+                  <div class="description">
+                    {{ tool.description }}
+                  </div>
+              </div>
+              <div class="extra content">
+                  <a>
+                      <i class="euro icon"></i>
+                      {{ tool.rentalPrice }}
+                  </a>
+              </div>
+          </div>
       </div>
-      <div class="mdl-card__supporting-text">
-        {{ tool.description }}
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Details
-        </a>
-      </div>
-    </div>
   </div>
   `,
   directives: [NgFor, NgIf]

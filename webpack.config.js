@@ -108,6 +108,10 @@ module.exports = {
     'app': [
       // App
       'app/bootstrap'
+    ],
+    'login': [
+      // App
+      'app/login'
     ]
   },
 

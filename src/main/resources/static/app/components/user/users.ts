@@ -10,7 +10,6 @@ import {UserService} from '../../services/user';
 
 @View({
   template: `
-  <div *ng-if="fetching" class="mdl-spinner mdl-js-spinner is-active"></div>
   <div class="ui grid">
       <div class="four wide column" *ng-for="#user of users">
           <div class="ui card">
