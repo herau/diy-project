@@ -22,6 +22,7 @@ var CommonsChunkPlugin   = webpack.optimize.CommonsChunkPlugin;
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var DedupePlugin   = webpack.optimize.DedupePlugin;
 var DefinePlugin   = webpack.DefinePlugin;
+var ProvidePlugin  = webpack.ProvidePlugin;
 var BannerPlugin   = webpack.BannerPlugin;
 
 
@@ -64,12 +65,11 @@ module.exports = {
 
   //
   entry: {
+    // to ensure these modules are grouped together in one file
     'angular2': [
-      // Angular 2 Deps
       'rx',
       'zone.js',
       'reflect-metadata',
-      // to ensure these modules are grouped together in one file
       'angular2/angular2',
       'angular2/forms',
       'angular2/core',
@@ -78,13 +78,22 @@ module.exports = {
       'angular2/debug',
       'angular2/di'
     ],
-    'mdl': [
-      'node_modules/material-design-lite/material.min.js',
-      'node_modules/material-design-lite/material.min.css'
+    'semantic': [
+      'semantic-ui-less/definitions/globals/site',
+      'semantic-ui-less/definitions/behaviors/api',
+      'semantic-ui-less/definitions/behaviors/colorize',
+      'semantic-ui-less/definitions/behaviors/form',
+      'semantic-ui-less/definitions/behaviors/state',
+      'semantic-ui-less/definitions/behaviors/visibility',
+      'semantic-ui-less/definitions/behaviors/visit',
+      'semantic-ui-less/definitions/modules/dropdown',
+      'semantic-ui-less/definitions/modules/modal',
+      'semantic-ui-less/definitions/modules/transition',
+      'semantic-ui-less/semantic.less',
     ],
     'app': [
       // App
-      'src/main/resources/static/app/bootstrap'
+      'app/bootstrap'
     ]
   },
 
@@ -100,13 +109,14 @@ module.exports = {
       'all': '[name].[hash].min.js.map'
     }),
     chunkFilename: '[id].chunk.js'
-    // publicPath: 'http://mycdn.com/'
   },
 
   resolve: {
     root: __dirname,
     extensions: ['','.ts','.js','.json'],
     alias: {
+      'app':    'src/main/resources/static/app',
+      'jquery': 'node_modules/semantic-ui-less/node_modules/jquery/dist/jquery'
       // 'app': 'src/app',
       // 'common': 'src/common',
       // 'bindings': 'src/bindings',
@@ -119,13 +129,22 @@ module.exports = {
   module: {
     loaders: [
       // Support for *.json files.
-      { test: /\.json$/,  loader: 'json' },
+      { test: /\.json$/, loader: 'json' },
 
-      // Support for CSS as raw text
-      { test: /\.css$/,   loader: 'style-loader!css-loader' },
+      // Support for CSS as document style.
+      { test: /\.css$/, loader: 'style!css' },
 
-      // support for .html as raw text
-      { test: /\.html$/,  loader: 'raw' },
+      // Support for Less as document style.
+      { test: /\.less$/, loader: 'style!css!less' },
+
+      // support for .html as raw text.
+      { test: /\.html$/, loader: 'raw' },
+
+      // support for fonts as raw.
+      { test: /\.(eot)|(ttf)|(woff)|(woff2)$/, loader: 'file?name=[name].[ext]' },
+
+      // support for images as raw.
+      { test: /\.(png)|(svg)$/, loader: 'file?name=[name].[ext]' },
 
       // Support for .ts files.
       {
@@ -183,6 +202,10 @@ module.exports = {
       new DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
         'VERSION': JSON.stringify(pkg.version)
+      }),
+      new ProvidePlugin({
+        "jQuery": "jquery",
+        "$":      "jquery",
       }),
       new OccurenceOrderPlugin(),
       new DedupePlugin(),
