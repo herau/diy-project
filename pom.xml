@@ -165,13 +165,36 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Copy Dockerfile -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/docker</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
                 <version>${docker-maven-plugin.version}</version>
 				<configuration>
 					<imageName>${project.artifactId}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
+                    <dockerDirectory>${project.build.directory}</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
@@ -190,7 +213,8 @@
 				<!--</execution>-->
 				<!--</executions>-->
 			</plugin>
-			<plugin>
+
+            <plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven.version}</version>
