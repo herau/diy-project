@@ -1,7 +1,7 @@
 // @AngularClass
 
 /*
- * Helpers env(), getBanner(), root(), and rootDir()
+ * Helpers env(), getBanner(), root(), and rootNode()
  * are defined at the bottom.
  */
 var sliceArgs = Function.prototype.call.bind(Array.prototype.slice);
@@ -86,9 +86,23 @@ module.exports = {
       'semantic-ui-less/definitions/behaviors/state',
       'semantic-ui-less/definitions/behaviors/visibility',
       'semantic-ui-less/definitions/behaviors/visit',
+      'semantic-ui-less/definitions/modules/accordion',
+      'semantic-ui-less/definitions/modules/checkbox',
+      'semantic-ui-less/definitions/modules/dimmer',
       'semantic-ui-less/definitions/modules/dropdown',
+      'semantic-ui-less/definitions/modules/embed',
       'semantic-ui-less/definitions/modules/modal',
+      'semantic-ui-less/definitions/modules/nag',
+      'semantic-ui-less/definitions/modules/popup',
+      'semantic-ui-less/definitions/modules/progress',
+      'semantic-ui-less/definitions/modules/rating',
+      'semantic-ui-less/definitions/modules/search',
+      'semantic-ui-less/definitions/modules/shape',
+      'semantic-ui-less/definitions/modules/sidebar',
+      'semantic-ui-less/definitions/modules/sticky',
+      'semantic-ui-less/definitions/modules/tab',
       'semantic-ui-less/definitions/modules/transition',
+      'semantic-ui-less/definitions/modules/video',
       'semantic-ui-less/semantic.less',
     ],
     'app': [
@@ -100,6 +114,7 @@ module.exports = {
   // Config for our build files
   output: {
     path: root('src/main/resources/static/build'),
+    publicPath: "/build/",
     filename: env({
       'development': '[name].js',
       'all': '[name].[hash].min.js'
@@ -116,7 +131,7 @@ module.exports = {
     extensions: ['','.ts','.js','.json'],
     alias: {
       'app':    'src/main/resources/static/app',
-      'jquery': 'node_modules/semantic-ui-less/node_modules/jquery/dist/jquery'
+      'jquery': 'semantic-ui-less/node_modules/jquery/dist/jquery'
       // 'app': 'src/app',
       // 'common': 'src/common',
       // 'bindings': 'src/bindings',
