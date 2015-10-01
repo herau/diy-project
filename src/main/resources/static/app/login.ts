@@ -1,4 +1,4 @@
-/// <reference path="../../typings/_custom.d.ts" />
+/// <reference path="../typings/_custom.d.ts" />
 
 import {Component, View, NgIf} from 'angular2/angular2';
 import {bootstrap} from 'angular2/angular2';
