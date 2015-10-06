@@ -84,10 +84,10 @@ spring:
           search:
             generate_statistics: true
     datasource:
-      url: jdbc:mysql://localhost/diy_db
+      url: jdbc:mysql://db:${DB_PORT_3306_TCP_PORT}/${DB_ENV_DB_NAME}
       driver-class-name: com.mysql.jdbc.Driver
-      username: root
-      password:
+      username: ${DB_ENV_DB_USER}
+      password: ${DB_ENV_DB_PASS}
     # TODO change smtp host
     mail:
       host: smtp.paris.exalead.com
@@ -97,9 +97,6 @@ spring:
         enabled: false
       livereload:
         enabled: false
-
-server:
-    port: 9001
 
 logging:
   level:
