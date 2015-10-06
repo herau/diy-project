@@ -1,7 +1,7 @@
 /// <reference path="../../typings/_custom.d.ts" />
 
 import {Component, View} from 'angular2/angular2';
-import {Router, Location, RouteConfig, RouterLink, RouterOutlet} from 'angular2/router';
+import {Router, Location, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {ToolList} from './tool/tools';
 import {UserList} from './user/users';
 
@@ -13,21 +13,21 @@ import {UserList} from './user/users';
     template: `
     <!-- Always shows a header, even in smaller screens. -->
     <div class="ui three item menu">
-        <a class="item" [class.active]="location.path() === '/tools'" [router-link]="['/tools']">Tools</a>
-        <a class="item" [class.active]="location.path() === '/users'" [router-link]="['/users']">Users</a>
+        <a class="item" [class.active]="location.path() === '/tools'" [router-link]="['/Tools']">Tools</a>
+        <a class="item" [class.active]="location.path() === '/users'" [router-link]="['/Users']">Users</a>
         <a class="item">Profile</a>
     </div>
      <router-outlet></router-outlet>
     `,
-    directives: [RouterLink, RouterOutlet]
+    directives: [ROUTER_DIRECTIVES]
 })
 
 @RouteConfig([
     //{ path: '/',                  redirectTo: '/search' },
-    //{ path: '/search',            as: 'search',     component: Search },
-    //{ path: '/artist/:id',        as: 'artist',     component: Artist }
-    { path: '/users',               as: 'users',     component: UserList },
-    { path: '/tools',               as: 'tools',     component: ToolList }
+    //{ path: '/search',            as: 'Search',     component: Search },
+    //{ path: '/artist/:id',        as: 'Artist',     component: Artist }
+    { path: '/users',               as: 'Users',      component: UserList },
+    { path: '/tools',               as: 'Tools',      component: ToolList }
 ])
 
 export class App {

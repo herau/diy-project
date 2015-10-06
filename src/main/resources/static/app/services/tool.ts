@@ -22,8 +22,6 @@ export class ToolService {
 
         return new Promise((resolve, reject) => {
             self.http.get(self.url)
-            // Get the RxJS Subject.
-            .toRx()
             // Call map on the response observable to get the parsed people object.
             .map(res => res.json())
             // Subscribe to the observable to get the parsed people object and attach it to the component.
