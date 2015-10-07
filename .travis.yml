@@ -17,14 +17,12 @@ before_install:
   - npm install
   - npm run build
 
-after_success:
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - mvn docker:build -DskipTests=true
-
 before_script:
   - pip install --user codecov
 
 after_success:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - mvn docker:build -DskipTests=true
   - codecov
 
 branches:
