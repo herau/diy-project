@@ -193,7 +193,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
                 <version>${docker-maven-plugin.version}</version>
 				<configuration>
-					<imageName>${project.artifactId}</imageName>
+					<imageName>herau/${project.artifactId}</imageName>
                     <dockerDirectory>${project.build.directory}</dockerDirectory>
 					<resources>
 						<resource>
