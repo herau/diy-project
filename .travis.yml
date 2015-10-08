@@ -26,6 +26,11 @@ after_success:
   - docker push herau/diy
   - codecov
 
+cache:
+  directories:
+    - $HOME/.m2/repository/
+    - node_modules
+
 branches:
   only:
   - master
