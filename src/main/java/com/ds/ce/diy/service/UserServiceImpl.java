@@ -1,7 +1,6 @@
 package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.Account;
-import com.ds.ce.diy.domain.Company;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.domain.VerificationToken;
@@ -16,8 +15,6 @@ import javax.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -64,8 +61,11 @@ public class UserServiceImpl implements UserService {
         String personalNumber = userDTO.getPersonalNumber();
         Assert.notNull(personalNumber, "personalNumber should be not null");
 
+        // generate a temporally password
         String securedPassword = passwordService.generateRandom();
-        User user = new User(personalNumber, "TODO", "TODO", passwordService.encode(securedPassword), "todo@3ds.com", Company.DS, State.INVALID);
+        User user = new User(personalNumber, userDTO.getFirstname(), userDTO.getLastname(),
+                             passwordService.encode(securedPassword), userDTO.getEmail(), userDTO.getCompany(),
+                             State.INVALID);
 
         Account userAccount = new Account();
         accountRepository.save(userAccount);
@@ -76,26 +76,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(Integer id, UserDTO userDTO) {
-        User user = repository.findOne(id);
-
-        if (user == null) {
-            throw new EntityNotFoundException("User not found [" + id + "]");
-        }
-
-        String password = userDTO.getPassword();
-        if (isNotEmpty(password)) {
-            if (!passwordService.match(userDTO.getOldPassword(), user.getPassword())) {
-                throw new IllegalArgumentException("the old password doesn't match with the existing password");
-            }
-            user.setPassword(passwordService.encode(password));
-        }
-
-        String email = userDTO.getPersonalEmail();
-        if (isNotEmpty(email)) {
-            user.setPersonalEmail(email);
-        }
-
-        repository.save(user);
+        //        User user = repository.findOne(id);
+        //
+        //        if (user == null) {
+        //            throw new EntityNotFoundException("User not found [" + id + "]");
+        //        }
+        //
+        //        String password = userDTO.getPassword();
+        //        if (isNotEmpty(password)) {
+        //            if (!passwordService.match(userDTO.getOldPassword(), user.getPassword())) {
+        //                throw new IllegalArgumentException("the old password doesn't match with the existing
+        // password");
+        //            }
+        //            user.setPassword(passwordService.encode(password));
+        //        }
+        //
+        //        String email = userDTO.getPersonalEmail();
+        //        if (isNotEmpty(email)) {
+        //            user.setPersonalEmail(email);
+        //        }
+        //        repository.save(user);
     }
 
     @Override

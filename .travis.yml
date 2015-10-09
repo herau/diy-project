@@ -11,6 +11,10 @@ services:
 env:
   - NODE_VERSION=0.12
 
+branches:
+  only:
+  - master
+
 before_install:
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
@@ -26,11 +30,9 @@ after_success:
   - docker push herau/diy
   - codecov
 
-cache:
-  directories:
-    - $HOME/.m2/repository/
-    - node_modules
+# not working for open source project
+#cache:
+#  directories:
+#    - $HOME/.m2/repository/
+#    - node_modules
 
-branches:
-  only:
-  - master

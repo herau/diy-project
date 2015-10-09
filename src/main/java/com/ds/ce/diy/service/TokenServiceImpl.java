@@ -74,7 +74,7 @@ public class TokenServiceImpl implements TokenService {
 
         URIBuilder uriBuilder = null;
         try {
-            uriBuilder = new URIBuilder(servletRequest.getRequestURL().toString());
+            uriBuilder = new URIBuilder(servletRequest != null ? servletRequest.getRequestURL().toString() : "");
         } catch (URISyntaxException e) {
             // no job here because it's always a correct URI
         }

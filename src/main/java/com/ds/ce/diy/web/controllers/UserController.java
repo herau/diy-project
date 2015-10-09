@@ -1,7 +1,5 @@
 package com.ds.ce.diy.web.controllers;
 
-import com.ds.ce.diy.domain.Company;
-import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.domain.VerificationToken;
 import com.ds.ce.diy.dto.UserDTO;
@@ -50,18 +48,21 @@ public class UserController extends AbstractController {
         this.tokenService = tokenService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = POST)
     @ResponseStatus(CREATED)
-    void create(@RequestBody UserDTO user, HttpServletResponse response) {
+    void create(@RequestBody @Valid UserDTO user, HttpServletResponse response) {
         String id = user.getPersonalNumber();
 
         if (service.getByPersonalNumber(id).isPresent()) {
             throw new EntityAlreadyExistException(id);
         }
 
-        User result = service.create(user);
+        User newUser = service.create(user);
 
-        response.setHeader(HttpHeaders.LOCATION, getLocationHeader(String.valueOf(result.getId())));
+        tokenService.sendEmailRegistrationToken(newUser);
+
+        response.setHeader(HttpHeaders.LOCATION, getLocationHeader(String.valueOf(newUser.getId())));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -76,11 +77,12 @@ public class UserController extends AbstractController {
         return service.get(id);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or principal.id = #id")
-    @RequestMapping(value = "{id}", method = PATCH)
-    void update(@PathVariable Integer id, @Valid @RequestBody UserDTO userDTO) {
-        service.update(id, userDTO);
-    }
+    //    @PreAuthorize("hasAuthority('ADMIN') or principal.id = #id")
+    //    @RequestMapping(value = "{id}", method = PATCH)
+    //    void update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+    //        //TODO provide update of only password
+    //        service.update(id, userDTO);
+    //    }
 
     @PermitAll
     @RequestMapping(value = "/token/{token}", method = PATCH)
@@ -105,14 +107,6 @@ public class UserController extends AbstractController {
             throw new IllegalArgumentException("search query must be contains at least two characters.");
         }
         return service.search(searchQuery);
-    }
-
-    //TODO Delete
-    @RequestMapping(value = "/test-import", method = POST)
-    void test() {
-        User user = new User("test", "test", "test", "test", "n27@3ds.com", Company.DS, State.INVALID);
-        userRepository.save(user);
-        tokenService.sendEmailRegistrationToken(user);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
