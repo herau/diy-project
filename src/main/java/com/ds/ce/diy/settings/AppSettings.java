@@ -16,7 +16,7 @@ public class AppSettings {
     public void init() {
         Assert.notNull(email);
         Assert.notNull(email.registration);
-        Assert.notNull(email.registration.getTokenExpiryTime());
+        Assert.notNull(email.registration.getTokenExpiration());
     }
 
     public Email getEmail() {
@@ -41,7 +41,7 @@ public class AppSettings {
 
         public static class Registration {
 
-            private int tokenExpiryTime;
+            private int tokenExpiration;
 
             private String subject;
 
@@ -60,12 +60,12 @@ public class AppSettings {
             /**
              * @return Email registration Token Expiry Time in Minutes
              */
-            public int getTokenExpiryTime() {
-                return tokenExpiryTime;
+            public int getTokenExpiration() {
+                return tokenExpiration;
             }
 
-            public void setTokenExpiryTime(int tokenExpiryTime) {
-                this.tokenExpiryTime = tokenExpiryTime;
+            public void setTokenExpiration(int tokenExpiration) {
+                this.tokenExpiration = tokenExpiration;
             }
         }
     }

@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,14 +43,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeRequests()
             .antMatchers("/build/**").permitAll()
             .antMatchers("/lib/**").permitAll()
+            .antMatchers("/profile/**").permitAll()
             .antMatchers(EntryPoint.TOKENS).permitAll()
             .anyRequest().fullyAuthenticated()
-            .and()
+        .and()
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -58,8 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .info("Success login of {} with credentials : [{}]", authentication.getName(),
                       authentication.getAuthorities()))
                 .defaultSuccessUrl("/")
-            .and()
-            .logout().permitAll();
+        .and()
+            .logout()
+                .permitAll()
+        .and()
+            .headers()
+                .frameOptions()
+                    .deny();
         // @formatter:on
 
         if (!security.isEnableCsrf()) {

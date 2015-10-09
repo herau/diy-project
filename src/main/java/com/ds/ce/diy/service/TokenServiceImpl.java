@@ -71,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
         //TODO create a service which remove tokens when expired
         AppSettings.Email.Registration registration = settings.getEmail().getRegistration();
         VerificationToken token = new VerificationToken(user, EMAIL_REGISTRATION,
-                                                        registration.getTokenExpiryTime());
+                                                        registration.getTokenExpiration());
         user.addVerificationToken(token);
         userRepository.save(user);
 

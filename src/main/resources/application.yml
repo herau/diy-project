@@ -41,7 +41,7 @@ app:
   email:
     registration:
       subject: Activation de votre compte à la section bricolage
-      tokenExpiryTime: 3600
+      tokenExpiration: 3600
 
 ---
 

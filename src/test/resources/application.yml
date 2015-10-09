@@ -12,4 +12,4 @@ app:
   email:
     subject: Subject
     registration:
-      tokenExpiryTime: 0
+      tokenExpiration: 0
