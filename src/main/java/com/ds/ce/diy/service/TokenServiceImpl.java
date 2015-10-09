@@ -19,6 +19,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +61,13 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public VerificationToken sendEmailRegistrationToken(User user) {
+        Assert.notNull(user);
+
+        if (!userRepository.exists(user.getId())) {
+            throw new EntityNotFoundException("unknown user [" + user + "]");
+        }
+
+
         //TODO create a service which remove tokens when expired
         AppSettings.Email.Registration registration = settings.getEmail().getRegistration();
         VerificationToken token = new VerificationToken(user, EMAIL_REGISTRATION,
@@ -74,6 +82,7 @@ public class TokenServiceImpl implements TokenService {
             uriBuilder = new URIBuilder(servletRequest != null ? servletRequest.getRequestURL().toString() : "");
         } catch (URISyntaxException e) {
             // no job here because it's always a correct URI
+            //TODO generate an exception handle and return code error 500
         }
 
         uriBuilder.setPath(EntryPoint.TOKENS + "/" + token.getToken());

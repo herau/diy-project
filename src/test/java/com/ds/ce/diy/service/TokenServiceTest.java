@@ -6,20 +6,25 @@ import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.repositories.VerificationTokenRepository;
 import com.ds.ce.diy.settings.AppSettings;
+import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TokenServiceTest {
@@ -41,38 +46,45 @@ public class TokenServiceTest {
     @Mock
     ServletRequestAttributes attrs;
 
+    @Mock
+    Configuration freeMarkerConfig;
+
     @Before
-    public void setUp() {
-        service = new TokenServiceImpl(this.appSettings, userRepository, tokenRepository, mailService, null);
+    public void setUp() throws IOException {
+        service =
+                new TokenServiceImpl(this.appSettings, userRepository, tokenRepository, mailService, freeMarkerConfig);
 
         // Mock settings
         AppSettings.Email email = mock(AppSettings.Email.class);
         appSettings.setEmail(email);
         when(appSettings.getEmail()).thenReturn(email);
         when(email.getRegistration()).thenReturn(new AppSettings.Email.Registration());
+        when(freeMarkerConfig.getTemplate(anyString())).thenReturn(mock(Template.class));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void tokenService_sendRegistrationToken_OutsideRequestContext_ko()  {
+    @Test(expected = EntityNotFoundException.class)
+    public void tokenService_sendRegistrationToken_noExistingUser_ko() {
         service.sendEmailRegistrationToken(new User());
     }
 
     @Test
-    @Ignore
     public void tokenService_sendRegistrationToken_ok() {
-        // Mock RequestContextHolder
         RequestContextHolder.setRequestAttributes(attrs);
-        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
-        when(attrs.getRequest()).thenReturn(mockedRequest);
-        when(mockedRequest.getRequestURL()).thenReturn(any(StringBuffer.class));
 
         User user = new User("toto", "foo", "bar", "pass", "test@test.com", Company.DS, State.INVALID);
 
-        //        TODO check that save method is called once
-        //        when(userRepository.save(any(User.class))).
+        // simulate existing user
+        when(userRepository.exists(anyInt())).thenReturn(true);
 
-        // Test
         service.sendEmailRegistrationToken(user);
+
+        verify(userRepository).save(user);
+        ArgumentCaptor<User> userMailCapture = ArgumentCaptor.forClass(User.class);
+        verify(mailService).sendMail(userMailCapture.capture(), anyString(), anyString());
+
+        assertEquals(user, userMailCapture.getValue());
+
+        assertNotNull(user.getToken());
     }
 
 }

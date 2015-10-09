@@ -1,6 +1,6 @@
 package com.ds.ce.diy.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -42,6 +42,7 @@ import java.io.Serializable;
                 @Parameter(name = "minGramSize", value = "2"), @Parameter(name = "maxGramSize", value = "15")}),
         filters = {@TokenFilterDef(factory = LowerCaseFilterFactory.class),
                    @TokenFilterDef(factory = StandardFilterFactory.class)})
+@JsonIgnoreProperties(value = {"token", "account", "role", "password"})
 public class User extends AbstractAuditableEntity implements Serializable {
 
     @Id
@@ -150,7 +151,6 @@ public class User extends AbstractAuditableEntity implements Serializable {
         return id;
     }
 
-    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -159,18 +159,20 @@ public class User extends AbstractAuditableEntity implements Serializable {
         this.password = password;
     }
 
-    @JsonIgnore
     public Role getRole() {
         return role;
     }
 
-    @JsonIgnore
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public VerificationToken getToken() {
+        return token;
     }
 
     public void addVerificationToken(final VerificationToken token) {

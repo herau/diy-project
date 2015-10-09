@@ -51,11 +51,11 @@ public class UserServiceTest {
 
         userService.create(userMock);
 
-        verify(passwordService, times(1)).generateRandom();
-        verify(passwordService, times(1)).encode(anyString());
-        verify(accountRepository, times(1)).save(any(Account.class));
+        verify(passwordService).generateRandom();
+        verify(passwordService).encode(anyString());
+        verify(accountRepository).save(any(Account.class));
         ArgumentCaptor<User> userToSave = ArgumentCaptor.forClass(User.class);
-        verify(repository, times(1)).save(userToSave.capture());
+        verify(repository).save(userToSave.capture());
 
         User user = userToSave.getValue();
 
