@@ -26,7 +26,6 @@ public class UserDTO {
     private String personalNumber;
 
     @Email
-    @NotNull
     private String personalEmail;
 
     public String getFirstname() {

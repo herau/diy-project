@@ -16,6 +16,8 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -66,6 +68,10 @@ public class UserServiceImpl implements UserService {
         User user = new User(personalNumber, userDTO.getFirstname(), userDTO.getLastname(),
                              passwordService.encode(securedPassword), userDTO.getEmail(), userDTO.getCompany(),
                              State.INVALID);
+
+        if (isNotEmpty(userDTO.getPersonalEmail())) {
+            user.setPersonalEmail(userDTO.getPersonalEmail());
+        }
 
         Account userAccount = new Account();
         accountRepository.save(userAccount);
