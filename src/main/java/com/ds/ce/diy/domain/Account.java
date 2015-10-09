@@ -47,4 +47,7 @@ public class Account implements Serializable {
         return balance;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
 }

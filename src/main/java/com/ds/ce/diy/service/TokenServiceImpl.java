@@ -8,6 +8,7 @@ import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.repositories.VerificationTokenRepository;
 import com.ds.ce.diy.settings.AppSettings;
 import com.ds.ce.diy.web.EntryPoint;
+import com.ds.ce.diy.web.RequestUtils;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
 import com.ds.ce.diy.web.exceptions.TokenHasExpiredException;
 import com.ds.ce.diy.web.exceptions.UserAlreadyRegisteredException;
@@ -18,10 +19,6 @@ import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +67,7 @@ public class TokenServiceImpl implements TokenService {
         user.addVerificationToken(token);
         userRepository.save(user);
 
-        HttpServletRequest servletRequest = getRequest();
+        HttpServletRequest servletRequest = RequestUtils.getRequest();
 
         URIBuilder uriBuilder = null;
         try {
@@ -115,12 +112,5 @@ public class TokenServiceImpl implements TokenService {
         }
 
         return token;
-    }
-
-    private HttpServletRequest getRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        Assert.state(requestAttributes != null, "Could not find current request via RequestContextHolder");
-        Assert.isInstanceOf(ServletRequestAttributes.class, requestAttributes);
-        return ((ServletRequestAttributes) requestAttributes).getRequest();
     }
 }

@@ -120,10 +120,14 @@ public class UserController extends AbstractController {
         // cf UserService
     }
 
+    /**
+     * Send a new token to a specific user
+     * @param type #com.ds.ce.diy.domain.VerificationTokenType
+     * @param userId
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/{id}/token/{type}", method = POST)
-        //TODO Test. this api provide to the admin the possiblity to send a new token to a specific user
-    void generateNewToken(@RequestParam(value = "type") String type, @RequestParam(value = "id") Integer userId) {
+    public void generateNewToken(@RequestParam(value = "type") String type, @RequestParam(value = "id") Integer userId) {
         User user = service.get(userId);
 
         switch (type) {
