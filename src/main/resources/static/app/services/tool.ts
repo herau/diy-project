@@ -6,9 +6,9 @@ import { Injectable } from 'angular2/angular2';
 @Injectable()
 export class ToolService {
 
-    url: String = 'api/tools';
+    url: string = 'api/tools';
 
-    http: Object;
+    http: Http;
 
     tools: Array<Object>;
 
@@ -16,7 +16,7 @@ export class ToolService {
         this.http = http;
     }
 
-    all() {
+    all(): Promise<Array<Object>> {
 
         let self = this;
 

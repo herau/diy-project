@@ -6,9 +6,9 @@ import { Injectable } from 'angular2/angular2';
 @Injectable()
 export class UserService {
 
-    url: String = 'api/users';
+    url: string = 'api/users';
 
-    http: Object;
+    http: Http;
 
     users: Array<Object>;
 
@@ -16,9 +16,10 @@ export class UserService {
 
     constructor(http: Http) {
         this.http = http;
+        this.user = window.user;
     }
 
-    all() {
+    all(): Promise<Array<Object>> {
         let self = this;
 
         return new Promise((resolve, reject) => {
@@ -33,6 +34,15 @@ export class UserService {
         });
     }
 
-    current() {
+    current(): Promise<Object> {
+        let self = this;
+
+        return new Promise((resolve, reject) => {
+            if (self.user){
+                resolve(self.user);
+            } else {
+                reject();
+            }
+        });
     }
 }

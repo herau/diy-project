@@ -4,6 +4,7 @@ import {Component, View} from 'angular2/angular2';
 import {Router, Location, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {ToolList} from './tool/tools';
 import {UserList} from './user/users';
+import {ProfileForm} from './user/profile';
 
 @Component({
     selector: 'app'
@@ -15,7 +16,7 @@ import {UserList} from './user/users';
     <div class="ui three item menu">
         <a class="item" [class.active]="location.path() === '/tools'" [router-link]="['/Tools']">Tools</a>
         <a class="item" [class.active]="location.path() === '/users'" [router-link]="['/Users']">Users</a>
-        <a class="item">Profile</a>
+        <a class="item" [class.active]="location.path() === '/profile'" [router-link]="['/Profile']">Profile</a>
     </div>
      <router-outlet></router-outlet>
     `,
@@ -27,7 +28,8 @@ import {UserList} from './user/users';
     //{ path: '/search',            as: 'Search',     component: Search },
     //{ path: '/artist/:id',        as: 'Artist',     component: Artist }
     { path: '/users',               as: 'Users',      component: UserList },
-    { path: '/tools',               as: 'Tools',      component: ToolList }
+    { path: '/tools',               as: 'Tools',      component: ToolList },
+    { path: '/profile',             as: 'Profile',    component: ProfileForm }
 ])
 
 export class App {
