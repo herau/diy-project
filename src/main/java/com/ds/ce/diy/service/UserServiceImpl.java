@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void validUser(VerificationToken verifiedToken, String password) {
+    public void changePasswordWithToken(VerificationToken verifiedToken, String password) {
         if (!verifiedToken.isValid()) {
             //TODO throw exception and handle it with a specific Http code error
             return;

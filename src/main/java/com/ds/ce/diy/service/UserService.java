@@ -30,5 +30,5 @@ public interface UserService {
      */
     List<User> search(String searchQuery);
 
-    void validUser(VerificationToken verifiedToken, String password);
+    void changePasswordWithToken(VerificationToken verifiedToken, String password);
 }

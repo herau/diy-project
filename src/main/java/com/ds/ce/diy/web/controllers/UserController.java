@@ -90,7 +90,7 @@ public class UserController extends AbstractController {
         //TODO test
         VerificationToken verifiedToken = tokenService.verifyToken(token);
 
-        service.validUser(verifiedToken, userPasswordDTO.getPassword());
+        service.changePasswordWithToken(verifiedToken, userPasswordDTO.getPassword());
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

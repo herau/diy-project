@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers("/build/**").permitAll()
             .antMatchers("/lib/**").permitAll()
-            .antMatchers("/profile/**").permitAll()
-            .antMatchers(EntryPoint.TOKENS).permitAll()
+            .antMatchers("/profile/**/password").permitAll()
+            .antMatchers(EntryPoint.TOKENS + "/**").permitAll()
             .anyRequest().fullyAuthenticated()
         .and()
             .formLogin()
@@ -67,11 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
         .and()
             .logout()
-                .permitAll()
-        .and()
-            .headers()
-                .frameOptions()
-                    .deny();
+                .permitAll();
         // @formatter:on
 
         if (!security.isEnableCsrf()) {

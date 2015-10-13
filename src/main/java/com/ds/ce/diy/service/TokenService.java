@@ -12,9 +12,10 @@ import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
 public interface TokenService {
 
     /**
+     *  Generate a token for the user and persist it. Then send an email with an embedded link that includes the token to the user
      * @param user
      *
-     * @return
+     * @return the generated token
      *
      */
     VerificationToken sendEmailRegistrationToken(User user);

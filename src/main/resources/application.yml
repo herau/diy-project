@@ -30,8 +30,6 @@ spring:
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
     serialization-inclusion: NON_NULL
-  freemarker:
-    enabled: false # disable view resolver
 
 security:
   enable-csrf: false

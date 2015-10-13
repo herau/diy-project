@@ -1,5 +1,7 @@
 package com.ds.ce.diy.web.controllers;
 
+import com.ds.ce.diy.domain.User;
+import com.ds.ce.diy.domain.VerificationToken;
 import com.ds.ce.diy.service.TokenService;
 import com.ds.ce.diy.web.EntryPoint;
 import org.springframework.stereotype.Controller;
@@ -21,9 +23,11 @@ public class TokenController {
 
     @RequestMapping(value = "{token}")
     public String checkToken(@PathVariable("token") String token) {
-        tokenService.verifyToken(token);
+        VerificationToken verifiedToken = tokenService.verifyToken(token);
 
-        return "/";
+        User user = verifiedToken.getUser();
+
+        return "redirect:/profile/" + user.getPersonalNumber() + "/password";
     }
 
 }
