@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -84,15 +83,6 @@ public class UserController extends AbstractController {
     //        service.update(id, userDTO);
     //    }
 
-    @PermitAll
-    @RequestMapping(value = "/token/{token}", method = PATCH)
-    void updateWithToken(@PathVariable String token, @Valid @RequestBody UserPasswordDTO userPasswordDTO) {
-        //TODO test
-        VerificationToken verifiedToken = tokenService.verifyToken(token);
-
-        service.changePasswordWithToken(verifiedToken, userPasswordDTO.getPassword());
-    }
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "{id}", method = DELETE)
     @ResponseStatus(NO_CONTENT)
@@ -137,5 +127,18 @@ public class UserController extends AbstractController {
             case "password":
                 break;
         }
+    }
+
+    @RequestMapping(value = "/token/{token}", method = PATCH)
+    void updateWithToken(@PathVariable(value = "token") String token, @Valid @RequestBody UserPasswordDTO userPasswordDTO) {
+        //TODO test
+        VerificationToken verifiedToken = tokenService.verifyToken(token);
+
+        service.changePasswordWithToken(verifiedToken, userPasswordDTO.getPassword());
+    }
+
+    @RequestMapping(value = "/token/{token}", method = GET)
+    public User getUserByToken(@PathVariable(value = "token") String token) {
+        return tokenService.verifyToken(token).getUser();
     }
 }
