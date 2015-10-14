@@ -9,6 +9,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/tools").setViewName("app");
+        registry.addViewController("/users").setViewName("app");
         registry.addViewController("/profile/**/password").setViewName("app");
         registry.addViewController("/login").setViewName("login.html");
     }
