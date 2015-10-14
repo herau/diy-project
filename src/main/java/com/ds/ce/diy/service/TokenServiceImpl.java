@@ -10,24 +10,22 @@ import com.ds.ce.diy.settings.AppSettings;
 import com.ds.ce.diy.web.EntryPoint;
 import com.ds.ce.diy.web.RequestUtils;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
-import com.ds.ce.diy.web.exceptions.TokenHasExpiredException;
+import com.ds.ce.diy.web.exceptions.InvalidTokenException;
 import com.ds.ce.diy.web.exceptions.UserAlreadyRegisteredException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.URISyntaxException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,13 +38,9 @@ public class TokenServiceImpl implements TokenService {
     private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     private final AppSettings settings;
-
     private final UserRepository userRepository;
-
     private final VerificationTokenRepository tokenRepository;
-
     private final MailService mailService;
-
     private final Configuration freeMarkerConfig;
 
     @Inject
@@ -60,45 +54,51 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public VerificationToken sendEmailRegistrationToken(User user) {
+    //TODO change template and mail subject according to the token type
+    public VerificationToken sendByMail(User user, VerificationToken token) {
+        Assert.notNull(token);
         Assert.notNull(user);
+
+        Map<String, String> dataModel = new HashMap<>();
+        dataModel.put("username", user.getFirstname());
+        dataModel.put("url", RequestUtils.getRequestPath(EntryPoint.TOKENS + "/" + token.getToken()));
+
+        Writer stringTemplate = new StringWriter();
+        try {
+            Template template = freeMarkerConfig.getTemplate("mail_registration.ftl");
+            template.process(dataModel, stringTemplate);
+        } catch (IOException | TemplateException e) {
+            logger.error("unable to load the template file: {}", e.getMessage());
+        }
+
+        mailService.sendMail(user, settings.getEmail().getRegistration().getSubject(), stringTemplate.toString());
+
+        return token;
+    }
+
+    @Override
+    //TODO create a service which remove tokens when expired
+    //TODO expiration setting only for registration
+    public VerificationToken createUserToken(@NotNull User user, VerificationTokenType type) {
+        Assert.notNull(user);
+        Assert.notNull(type);
 
         if (!userRepository.exists(user.getId())) {
             throw new EntityNotFoundException("unknown user [" + user + "]");
         }
 
-        //TODO create a service which remove tokens when expired
-        AppSettings.Email.Registration registration = settings.getEmail().getRegistration();
-        VerificationToken token = new VerificationToken(user, EMAIL_REGISTRATION,
-                                                        registration.getTokenExpiration());
+        AppSettings.Email settingsEmail = settings.getEmail();
+        int expiration;
+        switch (type) {
+            case EMAIL_REGISTRATION:
+            default:
+                expiration = settingsEmail.getRegistration().getTokenExpiration();
+                break;
+        }
+
+        VerificationToken token = new VerificationToken(user, type, expiration);
         user.addVerificationToken(token);
         userRepository.save(user);
-
-        HttpServletRequest servletRequest = RequestUtils.getRequest();
-
-        URIBuilder uriBuilder = null;
-        try {
-            uriBuilder = new URIBuilder(servletRequest != null ? servletRequest.getRequestURL().toString() : "");
-        } catch (URISyntaxException e) {
-            // no job here because it's always a correct URI
-            //TODO generate an exception handle and return code error 500
-        }
-
-        uriBuilder.setPath(EntryPoint.TOKENS + "/" + token.getToken());
-
-        Map<String, String> rootMap = new HashMap<>();
-        rootMap.put("username", user.getFirstname());
-        rootMap.put("url", uriBuilder.toString());
-
-        Writer stringTemplate = new StringWriter();
-        try {
-            Template template = freeMarkerConfig.getTemplate("mail_registration.ftl");
-            template.process(rootMap, stringTemplate);
-        } catch (IOException | TemplateException e) {
-            logger.error("unable to load the template file: {}", e.getMessage());
-        }
-
-        mailService.sendMail(user, registration.getSubject(), stringTemplate.toString());
 
         return token;
     }
@@ -109,8 +109,8 @@ public class TokenServiceImpl implements TokenService {
                 tokenRepository.findByToken(new String(Base64.getDecoder().decode(base64EncodedToken)))
                                .orElseThrow(() -> new EntityNotFoundException("token doesn't exist"));
 
-        if (token.isValid()) {
-            throw new TokenHasExpiredException();
+        if (!token.isValid()) {
+            throw new InvalidTokenException();
         }
 
         VerificationTokenType type = token.getType();

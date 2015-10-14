@@ -110,11 +110,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePasswordWithToken(VerificationToken verifiedToken, String password) {
-        if (!verifiedToken.isValid()) {
-            //TODO throw exception and handle it with a specific Http code error
-            return;
-        }
-
         User user = verifiedToken.getUser();
         user.setPassword(passwordService.encode(password));
         user.setState(State.VALID);

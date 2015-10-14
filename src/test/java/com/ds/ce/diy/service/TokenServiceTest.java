@@ -3,10 +3,12 @@ package com.ds.ce.diy.service;
 import com.ds.ce.diy.domain.Company;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
+import com.ds.ce.diy.domain.VerificationToken;
 import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.repositories.VerificationTokenRepository;
 import com.ds.ce.diy.settings.AppSettings;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
+import com.ds.ce.diy.web.exceptions.InvalidTokenException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.junit.Before;
@@ -19,7 +21,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
+import java.util.Optional;
 
+import static com.ds.ce.diy.domain.VerificationTokenType.EMAIL_REGISTRATION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyInt;
@@ -63,8 +67,8 @@ public class TokenServiceTest {
     }
 
     @Test(expected = EntityNotFoundException.class)
-    public void tokenService_sendRegistrationToken_noExistingUser_ko() {
-        service.sendEmailRegistrationToken(new User());
+    public void tokenService_createUserToken_noExistingUser_ko() {
+        service.createUserToken(new User(), EMAIL_REGISTRATION);
     }
 
     @Test
@@ -76,7 +80,8 @@ public class TokenServiceTest {
         // simulate existing user
         when(userRepository.exists(anyInt())).thenReturn(true);
 
-        service.sendEmailRegistrationToken(user);
+        VerificationToken token = service.createUserToken(user, EMAIL_REGISTRATION);
+        service.sendByMail(user, token);
 
         verify(userRepository).save(user);
         ArgumentCaptor<User> userMailCapture = ArgumentCaptor.forClass(User.class);
@@ -85,6 +90,43 @@ public class TokenServiceTest {
         assertEquals(user, userMailCapture.getValue());
 
         assertNotNull(user.getToken());
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void tokenService_verifyUnknownToken_ok() {
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.empty());
+
+        service.verifyToken("Foo");
+    }
+
+    @Test
+    public void tokenService_verifyValidToken_ok() {
+        User user = mock(User.class);
+
+        // simulate existing user
+        when(userRepository.exists(anyInt())).thenReturn(true);
+        // simulate finding token
+        VerificationToken token = new VerificationToken(user, EMAIL_REGISTRATION, 100);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+
+        VerificationToken verificationToken = service.verifyToken(token.getToken());
+
+        assertEquals(token, verificationToken);
+    }
+
+    @Test(expected = InvalidTokenException.class)
+    public void tokenService_verifyExpiredToken_ok() {
+        User user = mock(User.class);
+
+        // simulate existing user
+        when(userRepository.exists(anyInt())).thenReturn(true);
+        // simulate finding token
+        VerificationToken token = new VerificationToken(user, EMAIL_REGISTRATION, -1);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+
+        VerificationToken verificationToken = service.verifyToken(token.getToken());
+
+        assertEquals(token, verificationToken);
     }
 
 }

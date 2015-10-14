@@ -2,6 +2,7 @@ package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.domain.VerificationToken;
+import com.ds.ce.diy.domain.VerificationTokenType;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
 
 /**
@@ -12,13 +13,23 @@ import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
 public interface TokenService {
 
     /**
-     *  Generate a token for the user and persist it. Then send an email with an embedded link that includes the token to the user
+     * send an email with an embedded link that includes the token to the user
      * @param user
      *
      * @return the generated token
      *
      */
-    VerificationToken sendEmailRegistrationToken(User user);
+    VerificationToken sendByMail(User user, VerificationToken token);
+
+    /**
+     * Generate a token for the user and persist it.
+     *
+     * @param user
+     * @param type VerificationTokenType
+     *
+     * @return generated token
+     */
+    VerificationToken createUserToken(User user, VerificationTokenType type);
 
     //    TODO implement it
 

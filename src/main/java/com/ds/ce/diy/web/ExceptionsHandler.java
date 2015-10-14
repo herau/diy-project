@@ -2,7 +2,7 @@ package com.ds.ce.diy.web;
 
 import com.ds.ce.diy.web.exceptions.EntityAlreadyExistException;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
-import com.ds.ce.diy.web.exceptions.TokenHasExpiredException;
+import com.ds.ce.diy.web.exceptions.InvalidTokenException;
 import com.ds.ce.diy.web.exceptions.UserAlreadyRegisteredException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.hibernate.search.exception.EmptyQueryException;
@@ -69,10 +69,10 @@ public final class ExceptionsHandler {
     }
 
     @ResponseStatus(GONE)
-    @ExceptionHandler({TokenHasExpiredException.class})
+    @ExceptionHandler({InvalidTokenException.class})
     @ResponseBody
     ErrorResponse handleTokenExpired(Exception e) {
-        return new ErrorResponse(GONE, "Token has expired", e.getClass());
+        return new ErrorResponse(GONE, "Token isn't valid", e.getClass());
     }
 
     @ResponseStatus(CONFLICT)

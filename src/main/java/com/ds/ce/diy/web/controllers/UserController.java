@@ -2,6 +2,7 @@ package com.ds.ce.diy.web.controllers;
 
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.domain.VerificationToken;
+import com.ds.ce.diy.domain.VerificationTokenType;
 import com.ds.ce.diy.dto.UserDTO;
 import com.ds.ce.diy.dto.UserPasswordDTO;
 import com.ds.ce.diy.repositories.UserRepository;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 
 import java.util.List;
 
+import static com.ds.ce.diy.domain.VerificationTokenType.EMAIL_REGISTRATION;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -50,18 +52,19 @@ public class UserController extends AbstractController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = POST)
     @ResponseStatus(CREATED)
-    void create(@RequestBody @Valid UserDTO user, HttpServletResponse response) {
-        String id = user.getPersonalNumber();
+    void create(@RequestBody @Valid UserDTO userRequest, HttpServletResponse response) {
+        String id = userRequest.getPersonalNumber();
 
         if (service.getByPersonalNumber(id).isPresent()) {
             throw new EntityAlreadyExistException(id);
         }
 
-        User newUser = service.create(user);
+        User user = service.create(userRequest);
 
-        tokenService.sendEmailRegistrationToken(newUser);
+        VerificationToken userToken = tokenService.createUserToken(user, EMAIL_REGISTRATION);
+        tokenService.sendByMail(user, userToken);
 
-        response.setHeader(HttpHeaders.LOCATION, getLocationHeader(String.valueOf(newUser.getId())));
+        response.setHeader(HttpHeaders.LOCATION, getLocationHeader(String.valueOf(user.getId())));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -117,28 +120,22 @@ public class UserController extends AbstractController {
      */
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/{id}/token/{type}", method = POST)
-    public void generateNewToken(@RequestParam(value = "type") String type, @RequestParam(value = "id") Integer userId) {
+    public void generateNewToken(@RequestParam(value = "type") VerificationTokenType type, @RequestParam(value = "id") Integer userId) {
         User user = service.get(userId);
-
-        switch (type) {
-            case "registration":
-                tokenService.sendEmailRegistrationToken(user);
-                break;
-            case "password":
-                break;
-        }
+        VerificationToken token = tokenService.createUserToken(user, type);
+        tokenService.sendByMail(user, token);
     }
 
     @RequestMapping(value = "/token/{token}", method = PATCH)
     void updateWithToken(@PathVariable(value = "token") String token, @Valid @RequestBody UserPasswordDTO userPasswordDTO) {
         //TODO test
         VerificationToken verifiedToken = tokenService.verifyToken(token);
-
         service.changePasswordWithToken(verifiedToken, userPasswordDTO.getPassword());
     }
 
     @RequestMapping(value = "/token/{token}", method = GET)
     public User getUserByToken(@PathVariable(value = "token") String token) {
+        //TODO test
         return tokenService.verifyToken(token).getUser();
     }
 }
