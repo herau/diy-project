@@ -28,11 +28,10 @@
         <dependencies.latest.version>LATEST</dependencies.latest.version>
 
         <jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
-        <docker-maven-plugin.version>0.3.3</docker-maven-plugin.version>
+        <docker-maven-plugin.version>0.3.5</docker-maven-plugin.version>
     </properties>
 
     <dependencies>
-		<!-- Runtime dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -41,13 +40,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-        <!-- TODO see if cglib is really needed by spring security-->
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-            <version>LATEST</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -60,16 +52,15 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-freemarker</artifactId>
 	    </dependency>
-	    <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!-- JSR 330: Dependency Injection for Java -->
         <dependency>
@@ -83,6 +74,7 @@
             <artifactId>httpclient</artifactId>
             <version>${dependencies.latest.version}</version>
         </dependency>
+
         <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -203,28 +195,11 @@
 						</resource>
 					</resources>
 				</configuration>
-				<!-- TODO fail locally-->
-				<!--<executions>-->
-				<!--<execution>-->
-				<!--<phase>package</phase>-->
-				<!--<goals>-->
-				<!--<goal>build</goal>-->
-				<!--</goals>-->
-				<!--</execution>-->
-				<!--</executions>-->
 			</plugin>
-
             <plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven.version}</version>
-                <!--<executions>-->
-                <!--<execution>-->
-                <!--<goals>-->
-                <!--<goal>check</goal>-->
-                <!--</goals>-->
-                <!--</execution>-->
-                <!--</executions>-->
 			</plugin>
 		</plugins>
 	</build>

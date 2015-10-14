@@ -48,6 +48,7 @@ spring:
   jackson:
     serialization:
       indent_output: true
+  # TODO change smtp host
   mail:
     host: smtp.paris.exalead.com
   freemarker:

@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    //FIXME the user should create by bash import ?
     public User create(UserDTO userDTO) {
         String personalNumber = userDTO.getPersonalNumber();
         Assert.notNull(personalNumber, "personalNumber should be not null");
