@@ -113,10 +113,6 @@ public class UserServiceImpl implements UserService {
         User user = verifiedToken.getUser();
         user.setPassword(passwordService.encode(password));
         user.setState(State.VALID);
-
-        // invalid the token
-        verifiedToken.setVerified();
-
         repository.save(user);
     }
 

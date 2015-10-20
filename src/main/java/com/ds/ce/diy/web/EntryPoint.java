@@ -7,4 +7,6 @@ public interface EntryPoint {
 
     String TOKENS = "/tokens";
 
+    String PROFILE_PWD = "/profile/%s/password";
+
 }

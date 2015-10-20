@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 @Service
-public class PasswordServiceImpl implements PasswordService {
+public class BCryptPasswordService implements PasswordService {
 
     private final Random secureRandom = new SecureRandom();
 

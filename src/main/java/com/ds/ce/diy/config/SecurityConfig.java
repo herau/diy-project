@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers("/build/**").permitAll()
             .antMatchers("/lib/**").permitAll()
-            .antMatchers("/profile/**/password").permitAll()
+            .antMatchers(String.format(EntryPoint.PROFILE_PWD, "**")).permitAll()
             .antMatchers("/api/users/token/**").permitAll()
             .antMatchers(EntryPoint.TOKENS + "/**").permitAll()
             .anyRequest().fullyAuthenticated()

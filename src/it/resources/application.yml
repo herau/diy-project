@@ -1,7 +1,0 @@
-search:
-  index:
-    build-startup: false
-
-security:
-  basic:
-    enabled: false

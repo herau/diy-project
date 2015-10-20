@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -41,7 +41,7 @@ public class VerificationToken {
      * time to live for the Token. According to configuration ${app.email.registration.expiryTime}
      */
     @Column(nullable = false, updatable = false, name = "expiry_date")
-    private LocalTime expiryDate;
+    private LocalDateTime expiryDate;
 
     /**
      * a UUID that is used to identify the token. It is Base64 encoded before being sent
@@ -60,7 +60,7 @@ public class VerificationToken {
     public VerificationToken(User user, VerificationTokenType type, int emailRegistrationTokenExpiryTime) {
         this.user = user;
         this.type = type;
-        this.expiryDate = LocalTime.now().plusMinutes(emailRegistrationTokenExpiryTime);
+        this.expiryDate = LocalDateTime.now().plusMinutes(emailRegistrationTokenExpiryTime);
         this.token = UUID.randomUUID().toString();
     }
 
@@ -72,7 +72,7 @@ public class VerificationToken {
      * @see VerificationToken#setVerified()
      */
     public boolean isValid() {
-        return !verified && expiryDate.isAfter(LocalTime.now());
+        return !verified && expiryDate.isAfter(LocalDateTime.now());
     }
 
     public void setVerified() {

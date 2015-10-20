@@ -47,4 +47,11 @@ public interface TokenService {
      * @throws EntityNotFoundException if the token hasn't been found
      */
     VerificationToken verifyToken(String base64EncodedToken);
+
+    /**
+     * Invalidate the token (the token will be deleted after its expire date)
+     *
+     * @param verifiedToken
+     */
+    void invalidate(VerificationToken verifiedToken);
 }

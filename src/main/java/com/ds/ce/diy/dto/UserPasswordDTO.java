@@ -10,4 +10,8 @@ public class UserPasswordDTO {
     public String getPassword() {
         return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -27,7 +27,7 @@ public class TokenController {
 
         User user = verifiedToken.getUser();
 
-        return "redirect:/profile/" + user.getPersonalNumber() + "/password";
+        return "redirect:" + String.format(EntryPoint.PROFILE_PWD, user.getPersonalNumber());
     }
 
 }

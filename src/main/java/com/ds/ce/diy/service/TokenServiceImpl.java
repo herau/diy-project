@@ -121,4 +121,10 @@ public class TokenServiceImpl implements TokenService {
 
         return token;
     }
+
+    @Override
+    public void invalidate(VerificationToken verifiedToken) {
+        verifiedToken.setVerified();
+        tokenRepository.save(verifiedToken);
+    }
 }
