@@ -29,3 +29,8 @@ var testContext = require.context('./spec', true, /\.spec\.ts/);
 // loop and require those spec files here
 //appContext.keys().forEach(appContext);
 testContext.keys().forEach(testContext);
+
+// Select BrowserDomAdapter.
+// see https://github.com/AngularClass/angular2-webpack-starter/issues/124
+var domAdapter = require('angular2/src/core/dom/browser_adapter').BrowserDomAdapter;
+domAdapter.makeCurrent();

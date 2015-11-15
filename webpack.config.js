@@ -67,16 +67,13 @@ module.exports = {
   entry: {
     // to ensure these modules are grouped together in one file
     'angular2': [
-      'rx',
+      '@reactivex/rxjs',
       'zone.js',
       'reflect-metadata',
       'angular2/angular2',
-      //'angular2/forms',
       'angular2/core',
       'angular2/router',
       'angular2/http',
-      //'angular2/debug',
-      //'angular2/di'
     ],
     'semantic': [
       'semantic-ui-less/definitions/globals/site',
@@ -170,14 +167,12 @@ module.exports = {
       {
         test: /\.ts$/,
 
-        loader: 'typescript-simple',
+        loader: 'ts',
 
         query: {
           'ignoreWarnings': [
-            2300, // 2300 -> Duplicate identifier
+            //2300, // 2300 -> Duplicate identifier
             //2309, // 2309 -> An export assignment cannot be used in a module with other exported elements.
-            //2346, // 2346 -> Supplied parameters do not match any signature of call target.
-            //2432  // 2432 -> In an enum with multiple declarations, only one declaration can omit an initializer for its first enum element.
           ]
         },
 
@@ -185,8 +180,6 @@ module.exports = {
           /\.min\.js$/,
           /\.spec\.ts$/,
           /\.e2e\.ts$/,
-          /web_modules/,
-          /test/,
           /node_modules/
         ]
       }
@@ -214,10 +207,6 @@ module.exports = {
       }),
       new BannerPlugin(getBanner(), {entryOnly: true})
     ],
-    'development': [
-      /* Dev Plugin */
-      // new webpack.HotModuleReplacementPlugin(),
-    ],
     'all': [
       new DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
@@ -229,7 +218,6 @@ module.exports = {
       }),
       new OccurenceOrderPlugin(),
       new DedupePlugin(),
-
       new CommonsChunkPlugin({
         name: 'angular2',
         minChunks: Infinity,
@@ -246,7 +234,6 @@ module.exports = {
         })
       })
     ]
-
   }),
 
   /*

@@ -5,7 +5,7 @@ import {UserService} from '../../services/user';
 
 @Component({
   selector: 'user-list',
-  bindings: [UserService]
+  providers: [UserService]
 })
 
 @View({

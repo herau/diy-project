@@ -8,7 +8,7 @@
 * [Git](https://git-scm.com/)
 * [Maven](http://maven.apache.org/install.html)
 * [NodeJs](https://nodejs.org/en/) (0.12.0+. For Windows < 4.0.0, see [websocket #13](https://github.com/websockets/utf-8-validate/issues/13))
-* [Python](http://definitelytyped.org/tsd/) (2.7+ and < 3.0, see [node-gyp #193](https://github.com/nodejs/node-gyp/issues/193) )
+* [Python](https://www.python.org/) (2.7+ and < 3.0, see [node-gyp #193](https://github.com/nodejs/node-gyp/issues/193) )
 
 ### Windows specific (see [node-gyp #629](https://github.com/nodejs/node-gyp/issues/629))
 
@@ -27,19 +27,18 @@ $ npm run build
 $ npm start
 ```
 
-> If your network is behind a **proxy**, you may need to config [npm](http://jjasonclark.com/how-to-setup-node-behind-web-proxy/) and [tsd](https://github.com/DefinitelyTyped/tsd#tsdrc) before run `npm install`:
+> If your network is behind a **proxy**, you may need to config [npm](http://jjasonclark.com/how-to-setup-node-behind-web-proxy/) before run `npm install`:
 
 > ```bash
 > $ npm config set proxy http(s)://<user>:<password>@<host>:<port>
 > $ npm config set https-proxy http(s)://<user>:<password>@<host>:<port>
-> $ echo '{"proxy": "http(s)://<user>:<password>@<host>:<port>"}' > .tsdrc
 > ```
 
 ## Under the hood
 
 Powered by [Spring Boot](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/) and [Angular 2](https://angular.io/)
 
-Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com) and [TSD](https://github.com/DefinitelyTyped/tsd)
+Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com)
 
 Containerized to [Docker](https://www.docker.com/) Image, thanks to the [Spotify Maven plugin](https://github.com/spotify/docker-maven-plugin)
 
