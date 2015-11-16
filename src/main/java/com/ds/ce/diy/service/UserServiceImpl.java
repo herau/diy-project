@@ -3,7 +3,6 @@ package com.ds.ce.diy.service;
 import com.ds.ce.diy.domain.Account;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
 import com.ds.ce.diy.dto.UserDTO;
 import com.ds.ce.diy.repositories.AccountRepository;
 import com.ds.ce.diy.repositories.UserRepository;
@@ -110,8 +109,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePasswordWithToken(VerificationToken verifiedToken, String password) {
-        User user = verifiedToken.getUser();
+    public void changePassword(User user, String password) {
         user.setPassword(passwordService.encode(password));
         user.setState(State.VALID);
         repository.save(user);

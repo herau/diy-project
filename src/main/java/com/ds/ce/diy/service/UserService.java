@@ -1,7 +1,6 @@
 package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
 import com.ds.ce.diy.dto.UserDTO;
 
 import java.util.List;
@@ -30,5 +29,11 @@ public interface UserService {
      */
     List<User> search(String searchQuery);
 
-    void changePasswordWithToken(VerificationToken verifiedToken, String password);
+    /**
+     * change the password for the user.
+     * The state of the user will be set to VALID if it's not the case
+     * @param user
+     * @param password
+     */
+    void changePassword(User user, String password);
 }

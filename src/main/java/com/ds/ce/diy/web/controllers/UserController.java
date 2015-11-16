@@ -129,8 +129,10 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "/token/{token}", method = PATCH)
     void updateWithToken(@PathVariable(value = "token") String token, @Valid @RequestBody UserPasswordDTO userPasswordDTO) {
         VerificationToken verifiedToken = tokenService.verifyToken(token);
-        service.changePasswordWithToken(verifiedToken, userPasswordDTO.getPassword());
         tokenService.invalidate(verifiedToken);
+
+        User user = verifiedToken.getUser();
+        service.changePassword(user, userPasswordDTO.getPassword());
     }
 
     @RequestMapping(value = "/token/{token}", method = GET)
