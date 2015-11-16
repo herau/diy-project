@@ -5,7 +5,7 @@ import {ToolService} from '../../services/tool';
 
 @Component({
   selector: 'tool-list',
-  bindings: [ToolService]
+  providers: [ToolService]
 })
 
 @View({

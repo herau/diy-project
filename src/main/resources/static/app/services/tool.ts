@@ -1,6 +1,6 @@
 /// <reference path="../../typings/_custom.d.ts" />
 
-import {Http, HTTP_BINDINGS} from 'angular2/http';
+import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import { Injectable } from 'angular2/angular2';
 
 @Injectable()

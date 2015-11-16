@@ -5,7 +5,7 @@ import {UserService} from '../../services/user';
 
 @Component({
   selector: 'profile-form',
-  bindings: [UserService]
+  providers: [UserService]
 })
 
 @View({
