@@ -7,7 +7,6 @@ import com.ds.ce.diy.dto.UserDTO;
 import com.ds.ce.diy.repositories.AccountRepository;
 import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -26,8 +25,7 @@ public class UserServiceImpl implements UserService {
     private final AccountRepository accountRepository;
 
     @Inject
-    public UserServiceImpl(UserRepository userRepository,
-                           @Qualifier("BCryptPasswordService") PasswordService passwordService,
+    public UserServiceImpl(UserRepository userRepository, PasswordService passwordService,
                            AccountRepository accountRepository) {
         this.repository = userRepository;
         this.passwordService = passwordService;
