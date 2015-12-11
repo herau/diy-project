@@ -1,6 +1,6 @@
 spring:
   main:
-    show-banner: false
+    banner-mode: off
   profiles:
     active: development
   mail:
@@ -39,7 +39,7 @@ app:
   email:
     registration:
       subject: Activation de votre compte à la section bricolage
-      tokenExpiration: 3600
+      token-expiration: 3600
 
 ---
 
@@ -72,8 +72,6 @@ search:
 
 spring:
     profiles: production
-    main:
-      show-banner: false
     jpa:
       show-sql: false
       hibernate:

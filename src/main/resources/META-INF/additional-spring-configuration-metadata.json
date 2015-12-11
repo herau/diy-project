@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "app.email.registration.subject",
+      "type": "java.lang.String",
+      "description": "Subject of the registration email"
+    }
+  ]
+}
