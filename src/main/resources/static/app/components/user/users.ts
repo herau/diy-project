@@ -1,6 +1,5 @@
-/// <reference path="../../../typings/_custom.d.ts" />
-
-import {Component, View, NgFor, NgIf} from 'angular2/angular2';
+import {Component, View} from 'angular2/core';
+import {NgFor, NgIf} from 'angular2/common';
 import {UserService} from '../../services/user';
 
 @Component({
@@ -11,10 +10,10 @@ import {UserService} from '../../services/user';
 @View({
   template: `
   <div class="ui grid">
-      <div class="four wide column" *ng-for="#user of users">
+      <div class="four wide column" *ngFor="#user of users">
           <div class="ui card">
               <div class="image">
-                  <img src="/images/avatar2/large/kristy.png">
+                  <img src="/images/avatar2/large/kristy.png" />
               </div>
               <div class="content">
                   <a class="header">{{ user.firstname }} {{user.lastname}}</a>

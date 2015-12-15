@@ -32,8 +32,9 @@ module.exports = function(config) {
     webpack: {
 
       resolve: {
+        cache: false,
         root: __dirname,
-        extensions: ['','.ts','.js','.json'],
+        extensions: ['','.ts','.js','.json','.css','.html'],
         alias: {
           //'app': 'src/main/resources/static',
           //'common': 'src/common',
@@ -42,14 +43,22 @@ module.exports = function(config) {
       devtool: 'inline-source-map',
       module: {
         loaders: [
-          { test: /\.tsx?$/,   loader: 'ts-loader', exclude: [
-              /web_modules/,
-              /node_modules/
-            ]
+          {
+            test: /\.ts$/,
+            loader: 'ts-loader',
+            /*query: {
+              'ignoreDiagnostics': [
+                2403, // 2403 -> Subsequent variable declarations
+                2300, // 2300 Duplicate identifier
+                2374, // 2374 -> Duplicate number index signature
+                2375  // 2375 -> Duplicate string index signature
+              ]
+            },*/
+            exclude: [ /\.e2e\.ts$/, /node_modules/ ]
           },
-          { test: /\.json$/, loader: 'json' },
-          { test: /\.html$/, loader: 'raw' },
-          { test: /\.css$/,  loader: 'raw' }
+          { test: /\.json$/, loader: 'json-loader' },
+          { test: /\.html$/, loader: 'raw-loader' },
+          { test: /\.css$/,  loader: 'raw-loader' }
         ]
       },
       stats: { colors: true, reasons: true },

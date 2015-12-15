@@ -1,8 +1,6 @@
-/// <reference path="../../../main/resources/static/typings/_custom.d.ts" />
-
- /*
-  * TODO: ES5 for now until I make a webpack plugin for protractor
-  */
+/*
+ * TODO: ES5 for now until I make a webpack plugin for protractor
+ */
 describe('App', function() {
 
   beforeEach(function() {
@@ -12,7 +10,7 @@ describe('App', function() {
 
   it('should have a title', function() {
     var subject = browser.getTitle();
-    var result  = 'Angular2 Webpack Starter by @gdi2990 from @AngularClass';
+    var result  = 'DIY';
     expect(subject).toEqual(result);
   });
 
@@ -30,7 +28,7 @@ describe('App', function() {
 
   it('should have <footer>', function() {
     var subject = element(by.deepCss('app /deep/ footer')).getText();
-    var result  = 'WebPack Angular 2 Starter by @AngularClass';
+    var result  = 'footer';
     expect(subject).toEqual(result);
   });
 

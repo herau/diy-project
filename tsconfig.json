@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES5",
     "module": "commonjs",
-    "declaration": false,
-    "noImplicitAny": false,
     "removeComments": true,
-    "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
-    "listFiles": false,
-    "outDir": "dist"
+    "sourceMap": true
   },
   "files": [
+    "src/main/resources/static/app/vendor.ts",
     "src/main/resources/static/app/bootstrap.ts",
-    "src/main/resources/static/app/login.ts"
+    "src/main/resources/static/app/login.ts",
+    "src/test/js/spec/app.spec.ts",
+    "src/test/js/spec/injector.spec.ts",
+    "src/test/js/spec/sanity_check.spec.ts"
   ]
 }

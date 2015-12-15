@@ -1,6 +1,5 @@
-/// <reference path="../../../typings/_custom.d.ts" />
-
-import {Component, View, NgFor, NgIf} from 'angular2/angular2';
+import {Component, View,} from 'angular2/core';
+import {NgFor, NgIf} from 'angular2/common';
 import {UserService} from '../../services/user';
 
 @Component({
@@ -10,14 +9,14 @@ import {UserService} from '../../services/user';
 
 @View({
   template: `
-  <div class="ui warning message" *ng-if="!logged">
+  <div class="ui warning message" *ngIf="!logged">
     <div class="header">
       You must register before you can view your profile!
     </div>
       Visit our registration page, then try again.
   </div>
 
-  <form *ng-if="logged" class="ui form">
+  <form *ngIf="logged" class="ui form">
   <h4 class="ui dividing header">Personal</h4>
   <div class="field">
     <label>Name</label>

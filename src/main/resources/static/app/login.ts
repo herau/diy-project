@@ -1,7 +1,6 @@
-/// <reference path="../typings/_custom.d.ts" />
-
-import {Component, View, NgIf} from 'angular2/angular2';
-import {bootstrap} from 'angular2/angular2';
+import {bootstrap} from 'angular2/bootstrap';
+import {Component, View} from 'angular2/core';
+import {NgIf} from 'angular2/common';
 
 @Component({
   selector: 'login'

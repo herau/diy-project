@@ -1,79 +1,38 @@
-// @AngularClass
-
-/*
- * Helpers env(), getBanner(), root(), and rootNode()
+/**
+ * Helpers rootDir(), and NodeDir()
  * are defined at the bottom.
  */
 var sliceArgs = Function.prototype.call.bind(Array.prototype.slice);
 var toString  = Function.prototype.call.bind(Object.prototype.toString);
-var NODE_ENV  = process.env.NODE_ENV || 'development';
-
-// Polyfill
-Object.assign = require('object-assign');
-
-// Node
-var pkg = require('./package.json');
 var path = require('path');
 var webpack = require('webpack');
 
-// Webpack Plugins
-var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
+/**
+ * Webpack Plugins
+ */
 var CommonsChunkPlugin   = webpack.optimize.CommonsChunkPlugin;
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-var DedupePlugin   = webpack.optimize.DedupePlugin;
-var DefinePlugin   = webpack.DefinePlugin;
 var ProvidePlugin  = webpack.ProvidePlugin;
-var BannerPlugin   = webpack.BannerPlugin;
 
-
-/*
+/**
  * Config
  */
-
 module.exports = {
-  devtool: env({
-    'development': 'eval',
-    'all': 'source-map'
-  }),
-
-  debug: env({
-    'development': true,
-    'all': false
-  }),
-  cache: env({
-    // 'development': false
-    'all': true
-  }),
-  verbose: true,
-  displayErrorDetails: true,
+  // for faster builds use 'eval'
+  devtool: 'source-map',
   context: __dirname,
-  stats: env({
-    'all': {
-      colors: true,
-      reasons: true
-    }
-  }),
-
-  // our Development Server config
-  devServer: {
-    inline: true,
+  debug: true,
+  verbose: true,
+  stats: {
     colors: true,
-    historyApiFallback: true,
-    contentBase: 'src/main/resources/static',
-    publicPath: 'src/main/resources/static/build'
+    reasons: true
   },
 
   //
   entry: {
     // to ensure these modules are grouped together in one file
-    'angular2': [
-      '@reactivex/rxjs',
-      'zone.js',
-      'reflect-metadata',
-      'angular2/angular2',
-      'angular2/core',
-      'angular2/router',
-      'angular2/http',
+    'vendor': [
+      // angular, zone, reflect-metadata, rxjs, ...
+      'app/vendor'
     ],
     'semantic': [
       'semantic-ui-less/definitions/globals/site',
@@ -103,43 +62,30 @@ module.exports = {
       'semantic-ui-less/semantic.less',
     ],
     'app': [
-      // App
+      // App Page
       'app/bootstrap'
     ],
     'login': [
-      // App
+      // Login Page
       'app/login'
     ]
   },
 
-  // Config for our build files
   output: {
-    path: root('src/main/resources/static/build'),
+    path: rootDir('src/main/resources/static/build'),
     publicPath: "/build/",
-    filename: env({
-      'development': '[name].js',
-      'all': '[name].[hash].min.js'
-    }),
-    sourceMapFilename: env({
-      'development': '[name].js.map',
-      'all': '[name].[hash].min.js.map'
-    }),
+    filename: '[name].js',
+    sourceMapFilename: '[name].map',
     chunkFilename: '[id].chunk.js'
   },
 
   resolve: {
     root: __dirname,
-    extensions: ['','.ts','.js','.json'],
+    // ensure loader extensions match
+    extensions: ['','.ts','.js','.json', '.css', '.html'],
     alias: {
-      'rx': '@reactivex/rxjs',
       'app':    'src/main/resources/static/app',
       'jquery': 'semantic-ui-less/node_modules/jquery/dist/jquery'
-      // 'app': 'src/app',
-      // 'common': 'src/common',
-      // 'bindings': 'src/bindings',
-      // 'components': 'src/app/components'
-      // 'services': 'src/app/services',
-      // 'stores': 'src/app/stores'
     }
   },
 
@@ -177,97 +123,46 @@ module.exports = {
         },
 
         exclude: [
-          /\.min\.js$/,
           /\.spec\.ts$/,
           /\.e2e\.ts$/,
           /node_modules/
         ]
       }
-    ],
-    noParse: [
-      /rtts_assert\/src\/rtts_assert/,
-      /reflect-metadata/
     ]
   },
 
-  plugins: env({
-    'production': [
-      new UglifyJsPlugin({
-        compress: {
-          warnings: false,
-          drop_debugger: env({
-            'development': false,
-            'all': true
-          })
-        },
-        output: {
-          comments: false
-        },
-        beautify: false
-      }),
-      new BannerPlugin(getBanner(), {entryOnly: true})
-    ],
-    'all': [
-      new DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-        'VERSION': JSON.stringify(pkg.version)
-      }),
-      new ProvidePlugin({
-        "jQuery": "jquery",
-        "$":      "jquery",
-      }),
-      new OccurenceOrderPlugin(),
-      new DedupePlugin(),
-      new CommonsChunkPlugin({
-        name: 'angular2',
-        minChunks: Infinity,
-        filename: env({
-          'development': 'angular2.js',
-          'all': 'angular2.min.js'
-        })
-      }),
-      new CommonsChunkPlugin({
-        name: 'common',
-        filename: env({
-          'development': 'common.js',
-          'all': 'common.min.js'
-        })
-      })
-    ]
-  }),
+  plugins: [
+    new ProvidePlugin({
+      "jQuery": "jquery",
+      "$":      "jquery",
+    }),
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+      filename: 'vendor.js'
+    }),
+    new CommonsChunkPlugin({
+      name: 'common',
+      filename: 'common.js'
+    })
+  ],
 
-  /*
-   * When using `templateUrl` and `styleUrls` please use `__filename`
-   * rather than `module.id` for `moduleId` in `@View`
-   */
-  node: {
-    crypto: false,
-    __filename: true
+  // our Webpack Development Server config
+  devServer: {
+    historyApiFallback: true,
+    contentBase: rootDir('src/main/resources/static/build'),
+    publicPath: "/build/",
   }
+
 };
 
 
 // Helpers
-
-function env(configEnv) {
-  if (configEnv === undefined) { return configEnv; }
-  switch (toString(configEnv[NODE_ENV])) {
-    case '[object Object]'    : return Object.assign({}, configEnv.all || {}, configEnv[NODE_ENV]);
-    case '[object Array]'     : return [].concat(configEnv.all || [], configEnv[NODE_ENV]);
-    case '[object Undefined]' : return configEnv.all;
-    default                   : return configEnv[NODE_ENV];
-  }
-}
-
-function getBanner() {
-  return 'DIY v'+ pkg.version +' by @f2i and @n27';
-}
-
-function root(args) {
+function rootDir(args) {
   args = sliceArgs(arguments, 0);
   return path.join.apply(path, [__dirname].concat(args));
 }
-function rootNode(args) {
+function NodeDir(args) {
   args = sliceArgs(arguments, 0);
-  return root.apply(path, ['node_modules'].concat(args));
+  return rootDir.apply(path, ['node_modules'].concat(args));
 }

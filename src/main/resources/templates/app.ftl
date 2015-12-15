@@ -14,11 +14,6 @@
     <!-- styles -->
     <style>
     </style>
-    <!--
-        Angular 2
-        ES6 browser shim
-    -->
-    <script src="/lib/es6-shim.js"></script>
 <#if user??>
     <script type="application/javascript">var user =${user}</script>
 </#if>
@@ -30,7 +25,7 @@
 <!-- Commmon files to be cached -->
 <script src="/build/common.js"></script>
 <!-- Angular 2 files -->
-<script src="/build/angular2.js"></script>
+<script src="/build/vendor.js"></script>
 <!-- Semantic UI files -->
 <script src="/build/semantic.js"></script>
 <!-- App script -->

@@ -1,6 +1,5 @@
-/// <reference path="../../../typings/_custom.d.ts" />
-
-import {Component, View, NgFor, NgIf} from 'angular2/angular2';
+import {Component, View} from 'angular2/core';
+import {NgFor, NgIf} from 'angular2/common';
 import {ToolService} from '../../services/tool';
 
 @Component({
@@ -11,7 +10,7 @@ import {ToolService} from '../../services/tool';
 @View({
   template: `
   <div class="ui grid">
-      <div class="four wide column" *ng-for="#tool of tools">
+      <div class="four wide column" *ngFor="#tool of tools">
           <div class="ui card">
               <div class="image">
                   <img src="/images/avatar2/large/kristy.png">

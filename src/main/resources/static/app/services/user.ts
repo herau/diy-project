@@ -1,7 +1,6 @@
-/// <reference path="../../typings/_custom.d.ts" />
-
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
-import { Injectable } from 'angular2/angular2';
+import { Injectable } from 'angular2/core';
+//import 'rxjs/operators/map';
 
 @Injectable()
 export class UserService {

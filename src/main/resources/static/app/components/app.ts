@@ -1,6 +1,4 @@
-/// <reference path="../../typings/_custom.d.ts" />
-
-import {Component, View} from 'angular2/angular2';
+import {Component, View} from 'angular2/core';
 import {Router, Location, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {ToolList} from './tool/tools';
 import {UserList} from './user/users';
@@ -14,9 +12,9 @@ import {ProfileForm} from './user/profile';
     template: `
     <!-- Always shows a header, even in smaller screens. -->
     <div class="ui three item menu">
-        <a class="item" [class.active]="location.path() === '/tools'" [router-link]="['/Tools']">Tools</a>
-        <a class="item" [class.active]="location.path() === '/users'" [router-link]="['/Users']">Users</a>
-        <a class="item" [class.active]="location.path() === '/profile'" [router-link]="['/Profile']">Profile</a>
+        <a class="item" [class.active]="location.path() === '/tools'" [routerLink]="['/Tools']">Tools</a>
+        <a class="item" [class.active]="location.path() === '/users'" [routerLink]="['/Users']">Users</a>
+        <a class="item" [class.active]="location.path() === '/profile'" [routerLink]="['/Profile']">Profile</a>
     </div>
      <router-outlet></router-outlet>
     `,

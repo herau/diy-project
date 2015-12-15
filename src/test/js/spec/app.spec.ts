@@ -1,19 +1,15 @@
-/// <reference path="../../../main/resources/static/typings/_custom.d.ts" />
-
 // Import necessary wrappers for Jasmine
 import {
   beforeEachProviders,
   describe,
   expect,
-  iit,
   inject,
   it,
-  injectAsync,
-  fakeAsync,
-  tick
+  injectAsync
 } from 'angular2/testing';
-import { Component, provide} from 'angular2/angular2';
-import {MockBackend, BaseRequestOptions, Http} from 'angular2/http';
+import { provide } from 'angular2/core';
+import { BaseRequestOptions, Http } from 'angular2/http';
+import  { MockBackend } from 'angular2/http/testing';
 
 // Load the implementations that should be tested
 import { App } from '../../../main/resources/static/app/components/app';
@@ -24,8 +20,8 @@ describe('App', () => {
     App,
     BaseRequestOptions,
     MockBackend,
-    provide(Http, {useFactory:
-      function(backend, defaultOptions) {
+    provide(Http, {
+      useFactory: function(backend, defaultOptions) {
         return new Http(backend, defaultOptions);
       },
       deps: [MockBackend, BaseRequestOptions]})
