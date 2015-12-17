@@ -128,7 +128,8 @@ module.exports = {
           /node_modules/
         ]
       }
-    ]
+    ],
+    noParse: [ /zone\.js\/dist\/.+/, /angular2\/bundles\/.+/ ]
   },
 
   plugins: [
@@ -143,7 +144,9 @@ module.exports = {
     }),
     new CommonsChunkPlugin({
       name: 'common',
-      filename: 'common.js'
+      filename: 'common.js',
+      minChunks: 3,
+      chunks: ['app', 'login', 'vendor']
     })
   ],
 

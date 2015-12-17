@@ -2,7 +2,7 @@
  * Angular 2 providers
  */
 
-import {bootstrap} from 'angular2/bootstrap';
+import {bootstrap} from 'angular2/platform/browser';
 import {provide} from 'angular2/core';
 import {FORM_PROVIDERS} from 'angular2/common';
 import {ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/common_dom';

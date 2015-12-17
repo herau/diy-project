@@ -10,15 +10,14 @@
   "scripts": {
     "prebuild": "ncp src/main/resources/static/semantic/site node_modules/semantic-ui-less/site && ncp src/main/resources/static/semantic/theme.config node_modules/semantic-ui-less/theme.config",
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
-    "build-watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
-    "build-server": "webpack-dev-server --inline --progress --profile --colors --display-error-details --display-cached --port 3000",
+    "build:watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
+    "build:server": "webpack-dev-server --inline --progress --profile --colors --display-error-details --display-cached --port 3000",
+    "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-occurence-order --optimize-minimize --optimize-dedupe",
     "webpack": "webpack",
     "doc": "typedoc  --options src/main/resources/static/typedoc.json  src/main/resources/static/app/**/*.ts",
-    "clean": "rimraf node_modules src/main/resources/static/doc && npm cache clean",
-    "clean-install": "npm run clean && npm install",
-    "clean-start": "npm run clean && npm start",
-    "webdriver-update": "webdriver-manager update",
-    "webdriver-start": "webdriver-manager start",
+    "clean": "rimraf node_modules typings src/main/resources/static/doc",
+    "webdriver:update": "webdriver-manager update",
+    "webdriver:start": "webdriver-manager start",
     "preprotractor": "npm run webdriver-update",
     "protractor": "protractor",
     "e2e": "npm run protractor",
@@ -27,11 +26,12 @@
   },
   "dependencies": {
     "semantic-ui-less": "^2.1.4",
-    "angular2": "2.0.0-alpha.53",
+    "angular2": "2.0.0-beta.0",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-alpha.14",
-    "zone.js": "0.5.8",
-    "core-js": "^1.2.6"
+    "rxjs": "5.0.0-beta.0",
+    "zone.js": "0.5.10"
 
   },
   "devDependencies": {
@@ -59,6 +59,7 @@
     "typedoc": "^0.3.12",
     "typescript": "^1.7.3",
     "ts-loader": "^0.7.2",
+    "typings": "^0.3.1",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.12.1",
     "rimraf": "^2.4.4",
