@@ -102,6 +102,3 @@ logging:
     org.springframework.data.rest: ERROR
     org.springframework.security: ERROR
     org.hibernate: ERROR
-
-server:
-  context-path: /diy
