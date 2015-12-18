@@ -26,7 +26,7 @@ before_script:
 
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build target -t herau/diy
+  - docker build -t herau/diy target
   - docker push herau/diy
   - codecov
 
