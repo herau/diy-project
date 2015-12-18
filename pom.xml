@@ -103,7 +103,6 @@
 		</dependency>
 
         <!-- Runtime dependencies -->
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -124,7 +123,6 @@
 		</dependency>
 
         <!-- Dev tools -->
-
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -158,7 +156,7 @@
                 </executions>
             </plugin>
 
-            <!-- Copy Dockerfile -->
+            <!-- Copy Dockerfile, with filtering,  into build directory-->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
@@ -180,22 +178,6 @@
                     </execution>
                 </executions>
             </plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-                <version>${docker-maven-plugin.version}</version>
-				<configuration>
-					<imageName>herau/${project.artifactId}</imageName>
-                    <dockerDirectory>${project.build.directory}</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>
             <plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
