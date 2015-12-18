@@ -3,7 +3,6 @@
  * are defined at the bottom.
  */
 var sliceArgs = Function.prototype.call.bind(Array.prototype.slice);
-var toString  = Function.prototype.call.bind(Object.prototype.toString);
 var path = require('path');
 var webpack = require('webpack');
 
@@ -59,7 +58,7 @@ module.exports = {
       'semantic-ui-less/definitions/modules/tab',
       'semantic-ui-less/definitions/modules/transition',
       'semantic-ui-less/definitions/modules/video',
-      'semantic-ui-less/semantic.less',
+      'semantic-ui-less/semantic.less'
     ],
     'app': [
       // App Page
@@ -135,7 +134,7 @@ module.exports = {
   plugins: [
     new ProvidePlugin({
       "jQuery": "jquery",
-      "$":      "jquery",
+      "$":      "jquery"
     }),
     new CommonsChunkPlugin({
       name: 'vendor',
@@ -154,7 +153,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: rootDir('src/main/resources/static/build'),
-    publicPath: "/build/",
+    publicPath: "/build/"
   }
 
 };
@@ -164,8 +163,4 @@ module.exports = {
 function rootDir(args) {
   args = sliceArgs(arguments, 0);
   return path.join.apply(path, [__dirname].concat(args));
-}
-function NodeDir(args) {
-  args = sliceArgs(arguments, 0);
-  return rootDir.apply(path, ['node_modules'].concat(args));
 }
