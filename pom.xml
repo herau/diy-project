@@ -22,7 +22,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 
-        <hibernate-search-orm.version>5.5.1.Final</hibernate-search-orm.version>
+        <hibernate-search-orm.version>5.3.0.Final</hibernate-search-orm.version>
         <!-- should be change to RELEASE for the next release of the application -->
         <dependencies.latest.version>LATEST</dependencies.latest.version>
 
