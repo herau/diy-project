@@ -19,7 +19,7 @@ before_install:
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
   - npm install
-  - npm run build
+  - npm run build:prod
 
 before_script:
   - pip install --user codecov
