@@ -23,7 +23,7 @@ To start, follow those steps:
 $ git clone https://github.com/herau/diy-project.git
 $ cd diy-project
 $ npm install
-$ npm run build
+$ npm run build:prod
 $ npm start
 ```
 
@@ -38,9 +38,9 @@ $ npm start
 
 Powered by [Spring Boot](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/) and [Angular 2](https://angular.io/)
 
-Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html),  [NPM](https://www.npmjs.com)
+Built by [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html) and [webpack](https://webpack.github.io/).
 
-Containerized to [Docker](https://www.docker.com/) Image, thanks to the [Spotify Maven plugin](https://github.com/spotify/docker-maven-plugin)
+Containerized to [Docker](https://www.docker.com/) Image.
 
 Full-text search is available on users and tools entities through [Hibernate Search](http://hibernate.org/search/) and [Apache Solr](http://lucene.apache.org/solr/)
 
