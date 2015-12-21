@@ -59,7 +59,7 @@ module.exports = {
       'semantic-ui-less/definitions/modules/tab',
       'semantic-ui-less/definitions/modules/transition',
       'semantic-ui-less/definitions/modules/video',
-      'semantic-ui-less/semantic.less',
+      'semantic-ui-less/semantic.less'
     ],
     'app': [
       // App Page
@@ -73,7 +73,7 @@ module.exports = {
 
   output: {
     path: rootDir('src/main/resources/static/build'),
-    publicPath: "/build/",
+    publicPath: "build/",
     filename: '[name].js',
     sourceMapFilename: '[name].map',
     chunkFilename: '[id].chunk.js'
@@ -85,7 +85,7 @@ module.exports = {
     extensions: ['','.ts','.js','.json', '.css', '.html'],
     alias: {
       'app':    'src/main/resources/static/app',
-      'jquery': 'semantic-ui-less/node_modules/jquery/dist/jquery'
+      'jquery': 'node_modules/jquery/dist/jquery'
     }
   },
 
@@ -135,7 +135,7 @@ module.exports = {
   plugins: [
     new ProvidePlugin({
       "jQuery": "jquery",
-      "$":      "jquery",
+      "$":      "jquery"
     }),
     new CommonsChunkPlugin({
       name: 'vendor',
@@ -154,7 +154,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: rootDir('src/main/resources/static/build'),
-    publicPath: "/build/",
+    publicPath: "build/"
   }
 
 };
