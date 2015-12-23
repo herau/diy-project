@@ -45,6 +45,8 @@ app:
       subject: Inscription aux permanences
       location: Local section bricolage
 
+---
+
 spring:
   profiles: development
   jackson:
