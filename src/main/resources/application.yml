@@ -6,6 +6,7 @@ spring:
   mail:
     properties:
       mail.smtp.from: bricolage@ce-ds-sections.fr
+      mail.smtp.user: The section bricolage
   data:
     rest:
       base-path: /api
@@ -40,8 +41,9 @@ app:
     registration:
       subject: Activation de votre compte à la section bricolage
       token-expiration: 3600
-
----
+    invitation:
+      subject: Inscription aux permanences
+      location: Local section bricolage
 
 spring:
   profiles: development
@@ -59,6 +61,7 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.hibernate: INFO
+    net.fortuna.ical4j: WARN
 
 security:
   basic:

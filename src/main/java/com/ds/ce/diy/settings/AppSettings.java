@@ -31,8 +31,18 @@ public class AppSettings {
 
         private Registration registration;
 
+        private Invitation invitation;
+
         public Registration getRegistration() {
             return registration;
+        }
+
+        public Invitation getInvitation() {
+            return invitation;
+        }
+
+        public void setInvitation(Invitation invitation) {
+            this.invitation = invitation;
         }
 
         public void setRegistration(Registration registration) {
@@ -66,6 +76,29 @@ public class AppSettings {
 
             public void setTokenExpiration(int tokenExpiration) {
                 this.tokenExpiration = tokenExpiration;
+            }
+        }
+
+        public static class Invitation {
+
+            private String subject;
+
+            private String location;
+
+            public String getSubject() {
+                return subject;
+            }
+
+            public void setSubject(String subject) {
+                this.subject = subject;
+            }
+
+            public String getLocation() {
+                return location;
+            }
+
+            public void setLocation(String location) {
+                this.location = location;
             }
         }
     }
