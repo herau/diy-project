@@ -38,6 +38,19 @@ import java.time.ZoneId;
 @Service
 public class ICalendarService {
 
+    /**
+     * generate a calendar event
+     * @param user receiver
+     * @param startDate event start date
+     * @param duration event duration
+     * @param location event location
+     * @param summary event summary
+     * @param description event description
+     * @param category event category
+     * @param organizer event organizer
+     * @return Calendar with an event and an alarm
+     * @throws SocketException
+     */
     public Calendar getCalendar(User user, LocalDateTime startDate, Duration duration, String location, String summary,
                          String description, String category, String organizer) throws SocketException {
 

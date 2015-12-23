@@ -41,6 +41,7 @@ app:
     registration:
       subject: Activation de votre compte à la section bricolage
       token-expiration: 3600
+    #TODO use it through AppSettings instance
     invitation:
       subject: Inscription aux permanences
       location: Local section bricolage
