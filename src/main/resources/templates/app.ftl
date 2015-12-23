@@ -10,9 +10,13 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
+    <#-- base tag is mandatory for Angular -->
+    <script>document.write('<base href="' + document.location + '" />');</script>
+
 <#if user??>
     <script type="application/javascript">var user =${user}</script>
 </#if>
+
 </head>
 <body>
 <app>
