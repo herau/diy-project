@@ -10,6 +10,7 @@ import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VAlarm;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.parameter.Cn;
 import net.fortuna.ical4j.model.parameter.Role;
 import net.fortuna.ical4j.model.parameter.Rsvp;
 import net.fortuna.ical4j.model.property.Action;
@@ -23,6 +24,7 @@ import net.fortuna.ical4j.model.property.Organizer;
 import net.fortuna.ical4j.model.property.Priority;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Sequence;
+import net.fortuna.ical4j.model.property.Status;
 import net.fortuna.ical4j.model.property.Transp;
 import net.fortuna.ical4j.model.property.TzId;
 import net.fortuna.ical4j.model.property.Version;
@@ -66,27 +68,19 @@ public class ICalendarService {
         vEventProperties.add(new UidGenerator("1").generateUid());
 
         for (User participant : required) {
-            Attendee attendee = new Attendee(URI.create("MAILTO:" + participant.getEmail()));
-            ParameterList parameters = attendee.getParameters();
-            parameters.add(Role.REQ_PARTICIPANT);
-            parameters.add(Rsvp.TRUE);
-            vEventProperties.add(attendee);
+            addEventAttendee(vEventProperties, participant, true);
         }
 
         for (User optional : optionals) {
-            Attendee attendee = new Attendee(URI.create("MAILTO:" + optional.getEmail()));
-            ParameterList parameters = attendee.getParameters();
-            parameters.add(Role.OPT_PARTICIPANT);
-            parameters.add(Rsvp.FALSE);
-            vEventProperties.add(attendee);
+            addEventAttendee(vEventProperties, optional, false);
         }
-
 
         // use Tzid property instead of use TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone(zoneId.getId()).getVTimeZone().getTimeZoneId()
         vEventProperties.add(new TzId(zoneId.getId()));
         vEventProperties.add(Transp.OPAQUE);
         vEventProperties.add(Priority.MEDIUM);
         vEventProperties.add(Clazz.PUBLIC);
+        vEventProperties.add(Status.VEVENT_CONFIRMED);
         vEventProperties.add(new Location(location));
         vEventProperties.add(new Sequence(0));
 
@@ -111,7 +105,7 @@ public class ICalendarService {
         Calendar calendar = new Calendar();
         PropertyList calendarProperties = calendar.getProperties();
         calendarProperties.add(Version.VERSION_2_0);
-        calendarProperties.add(new ProdId("-//Section Bricolage//iCal4j 1.0//EN"));
+        calendarProperties.add(new ProdId("-//Section Bricolage//iCal4j 1.0//FR"));
         calendarProperties.add(Method.REQUEST);
         ComponentList<CalendarComponent> calendarComponents = calendar.getComponents();
         calendarComponents.add(vEvent);
@@ -119,5 +113,14 @@ public class ICalendarService {
         return calendar;
     }
 
+    private void addEventAttendee(PropertyList vEventProperties,
+                                  User user, boolean isRequired) {
+        Attendee attendee = new Attendee(URI.create("MAILTO:" + user.getEmail()));
+        ParameterList parameters = attendee.getParameters();
+        parameters.add(new Cn(user.getFirstname() + " " + user.getLastname()));
+        parameters.add(isRequired ? Role.REQ_PARTICIPANT : Role.OPT_PARTICIPANT);
+        parameters.add(Rsvp.TRUE);
+        vEventProperties.add(attendee);
+    }
 
 }
