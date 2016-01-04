@@ -34,13 +34,15 @@ import java.net.URI;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 public class ICalendarService {
 
     /**
      * generate a calendar event
-     * @param user receiver
+     * @param required required participants
+     * @param optionals optional participants
      * @param startDate event start date
      * @param duration event duration
      * @param location event location
@@ -51,8 +53,8 @@ public class ICalendarService {
      * @return Calendar with an event and an alarm
      * @throws SocketException
      */
-    public Calendar getCalendar(User user, LocalDateTime startDate, Duration duration, String location, String summary,
-                         String description, String category, String organizer) throws SocketException {
+    public Calendar getCalendar(List<User> required, List<User> optionals, LocalDateTime startDate, Duration duration, String location, String summary,
+                                String description, String category, String organizer) throws SocketException {
 
         ZoneId zoneId = ZoneId.of("Europe/Paris");
 
@@ -63,12 +65,22 @@ public class ICalendarService {
         PropertyList vEventProperties = vEvent.getProperties();
         vEventProperties.add(new UidGenerator("1").generateUid());
 
-        //TODO manage optional / required
-        Attendee attendee = new Attendee(URI.create("MAILTO:" + user.getEmail()));
-        ParameterList parameters = attendee.getParameters();
-        parameters.add(Role.REQ_PARTICIPANT);
-        parameters.add(Rsvp.TRUE);
-        vEventProperties.add(attendee);
+        for (User participant : required) {
+            Attendee attendee = new Attendee(URI.create("MAILTO:" + participant.getEmail()));
+            ParameterList parameters = attendee.getParameters();
+            parameters.add(Role.REQ_PARTICIPANT);
+            parameters.add(Rsvp.TRUE);
+            vEventProperties.add(attendee);
+        }
+
+        for (User optional : optionals) {
+            Attendee attendee = new Attendee(URI.create("MAILTO:" + optional.getEmail()));
+            ParameterList parameters = attendee.getParameters();
+            parameters.add(Role.OPT_PARTICIPANT);
+            parameters.add(Rsvp.FALSE);
+            vEventProperties.add(attendee);
+        }
+
 
         // use Tzid property instead of use TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone(zoneId.getId()).getVTimeZone().getTimeZoneId()
         vEventProperties.add(new TzId(zoneId.getId()));

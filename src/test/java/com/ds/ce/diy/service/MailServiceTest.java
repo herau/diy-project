@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Properties;
 
 public class MailServiceTest {
@@ -29,7 +30,7 @@ public class MailServiceTest {
 
         ICalendarService iCalendarService = new ICalendarService();
         Calendar calendar = iCalendarService
-                .getCalendar(dd, LocalDateTime.now(), Duration.ofHours(2), "location", "event summary", "desc",
+                .getCalendar(Collections.singletonList(dd), Collections.emptyList(), LocalDateTime.now(), Duration.ofHours(2), "location", "event summary", "desc",
                              "category", "bricolage@ce-3ds.com");
 
         mailService.sendCalendar(dd, "subject of the mail", calendar.toString());
