@@ -2,12 +2,10 @@ package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.User;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Dur;
 import net.fortuna.ical4j.model.ParameterList;
 import net.fortuna.ical4j.model.PropertyList;
-import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VAlarm;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.parameter.Cn;
@@ -44,19 +42,19 @@ public class ICalendarService {
     /**
      * generate a calendar event
      * @param required required participants
-     * @param optionals optional participants
      * @param startDate event start date
      * @param duration event duration
      * @param location event location
      * @param summary event summary
      * @param description event description
-     * @param category event category
      * @param organizer event organizer
+     * @param optionals (optional) optional participants
+     * @param category (optional) event category
      * @return Calendar with an event and an alarm
      * @throws SocketException
      */
-    public Calendar getCalendar(List<User> required, List<User> optionals, LocalDateTime startDate, Duration duration, String location, String summary,
-                                String description, String category, String organizer) throws SocketException {
+    public Calendar getCalendar(List<User> required, LocalDateTime startDate, Duration duration, String location, String summary,
+                                String description, String organizer, String category, List<User> optionals) throws SocketException {
 
         ZoneId zoneId = ZoneId.of("Europe/Paris");
 
@@ -71,8 +69,10 @@ public class ICalendarService {
             addEventAttendee(vEventProperties, participant, true);
         }
 
-        for (User optional : optionals) {
-            addEventAttendee(vEventProperties, optional, false);
+        if (optionals != null) {
+            for (User optional : optionals) {
+                addEventAttendee(vEventProperties, optional, false);
+            }
         }
 
         // use Tzid property instead of use TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone(zoneId.getId()).getVTimeZone().getTimeZoneId()
@@ -96,20 +96,27 @@ public class ICalendarService {
             vEventProperties.add(new Description(description));
         }
 
-        //TODO Test the trigger event (currently one hour before the event)
-        VAlarm vAlarm = new VAlarm(new Dur(-1, 0, 0, 0));
-        PropertyList vAlarmProperties = vAlarm.getProperties();
+        //TODO mettre en configuration / tester en avoir plusieurs (2h avant)
+
+        VAlarm alarmOnDay = new VAlarm(new Dur(-1, 0, 0, 0));
+        PropertyList vAlarmProperties = alarmOnDay.getProperties();
         vAlarmProperties.add(Action.DISPLAY);
         vAlarmProperties.add(new Description("Reminder"));
+        vEvent.getAlarms().add(alarmOnDay);
+
+        VAlarm alarmTwoHours = new VAlarm(new Dur(0, 2, 0, 0));
+        PropertyList alarmProperties = alarmTwoHours.getProperties();
+        alarmProperties.add(Action.DISPLAY);
+        alarmProperties.add(new Description("Reminder"));
+        vEvent.getAlarms().add(alarmTwoHours);
 
         Calendar calendar = new Calendar();
         PropertyList calendarProperties = calendar.getProperties();
         calendarProperties.add(Version.VERSION_2_0);
         calendarProperties.add(new ProdId("-//Section Bricolage//iCal4j 1.0//FR"));
         calendarProperties.add(Method.REQUEST);
-        ComponentList<CalendarComponent> calendarComponents = calendar.getComponents();
-        calendarComponents.add(vEvent);
-        calendarComponents.add(vAlarm);
+        calendar.getComponents().add(vEvent);
+
         return calendar;
     }
 
