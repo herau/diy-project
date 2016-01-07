@@ -4,23 +4,24 @@ import com.ds.ce.diy.domain.Company;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
 import net.fortuna.ical4j.model.Calendar;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 public class MailServiceTest {
 
     @Test
-    @Ignore
+    //@Ignore
     public void testSendInvitation() throws Exception {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.paris.exalead.com");
@@ -38,13 +39,17 @@ public class MailServiceTest {
 
         ICalendarService iCalendarService = new ICalendarService();
         ZoneId zoneId = ZoneId.of("Europe/Paris");
-        LocalDateTime localDateTime = ZonedDateTime.of(2016, 4, 1, 16, 0, 0, 0, zoneId).toLocalDateTime();
-        Calendar calendar = iCalendarService.getCalendar(required, Collections.emptyList(),
+
+        LocalDate now = LocalDate.now();
+        LocalDateTime localDateTime = ZonedDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 16, 0, 0, 0, zoneId).toLocalDateTime();
+        List<Duration> alarms = new ArrayList<>();
+        alarms.add(Duration.ofDays(-1));
+        alarms.add(Duration.ofHours(-2));
+        Calendar calendar = iCalendarService.getCalendar(required,
                                                          localDateTime,
                                                          Duration.ofHours(2), "location", "event summary", "desc",
-                                                         "category", "bricolage@ce-3ds.com");
+                                                         "bricolage@ce-3ds.com", "category", Collections.emptyList(), alarms);
 
         mailService.sendCalendar(dd, "subject of the mail", calendar.toString());
-
     }
 }

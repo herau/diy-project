@@ -50,11 +50,12 @@ public class ICalendarService {
      * @param organizer event organizer
      * @param optionals (optional) optional participants
      * @param category (optional) event category
+     * @param alarms (optional) duration of alarms - should be negative values
      * @return Calendar with an event and an alarm
      * @throws SocketException
      */
     public Calendar getCalendar(List<User> required, LocalDateTime startDate, Duration duration, String location, String summary,
-                                String description, String organizer, String category, List<User> optionals) throws SocketException {
+                                String description, String organizer, String category, List<User> optionals, List<Duration> alarms) throws SocketException {
 
         ZoneId zoneId = ZoneId.of("Europe/Paris");
 
@@ -96,19 +97,14 @@ public class ICalendarService {
             vEventProperties.add(new Description(description));
         }
 
-        //TODO mettre en configuration / tester en avoir plusieurs (2h avant)
-
-        VAlarm alarmOnDay = new VAlarm(new Dur(-1, 0, 0, 0));
-        PropertyList vAlarmProperties = alarmOnDay.getProperties();
-        vAlarmProperties.add(Action.DISPLAY);
-        vAlarmProperties.add(new Description("Reminder"));
-        vEvent.getAlarms().add(alarmOnDay);
-
-        VAlarm alarmTwoHours = new VAlarm(new Dur(0, 2, 0, 0));
-        PropertyList alarmProperties = alarmTwoHours.getProperties();
-        alarmProperties.add(Action.DISPLAY);
-        alarmProperties.add(new Description("Reminder"));
-        vEvent.getAlarms().add(alarmTwoHours);
+        for (Duration alarmDuration : alarms) {
+            Dur trigger = new Dur(alarmDuration.toString());
+            VAlarm alarm = new VAlarm(trigger);
+            PropertyList vAlarmProperties = alarm.getProperties();
+            vAlarmProperties.add(Action.DISPLAY);
+            vAlarmProperties.add(new Description("Reminder"));
+            vEvent.getAlarms().add(alarm);
+        }
 
         Calendar calendar = new Calendar();
         PropertyList calendarProperties = calendar.getProperties();
