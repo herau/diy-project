@@ -10,22 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "equipments")
-public class Equipment extends AbstractAuditableEntity implements Serializable {
+@Table(name = "supplies")
+public class Supply extends Rentable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false, name = "equipment_id")
+    @Column(nullable = false, updatable = false, name = "supply_id")
     private Integer id;
 
     @Range
     @Column(nullable = false)
     private Integer quantity;
-
-    @Column(nullable = false)
-    private Integer price;
 
     @Column(name = "alert_threshold", nullable = false)
     private Integer alertThreshold;
@@ -33,9 +31,11 @@ public class Equipment extends AbstractAuditableEntity implements Serializable {
     @Column(name = "max_booking", nullable = false)
     private Integer maxBooking;
 
-    @Column(nullable = false)
-    private String description;
+    protected Supply(){}
 
-    public Equipment() {}
+    //TODO check that purchaseDate is wanted
+    public Supply(String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description, Double price) {
+        super(type, brand, purchaseDate, purchasePrice, description, price);
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.ds.ce.diy.domain;
 
+import lombok.Getter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "accounts")
-public class Account implements Serializable {
+public class Account extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +21,8 @@ public class Account implements Serializable {
     private Integer id;
 
     @Column
+    @Getter
+    //TODO maximum negative value ?
     private Double balance = 0.0;
 
     public Account() {}
@@ -44,10 +48,6 @@ public class Account implements Serializable {
      */
     public Double debit(Double value) {
         balance -= value;
-        return balance;
-    }
-
-    public Double getBalance() {
         return balance;
     }
 }

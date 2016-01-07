@@ -18,8 +18,8 @@ public final class ToolRepositoryImpl extends AbstractSearchRepository<Tool> {
 
     @Override
     public List search(String query) {
-        // add categories.name field for the search query
-        return search(query, "name", "description", /*"energy",*/ "categories.name");
+        //TODO not tested
+        return search(query, "name", "tags.name");
     }
 
 }

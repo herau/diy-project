@@ -1,4 +1,4 @@
-INSERT INTO categories (category_id, name)
+INSERT INTO tags (tag_id, name)
 VALUES
   (12, 'Electro-portatif'),
   (13, 'Outil de batiment électrique'),

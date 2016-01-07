@@ -282,7 +282,7 @@ VALUES
 
 -- DUMP select uidoutils, uidcategorie from lienoutilcategorie where uidoutils in (select distinct(uid) from outils) order by uidoutils;
 
-INSERT INTO categories_tools (tool_id, category_id)
+INSERT INTO tags_tools (tool_id, tag_id)
 VALUES
   (21, 12),
   (21, 24),
