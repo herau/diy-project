@@ -1,5 +1,6 @@
-package com.ds.ce.diy.domain;
+package com.ds.ce.diy.domain.security;
 
+import com.ds.ce.diy.domain.User;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

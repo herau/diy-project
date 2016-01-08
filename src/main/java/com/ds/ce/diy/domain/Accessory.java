@@ -1,6 +1,8 @@
 package com.ds.ce.diy.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "accessories")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Accessory extends Rentable implements Serializable {
 
     @Id
@@ -32,10 +35,8 @@ public class Accessory extends Rentable implements Serializable {
     @Embedded
     private Lifespan lifespan;
 
-    protected Accessory() {}
-
     public Accessory(String serialNumber, String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description, Double price) {
-        super(type, brand, purchaseDate, purchasePrice,description,price);
+        super(price, description, type, brand, purchaseDate, purchasePrice);
         this.lifespan = new Lifespan(serialNumber);
     }
 

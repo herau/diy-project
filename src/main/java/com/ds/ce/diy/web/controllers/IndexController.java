@@ -1,7 +1,7 @@
 package com.ds.ce.diy.web.controllers;
 
-import com.ds.ce.diy.domain.CurrentUser;
 import com.ds.ce.diy.domain.User;
+import com.ds.ce.diy.domain.security.CurrentUser;
 import com.ds.ce.diy.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;

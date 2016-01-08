@@ -1,8 +1,8 @@
 package com.ds.ce.diy.web.controllers;
 
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
-import com.ds.ce.diy.domain.VerificationTokenType;
+import com.ds.ce.diy.domain.security.VerificationToken;
+import com.ds.ce.diy.domain.security.VerificationTokenType;
 import com.ds.ce.diy.dto.UserDTO;
 import com.ds.ce.diy.dto.UserPasswordDTO;
 import com.ds.ce.diy.repositories.UserRepository;
@@ -25,11 +25,14 @@ import javax.validation.Valid;
 
 import java.util.List;
 
-import static com.ds.ce.diy.domain.VerificationTokenType.EMAIL_REGISTRATION;
+import static com.ds.ce.diy.domain.security.VerificationTokenType.EMAIL_REGISTRATION;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = APPLICATION_JSON_VALUE)
@@ -115,7 +118,7 @@ public class UserController extends AbstractController {
 
     /**
      * Send a new token to a specific user
-     * @param type #com.ds.ce.diy.domain.VerificationTokenType
+     * @param type #com.ds.ce.diy.domain.security.VerificationTokenType
      * @param userId
      */
     @PreAuthorize("hasAnyAuthority('ADMIN')")

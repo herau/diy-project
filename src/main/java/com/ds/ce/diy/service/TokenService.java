@@ -1,8 +1,8 @@
 package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
-import com.ds.ce.diy.domain.VerificationTokenType;
+import com.ds.ce.diy.domain.security.VerificationToken;
+import com.ds.ce.diy.domain.security.VerificationTokenType;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
 
 /**

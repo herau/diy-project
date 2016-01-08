@@ -1,5 +1,9 @@
 package com.ds.ce.diy.domain;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Column;
@@ -14,6 +18,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "supplies")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Supply extends Rentable implements Serializable {
 
     @Id
@@ -23,19 +28,20 @@ public class Supply extends Rentable implements Serializable {
 
     @Range
     @Column(nullable = false)
+    @Getter @Setter
     private Integer quantity;
 
     @Column(name = "alert_threshold", nullable = false)
+    @Getter @Setter
     private Integer alertThreshold;
 
     @Column(name = "max_booking", nullable = false)
+    @Getter @Setter
     private Integer maxBooking;
-
-    protected Supply(){}
 
     //TODO check that purchaseDate is wanted
     public Supply(String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description, Double price) {
-        super(type, brand, purchaseDate, purchasePrice, description, price);
+        super(price, description, type, brand, purchaseDate, purchasePrice);
     }
 
 }

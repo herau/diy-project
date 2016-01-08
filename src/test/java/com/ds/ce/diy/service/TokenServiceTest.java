@@ -3,7 +3,7 @@ package com.ds.ce.diy.service;
 import com.ds.ce.diy.domain.Company;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
+import com.ds.ce.diy.domain.security.VerificationToken;
 import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.repositories.VerificationTokenRepository;
 import com.ds.ce.diy.settings.AppSettings;
@@ -23,12 +23,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.ds.ce.diy.domain.VerificationTokenType.EMAIL_REGISTRATION;
+import static com.ds.ce.diy.domain.security.VerificationTokenType.EMAIL_REGISTRATION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TokenServiceTest {

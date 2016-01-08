@@ -1,5 +1,8 @@
-package com.ds.ce.diy.domain;
+package com.ds.ce.diy.domain.security;
 
+import com.ds.ce.diy.domain.Role;
+import com.ds.ce.diy.domain.State;
+import com.ds.ce.diy.domain.User;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,8 +1,10 @@
 package com.ds.ce.diy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -22,6 +24,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -29,7 +32,7 @@ import java.util.Set;
 @Table(name = "tools")
 @Indexed(index = "tools")
 @JsonIgnoreProperties(value = "tags")
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tool extends Rentable implements Serializable {
 
     @Id
@@ -44,6 +47,7 @@ public class Tool extends Rentable implements Serializable {
 
     @Size(min = 1)
     @Column(nullable = false, name = "rental_price")
+    //TODO not the same than rentable#price ?
     private Double rentalPrice;
 
     @Size
@@ -61,6 +65,12 @@ public class Tool extends Rentable implements Serializable {
     @Getter
     private Nature nature;
 
+    @Column(name = "order_number")
+    private String orderNumber;
+
+    @Column(name = "order_reference")
+    private String orderReference;
+
     @ManyToMany
     @JoinTable(
             name = "tags_tools",
@@ -75,4 +85,21 @@ public class Tool extends Rentable implements Serializable {
     @OneToMany(mappedBy="parent")
     private Set<Tool> children;
 
+    @Builder
+    public Tool(String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description,
+                Double price, String name, Double rentalPrice, List<Tag> tags, Set<Tool> children, Tool parent,
+                Double weight, Double maxSize, String documentationUrl, String orderNumber, String orderReference, Nature nature) {
+        super(price, description, type, brand, purchaseDate, purchasePrice);
+        this.name = name;
+        this.rentalPrice = rentalPrice;
+        this.tags = tags;
+        this.children = children;
+        this.parent = parent;
+        this.weight = weight;
+        this.maxSize = maxSize;
+        this.documentationUrl = documentationUrl;
+        this.orderNumber = orderNumber;
+        this.orderReference = orderReference;
+        this.nature = nature;
+    }
 }

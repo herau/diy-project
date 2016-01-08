@@ -2,8 +2,8 @@ package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
-import com.ds.ce.diy.domain.VerificationTokenType;
+import com.ds.ce.diy.domain.security.VerificationToken;
+import com.ds.ce.diy.domain.security.VerificationTokenType;
 import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.repositories.VerificationTokenRepository;
 import com.ds.ce.diy.settings.AppSettings;
@@ -30,7 +30,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ds.ce.diy.domain.VerificationTokenType.EMAIL_REGISTRATION;
+import static com.ds.ce.diy.domain.security.VerificationTokenType.EMAIL_REGISTRATION;
 
 @Service
 public class TokenServiceImpl implements TokenService {

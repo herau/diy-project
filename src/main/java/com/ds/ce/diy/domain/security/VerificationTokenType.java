@@ -1,4 +1,4 @@
-package com.ds.ce.diy.domain;
+package com.ds.ce.diy.domain.security;
 
 /**
  * Type of verification token.

@@ -85,7 +85,7 @@ module.exports = {
     extensions: ['','.ts','.js','.json', '.css', '.html'],
     alias: {
       'app':    'src/main/resources/static/app',
-      'jquery': 'semantic-ui-less/node_modules/jquery/dist/jquery'
+      'jquery': 'node_modules/jquery/dist/jquery'
     }
   },
 

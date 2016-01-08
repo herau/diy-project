@@ -1,7 +1,7 @@
 package com.ds.ce.diy.web.controllers;
 
 import com.ds.ce.diy.domain.User;
-import com.ds.ce.diy.domain.VerificationToken;
+import com.ds.ce.diy.domain.security.VerificationToken;
 import com.ds.ce.diy.service.TokenService;
 import com.ds.ce.diy.web.EntryPoint;
 import org.springframework.stereotype.Controller;

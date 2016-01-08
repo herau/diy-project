@@ -1,7 +1,10 @@
 package com.ds.ce.diy.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -23,6 +26,9 @@ import java.util.Set;
 @Table(name = "tags")
 @Indexed(index = "tags")
 //TODO #search index root and children
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
+@EqualsAndHashCode(of = {"name", "root"}, callSuper = false)
 public class Tag extends AbstractAuditableEntity implements Serializable {
 
     @Id
@@ -34,6 +40,7 @@ public class Tag extends AbstractAuditableEntity implements Serializable {
     @NotNull
     @Field
     @Analyzer(definition = "nGrams")
+    @NonNull
     private String name;
 
     @ManyToOne
@@ -41,40 +48,4 @@ public class Tag extends AbstractAuditableEntity implements Serializable {
 
     @OneToMany(mappedBy="root")
     private Set<Tag> children;
-
-    protected Tag() {
-        // default constructor for entity
-    }
-
-    public Tag(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Tag tag = (Tag) o;
-
-        return new EqualsBuilder().append(name, tag.name).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).toHashCode();
-    }
 }

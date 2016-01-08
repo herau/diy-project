@@ -1,5 +1,6 @@
 package com.ds.ce.diy.domain;
 
+import com.ds.ce.diy.domain.security.VerificationToken;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -43,6 +44,7 @@ import java.io.Serializable;
         filters = {@TokenFilterDef(factory = LowerCaseFilterFactory.class),
                    @TokenFilterDef(factory = StandardFilterFactory.class)})
 @JsonIgnoreProperties(value = {"token", "account", "role", "password"})
+//TODO apply lombok
 public class User extends AbstractAuditableEntity implements Serializable {
 
     @Id

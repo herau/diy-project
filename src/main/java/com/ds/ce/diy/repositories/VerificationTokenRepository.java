@@ -1,6 +1,6 @@
 package com.ds.ce.diy.repositories;
 
-import com.ds.ce.diy.domain.VerificationToken;
+import com.ds.ce.diy.domain.security.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

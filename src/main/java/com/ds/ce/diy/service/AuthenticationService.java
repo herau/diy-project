@@ -1,7 +1,7 @@
 package com.ds.ce.diy.service;
 
-import com.ds.ce.diy.domain.CurrentUser;
 import com.ds.ce.diy.domain.User;
+import com.ds.ce.diy.domain.security.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
