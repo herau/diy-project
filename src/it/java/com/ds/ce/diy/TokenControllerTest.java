@@ -49,7 +49,9 @@ public class TokenControllerTest extends AbstractControllerTest {
 
     @Before
     public void setUp() {
-        user = new User("0001", "foo", "bar", "dd", "foo.bar@3ds.com", Company.DS, State.INVALID);
+        user = new User("0001", "dd", "foo", "bar", "foo.bar@3ds.com", Company.DS);
+        user.setState(State.INVALID);
+
         userRepository.save(user);
         token = tokenService.createUserToken(user, VerificationTokenType.EMAIL_REGISTRATION);
         apiPath = getPath(EntryPoint.TOKENS + "/{token}");

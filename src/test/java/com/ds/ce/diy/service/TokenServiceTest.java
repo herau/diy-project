@@ -77,7 +77,8 @@ public class TokenServiceTest {
     public void tokenService_sendRegistrationToken_ok() {
         RequestContextHolder.setRequestAttributes(attrs);
 
-        User user = new User("toto", "foo", "bar", "pass", "test@test.com", Company.DS, State.INVALID);
+        User user = new User("toto", "pass", "foo", "bar", "test@test.com", Company.DS);
+        user.setState(State.INVALID);
 
         // simulate existing user
         when(userRepository.exists(anyInt())).thenReturn(true);

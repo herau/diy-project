@@ -2,9 +2,13 @@ package com.ds.ce.diy.domain;
 
 import com.ds.ce.diy.domain.security.VerificationToken;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramTokenizerFactory;
 import org.apache.lucene.analysis.standard.StandardFilterFactory;
@@ -34,17 +38,24 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 
+@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode(of = "personalNumber", callSuper = false)
+@ToString(exclude = {"id", "password", "token", "account"})
+
 @Entity
 @Table(name = "users", indexes = {@Index(columnList = "personal_number", name = "user_personal_number_hidx")})
 @EntityListeners({AuditingEntityListener.class})
+
 @Indexed(index = "users")
 @AnalyzerDef(name = "nGrams",
         tokenizer = @TokenizerDef(factory = NGramTokenizerFactory.class, params = {
                 @Parameter(name = "minGramSize", value = "2"), @Parameter(name = "maxGramSize", value = "15")}),
         filters = {@TokenFilterDef(factory = LowerCaseFilterFactory.class),
                    @TokenFilterDef(factory = StandardFilterFactory.class)})
+
 @JsonIgnoreProperties(value = {"token", "account", "role", "password"})
-//TODO apply lombok
 public class User extends AbstractAuditableEntity implements Serializable {
 
     @Id
@@ -55,156 +66,62 @@ public class User extends AbstractAuditableEntity implements Serializable {
     @Column(updatable = false, nullable = false, unique = true, length = 11, name = "personal_number")
     @Field
     @Analyzer(definition = "nGrams")
+    @NonNull
     private String personalNumber;
 
     @Column(nullable = false)
+    @Setter
+    @NonNull
     private String password;
 
     @Column(nullable = false, length = 55)
     @Field
     @Analyzer(definition = "nGrams")
+    @NonNull
     private String firstname;
 
     @Column(nullable = false, length = 55)
     @Analyzer(definition = "nGrams")
     @Field
+    @NonNull
     private String lastname;
 
     @Column(nullable = false)
     @Email
+    @NonNull
     private String email;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter
     private Role role = Role.USER;
 
     @Column(name = "personal_email")
     @Email
+    @Setter
     private String personalEmail;
 
     @Column
     @Enumerated(EnumType.ORDINAL)
+    @Setter
+    @NonNull
     private State state = State.INVALID;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
+    @NonNull
     private Company company;
 
     // TODO ADMIN user not have account
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "account_id", unique = true)
+    @Setter
     private Account account;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private VerificationToken token;
 
-    public User() {
-        // no-args constructor required by JPA spec and Jackson
-    }
-
-    public User(String personalNumber, String firstname, String lastname, String password, String email,
-                Company company, State state) {
-        this.personalNumber = personalNumber;
-        this.firstname = firstname;
-        this.password = password;
-        this.lastname = lastname;
-        this.email = email;
-        this.company = company;
-        this.state = state;
-    }
-
-    public String getPersonalNumber() {
-        return personalNumber;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPersonalEmail() {
-        return personalEmail;
-    }
-
-    public void setPersonalEmail(String personalEmail) {
-        this.personalEmail = personalEmail;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public VerificationToken getToken() {
-        return token;
-    }
-
     public void addVerificationToken(final VerificationToken token) {
         this.token = token;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        User user = (User) o;
-
-        return new EqualsBuilder().append(personalNumber, user.personalNumber).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(personalNumber).toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("personalNumber", personalNumber).append("role", role)
-                                        .append("state", state).append("company", company).append("email", email)
-                                        .append("lastname", lastname).append("firstname", firstname).toString();
     }
 }

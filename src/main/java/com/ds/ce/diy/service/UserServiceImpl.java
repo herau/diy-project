@@ -62,9 +62,9 @@ public class UserServiceImpl implements UserService {
 
         // generate a temporally password
         String securedPassword = passwordService.generateRandom();
-        User user = new User(personalNumber, userDTO.getFirstname(), userDTO.getLastname(),
-                             passwordService.encode(securedPassword), userDTO.getEmail(), userDTO.getCompany(),
-                             State.INVALID);
+        User user = new User(personalNumber, passwordService.encode(securedPassword), userDTO.getFirstname(), userDTO.getLastname(),
+                             userDTO.getEmail(), userDTO.getCompany());
+        user.setState(State.INVALID);
 
         if (isNotEmpty(userDTO.getPersonalEmail())) {
             user.setPersonalEmail(userDTO.getPersonalEmail());
