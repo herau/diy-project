@@ -7,14 +7,15 @@ public class LombokEntitiesTest {
 
     @Test
     public void required_NoArgsConstructory_JPA() throws Exception {
-        Notification notification = new Notification();
-        Accessory accessory = new Accessory();
-        Lifespan lifespan = new Lifespan();
-        Supply supply = new Supply();
-        User user = new User();
-        Account account = new Account();
-        Tool tool = new Tool();
-        Tag tag = new Tag();
-        VerificationToken verificationToken = new VerificationToken();
+        new Notification();
+        new Accessory();
+        new Lifespan();
+        new Supply();
+        new User();
+        new Account();
+        new Tool();
+        new Tag();
+        new VerificationToken();
+        new Registration();
     }
 }

@@ -19,15 +19,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "office_hours", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "user_id"}),
+@Table(name = "registration", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "user_id"}),
                                                    @UniqueConstraint(columnNames = {"date", "type"})})
 @NoArgsConstructor/**/
 @RequiredArgsConstructor
-public class OfficeHours extends AbstractAuditableEntity implements Serializable {
+public class Registration extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "office_hours_id")
+    @Column(nullable = false, updatable = false, name = "registration_id")
     private Integer id;
 
     @ManyToOne(optional = false)
@@ -45,7 +45,7 @@ public class OfficeHours extends AbstractAuditableEntity implements Serializable
     @Column(nullable = false, updatable = false)
     @NonNull
     @Getter
-    private OfficeHoursType type;
+    private RegistrationType type;
 
     //TODO if you want to keep a trace of people which unsubscribe from an office hour
     private boolean unsubscribed;

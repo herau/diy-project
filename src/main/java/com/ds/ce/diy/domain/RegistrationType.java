@@ -1,6 +1,6 @@
 package com.ds.ce.diy.domain;
 
-public enum OfficeHoursType {
+public enum RegistrationType {
     //TODO Autre dans l'interface d'admin sur les inscriptions aux permanences ?
     FIRST, SECOND, REPLACEMENT
 }
