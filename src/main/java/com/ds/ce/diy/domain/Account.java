@@ -5,7 +5,6 @@ import lombok.Getter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,7 +15,7 @@ import java.io.Serializable;
 public class Account extends AbstractAuditableEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(nullable = false, updatable = false, name = "account_id")
     private Integer id;
 

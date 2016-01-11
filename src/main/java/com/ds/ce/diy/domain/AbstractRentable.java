@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = {"type", "brand"}, callSuper = false)
-public abstract class Rentable extends AbstractAuditableEntity implements Serializable {
+public abstract class AbstractRentable extends AbstractAuditableEntity implements Serializable {
 
     @Size(min = 1)
     @Column(nullable = false)

@@ -1,6 +1,6 @@
 package com.ds.ce.diy.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -31,12 +30,11 @@ import java.util.Set;
 @Entity
 @Table(name = "tools")
 @Indexed(index = "tools")
-@JsonIgnoreProperties(value = "tags")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Tool extends Rentable implements Serializable {
+public class Tool extends AbstractRentable implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(nullable = false, updatable = false, name = "tool_id")
     private Integer id;
 
@@ -77,12 +75,15 @@ public class Tool extends Rentable implements Serializable {
             joinColumns = @JoinColumn(name = "tool_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "tag_id", nullable = false))
     @IndexedEmbedded
+    @JsonIgnore
     private List<Tag> tags;
 
     @ManyToOne
+    @JsonIgnore
     private Tool parent;
 
     @OneToMany(mappedBy="parent")
+    @JsonIgnore
     private Set<Tool> children;
 
     @Builder

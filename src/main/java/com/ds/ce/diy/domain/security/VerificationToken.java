@@ -1,14 +1,16 @@
 package com.ds.ce.diy.domain.security;
 
 import com.ds.ce.diy.domain.User;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -23,31 +25,38 @@ import java.util.UUID;
 @Entity
 @Table(name = "tokens", indexes = {@Index(columnList = "token", name = "token_value_hidx")},
         uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "type"})})
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"user", "type", "token"})
+@RequiredArgsConstructor
 public class VerificationToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(nullable = false, updatable = false, name = "token_id")
     private Integer id;
 
     @OneToOne(optional = false)
     @JoinColumn(nullable = false, updatable = false, name = "user_id")
+    @Getter @NonNull
     private User user;
 
     @Column(nullable = false, updatable = false, name = "type")
     @Enumerated
+    @Getter @NonNull
     private VerificationTokenType type;
 
     /**
      * time to live for the Token. According to configuration ${app.email.registration.expiryTime}
      */
     @Column(nullable = false, updatable = false, name = "expiry_date")
+    @NonNull
     private LocalDateTime expiryDate;
 
     /**
      * a UUID that is used to identify the token. It is Base64 encoded before being sent
      */
     @Column(nullable = false, updatable = false)
+    @NonNull
     private String token;
 
     /**
@@ -56,13 +65,13 @@ public class VerificationToken {
     @Column
     private boolean verified;
 
-    public VerificationToken() {}
-
-    public VerificationToken(User user, VerificationTokenType type, int emailRegistrationTokenExpiryTime) {
-        this.user = user;
-        this.type = type;
-        this.expiryDate = LocalDateTime.now().plusMinutes(emailRegistrationTokenExpiryTime);
-        this.token = UUID.randomUUID().toString();
+    /**
+     * @param user
+     * @param type
+     * @param expiredTime expired time in minutes
+     */
+    public VerificationToken(User user, VerificationTokenType type, int expiredTime) {
+        this(user, type, LocalDateTime.now().plusMinutes(expiredTime), UUID.randomUUID().toString());
     }
 
     /**
@@ -84,31 +93,4 @@ public class VerificationToken {
         return Base64.getEncoder().encodeToString(token.getBytes());
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public VerificationTokenType getType() {
-        return type;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        VerificationToken that = (VerificationToken) o;
-
-        return new EqualsBuilder().append(user, that.user).append(type, that.type).append(token, that.token).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(user).append(type).append(token).toHashCode();
-    }
 }

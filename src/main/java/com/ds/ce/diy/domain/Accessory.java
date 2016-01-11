@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,10 +19,10 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "accessories")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Accessory extends Rentable implements Serializable {
+public class Accessory extends AbstractRentable implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(nullable = false, updatable = false, name = "accessory_id")
     private Integer id;
 

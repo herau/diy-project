@@ -12,7 +12,6 @@ import org.hibernate.search.annotations.Indexed;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,7 +31,7 @@ import java.util.Set;
 public class Tag extends AbstractAuditableEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(nullable = false, updatable = false, name = "tag_id")
     private Integer id;
 
