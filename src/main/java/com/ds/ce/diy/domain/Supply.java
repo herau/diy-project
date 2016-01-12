@@ -30,11 +30,11 @@ public class Supply extends AbstractRentable implements Serializable {
     @Getter @Setter
     private Integer quantity;
 
-    @Column(name = "alert_threshold", nullable = false)
+    @Column(name = "alert_threshold", nullable = false, length = 5)
     @Getter @Setter
     private Integer alertThreshold;
 
-    @Column(name = "max_booking", nullable = false)
+    @Column(name = "max_booking", nullable = false, length = 5)
     @Getter @Setter
     private Integer maxBooking;
 

@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import java.io.Serializable;
@@ -26,26 +28,31 @@ public abstract class AbstractRentable extends AbstractAuditableEntity implement
     @Getter
     @Setter
     @NonNull
+    @NotNull
     private Double rentalPrice;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 510)
     @Getter
     @Setter
     @NonNull
+    @NotBlank
     private String description;
 
     @Column(nullable = false, updatable = false)
     @NonNull
     @Getter
+    @NotBlank
     private String type;
 
     @Column(nullable = false, updatable = false)
     @NonNull
     @Getter
+    @NotBlank
     private String brand;
 
     @Column(nullable = false, updatable = false, name = "purchase_date")
     @NonNull
+    @NotNull
     private LocalDate purchaseDate;
 
     @Column(nullable = false, updatable = false, name = "purchase_price")
