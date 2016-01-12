@@ -2,10 +2,12 @@ package com.ds.ce.diy.service;
 
 import com.ds.ce.diy.DiyApplication;
 import com.ds.ce.diy.domain.Company;
+import com.ds.ce.diy.domain.Registration;
 import com.ds.ce.diy.domain.RegistrationType;
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.repositories.RegistrationRepository;
 import com.ds.ce.diy.repositories.UserRepository;
+import com.ds.ce.diy.repositories.specifications.RegistrationSpecs;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
@@ -102,6 +105,16 @@ public class RegistrationServiceTest {
         // unable to register two different users for a same
         User user2 = userRepository.save(new User("2213", "", "", "", "", Company.DS));
         service.subscribe(user2, date, RegistrationType.FIRST);
+    }
+
+    @Test
+    public void test() {
+        assertThat(repository.findAll(RegistrationSpecs.isFuture())).isEmpty();
+
+        service.subscribe(user, date.plusDays(1), RegistrationType.FIRST);
+
+        List<Registration> all = repository.findAll(RegistrationSpecs.isFuture());
+        assertThat(all).isNotEmpty();
     }
 
 }

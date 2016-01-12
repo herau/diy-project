@@ -26,7 +26,9 @@ public class RegistrationController {
 
     @RequestMapping(method = GET)
     public List<Registration> getAll() {
-        service.
+        return null;
+        //TODO
+//        service.
     }
 
 

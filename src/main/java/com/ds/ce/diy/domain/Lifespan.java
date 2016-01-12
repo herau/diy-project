@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Enumerated;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -23,10 +24,10 @@ public class Lifespan implements Serializable {
     @NonNull
     private String serialNumber;
 
-    @Column(nullable = false)
+    //TODO in db as integer and must be non nullable
+    @Enumerated
     @Getter @Setter
-    @NonNull
-    private Status status = Status.OK;
+    private Status status;
 
     @Column(insertable = false, name = "exit_date")
     private LocalDate exitDate;

@@ -22,13 +22,13 @@ import java.time.LocalDate;
 public abstract class AbstractRentable extends AbstractAuditableEntity implements Serializable {
 
     @Size(min = 1)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "rental_price")
     @Getter
     @Setter
     @NonNull
-    private Double price;
+    private Double rentalPrice;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     @Getter
     @Setter
     @NonNull

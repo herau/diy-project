@@ -3,7 +3,6 @@ package com.ds.ce.diy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
@@ -11,6 +10,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -43,11 +43,6 @@ public class Tool extends AbstractRentable implements Serializable {
     @Analyzer(definition = "nGrams")
     private String name;
 
-    @Size(min = 1)
-    @Column(nullable = false, name = "rental_price")
-    //TODO not the same than rentable#price ?
-    private Double rentalPrice;
-
     @Size
     @Column
     private Double weight;
@@ -59,15 +54,19 @@ public class Tool extends AbstractRentable implements Serializable {
     @Column(name = "documentation_url")
     private String documentationUrl;
 
-    @Column(nullable = false, updatable = false)
-    @Getter
-    private Nature nature;
+    //TODO currently no data in DB
+//    @Column(nullable = false, updatable = false)
+//    @Getter
+//    private Nature nature;
 
     @Column(name = "order_number")
     private String orderNumber;
 
     @Column(name = "order_reference")
     private String orderReference;
+
+    @Embedded
+    private Lifespan lifespan;
 
     @ManyToMany
     @JoinTable(
@@ -88,11 +87,10 @@ public class Tool extends AbstractRentable implements Serializable {
 
     @Builder
     public Tool(String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description,
-                Double price, String name, Double rentalPrice, List<Tag> tags, Set<Tool> children, Tool parent,
-                Double weight, Double maxSize, String documentationUrl, String orderNumber, String orderReference, Nature nature) {
-        super(price, description, type, brand, purchaseDate, purchasePrice);
+                String name, Double rentalPrice, List<Tag> tags, Set<Tool> children, Tool parent, Double weight, Double maxSize, String documentationUrl, String orderNumber, String orderReference,
+                String serialNumber) {
+        super(rentalPrice, description, type, brand, purchaseDate, purchasePrice);
         this.name = name;
-        this.rentalPrice = rentalPrice;
         this.tags = tags;
         this.children = children;
         this.parent = parent;
@@ -101,6 +99,7 @@ public class Tool extends AbstractRentable implements Serializable {
         this.documentationUrl = documentationUrl;
         this.orderNumber = orderNumber;
         this.orderReference = orderReference;
-        this.nature = nature;
+//        this.nature = nature;
+        this.lifespan = new Lifespan(serialNumber);
     }
 }
