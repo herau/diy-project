@@ -3,6 +3,7 @@ package com.ds.ce.diy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
@@ -41,6 +42,7 @@ public class Tool extends AbstractRentable implements Serializable {
     @Column(nullable = false, unique = true, length = 30)
     @Field
     @Analyzer(definition = "nGrams")
+    @Getter
     private String name;
 
     @Size

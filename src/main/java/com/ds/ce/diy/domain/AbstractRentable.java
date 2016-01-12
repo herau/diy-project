@@ -36,10 +36,12 @@ public abstract class AbstractRentable extends AbstractAuditableEntity implement
 
     @Column(nullable = false, updatable = false)
     @NonNull
+    @Getter
     private String type;
 
     @Column(nullable = false, updatable = false)
     @NonNull
+    @Getter
     private String brand;
 
     @Column(nullable = false, updatable = false, name = "purchase_date")
