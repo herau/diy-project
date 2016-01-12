@@ -4,6 +4,7 @@ import com.ds.ce.diy.domain.Company;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
 import net.fortuna.ical4j.model.Calendar;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -21,7 +22,7 @@ import java.util.Properties;
 public class MailServiceTest {
 
     @Test
-    //@Ignore
+    @Ignore
     public void testSendInvitation() throws Exception {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.paris.exalead.com");
@@ -32,7 +33,8 @@ public class MailServiceTest {
         mailSender.setJavaMailProperties(javaMailProperties);
         DefaultMailService mailService = new DefaultMailService(mailSender);
 
-        User dd = new User("dd", "", "", "", "n27@3ds.com", Company.DS, State.VALID);
+        User dd = new User("dd", "", "", "", "n27@3ds.com", Company.DS);
+        dd.setState(State.VALID);
 
         ArrayList<User> required = new ArrayList<>();
         required.add(dd);
