@@ -89,8 +89,7 @@ public class Tool extends AbstractRentable implements Serializable {
 
     @Builder
     public Tool(String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description,
-                String name, Double rentalPrice, List<Tag> tags, Set<Tool> children, Tool parent, Double weight, Double maxSize, String documentationUrl, String orderNumber, String orderReference,
-                String serialNumber) {
+                String name, Double rentalPrice, List<Tag> tags, Set<Tool> children, Tool parent, Double weight, Double maxSize, String documentationUrl, String orderNumber, String orderReference) {
         super(rentalPrice, description, type, brand, purchaseDate, purchasePrice);
         this.name = name;
         this.tags = tags;
@@ -102,6 +101,6 @@ public class Tool extends AbstractRentable implements Serializable {
         this.orderNumber = orderNumber;
         this.orderReference = orderReference;
 //        this.nature = nature;
-        this.lifespan = new Lifespan(serialNumber);
+        this.lifespan = new Lifespan();
     }
 }

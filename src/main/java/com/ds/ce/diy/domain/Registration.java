@@ -34,6 +34,7 @@ public class Registration extends AbstractAuditableEntity implements Serializabl
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     @NonNull
     @Getter
+    // only the logged user can make a registration
     //TODO is it possible to create an officeHours for another person (if not you can use @CreatedBy)
     private User user;
 

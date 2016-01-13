@@ -1,10 +1,7 @@
 package com.ds.ce.diy.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -15,13 +12,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Lifespan implements Serializable {
 
-    @Column(nullable = false, updatable = false, name = "serial_number")
-    @Getter
-    @NonNull
+    @Column(name = "serial_number")
+    @Getter @Setter
     private String serialNumber;
 
     //TODO in db as integer and must be non nullable

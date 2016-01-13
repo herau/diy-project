@@ -34,9 +34,10 @@ public class Accessory extends AbstractRentable implements Serializable {
     @Embedded
     private Lifespan lifespan;
 
-    public Accessory(String serialNumber, String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description, Double price) {
+    public Accessory(String type, String brand, LocalDate purchaseDate, Double purchasePrice, String description,
+                     Double price) {
         super(price, description, type, brand, purchaseDate, purchasePrice);
-        this.lifespan = new Lifespan(serialNumber);
+        this.lifespan = new Lifespan();
     }
 
 }
