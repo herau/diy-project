@@ -1,5 +1,6 @@
 package com.ds.ce.diy.domain;
 
+import com.ds.ce.diy.domain.audit.AbstractAuditableEntity;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

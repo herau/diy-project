@@ -1,5 +1,6 @@
 package com.ds.ce.diy.domain;
 
+import com.ds.ce.diy.domain.audit.AbstractAuditableEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

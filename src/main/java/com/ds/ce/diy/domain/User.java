@@ -1,5 +1,6 @@
 package com.ds.ce.diy.domain;
 
+import com.ds.ce.diy.domain.audit.AbstractAuditableEntity;
 import com.ds.ce.diy.domain.security.VerificationToken;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
