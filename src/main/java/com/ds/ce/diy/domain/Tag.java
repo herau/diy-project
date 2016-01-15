@@ -32,7 +32,7 @@ public class Tag extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "tag_id")
+    @Column(name = "tag_id")
     private Integer id;
 
     @Column(nullable = false, unique = true)

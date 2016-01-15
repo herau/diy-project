@@ -36,7 +36,7 @@ public class Tool extends AbstractRentable implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "tool_id")
+    @Column(name = "tool_id")
     private Integer id;
 
     @Column(nullable = false, unique = true, length = 30)

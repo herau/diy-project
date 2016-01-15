@@ -22,7 +22,7 @@ public class Supply extends AbstractRentable implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "supply_id")
+    @Column(name = "supply_id")
     private Integer id;
 
     @Range

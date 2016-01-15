@@ -27,7 +27,7 @@ public class Registration extends AbstractAuditableEntity implements Serializabl
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "registration_id")
+    @Column(name = "registration_id")
     private Integer id;
 
     @ManyToOne(optional = false)

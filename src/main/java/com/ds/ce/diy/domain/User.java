@@ -59,7 +59,7 @@ public class User extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "user_id")
+    @Column(name = "user_id")
     private Integer id;
 
     @Column(updatable = false, nullable = false, unique = true, length = 11, name = "personal_number")

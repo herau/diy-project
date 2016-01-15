@@ -23,7 +23,7 @@ public class Notification {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "tool_id")
+    @Column(name = "tool_id")
     private Integer id;
 
     @Column(nullable = false)

@@ -16,7 +16,7 @@ public class Account extends AbstractAuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false, updatable = false, name = "account_id")
+    @Column(name = "account_id")
     private Integer id;
 
     @Column
