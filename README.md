@@ -1,4 +1,4 @@
-# DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project) [![codecov.io](http://codecov.io/github/herau/diy-project/coverage.svg?branch=master)](http://codecov.io/github/herau/diy-project?branch=master) [![Java](https://www.versioneye.com/user/projects/56081ebf5a262f001e000365/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56081ebf5a262f001e000365) [![JS](https://www.versioneye.com/user/projects/56081ea55a262f00220000f9/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56081ea55a262f00220000f9)
+# DIY Project  [![Build Status](https://travis-ci.org/herau/diy-project.svg)](https://travis-ci.org/herau/diy-project) [![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen) [![codecov.io](http://codecov.io/github/herau/diy-project/coverage.svg?branch=master)](http://codecov.io/github/herau/diy-project?branch=master) [![Java](https://www.versioneye.com/user/projects/56081ebf5a262f001e000365/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56081ebf5a262f001e000365) [![JS](https://www.versioneye.com/user/projects/56081ea55a262f00220000f9/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56081ea55a262f00220000f9)
 
 ## Prerequisites
 
@@ -7,7 +7,7 @@
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Git](https://git-scm.com/)
 * [Maven](http://maven.apache.org/install.html)
-* [NodeJs](https://nodejs.org/en/) (0.12.0+. For Windows < 4.0.0, see [websocket #13](https://github.com/websockets/utf-8-validate/issues/13))
+* [NodeJs](https://nodejs.org/en/) (4.0.0+)
 * [Python](https://www.python.org/) (2.7+ and < 3.0, see [node-gyp #193](https://github.com/nodejs/node-gyp/issues/193) )
 
 ### Windows specific (see [node-gyp #629](https://github.com/nodejs/node-gyp/issues/629))
@@ -23,6 +23,7 @@ To start, follow those steps:
 $ git clone https://github.com/herau/diy-project.git
 $ cd diy-project
 $ npm install
+$ ./node_modules/.bin/typings install
 $ npm run build:prod
 $ npm start
 ```

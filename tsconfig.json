@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es5",
     "module": "commonjs",
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "noEmitHelpers": false
   },
   "files": [
     "src/main/resources/static/app/vendor.ts",

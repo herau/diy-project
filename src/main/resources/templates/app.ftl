@@ -22,8 +22,6 @@
 <app>
     Loading...
 </app>
-<!-- Commmon files to be cached -->
-<script src="build/common.js"></script>
 <!-- Angular 2 files -->
 <script src="build/vendor.js"></script>
 <!-- Semantic UI files -->

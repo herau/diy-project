@@ -1,15 +1,8 @@
 // Import necessary wrappers for Jasmine
-import {
-  beforeEachProviders,
-  describe,
-  expect,
-  inject,
-  it,
-  injectAsync
-} from 'angular2/testing';
+import { beforeEachProviders, describe, expect, inject, it } from 'angular2/testing';
 import { provide } from 'angular2/core';
 import { BaseRequestOptions, Http } from 'angular2/http';
-import  { MockBackend } from 'angular2/http/testing';
+import { MockBackend } from 'angular2/http/testing';
 
 // Load the implementations that should be tested
 import { App } from '../../../main/resources/static/app/components/app';

@@ -4,17 +4,20 @@
  */
 var path = require('path');
 var webpack = require('webpack');
-var ENV = process.env.ENV = process.env.NODE_ENV = 'development';
+var ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 /**
  * Webpack Plugins
  */
-var CommonsChunkPlugin   = webpack.optimize.CommonsChunkPlugin;
-var ProvidePlugin        = webpack.ProvidePlugin;
-var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
-var DefinePlugin         = webpack.DefinePlugin;
-var CopyWebpackPlugin    = require('copy-webpack-plugin');
-var HtmlWebpackPlugin    = require('html-webpack-plugin');
+var ProvidePlugin = require('webpack/lib/ProvidePlugin');
+var DefinePlugin = require('webpack/lib/DefinePlugin');
+var OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
+var DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
+var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var WebpackMd5Hash    = require('webpack-md5-hash');
 
 var metadata = {
   title: 'DIY',
@@ -31,13 +34,14 @@ module.exports = {
   // For faster builds use 'eval'.
   devtool: 'source-map',
   context: __dirname,
-  debug: true,
+  debug: false,
   verbose: true,
   stats: {
     colors: true,
     reasons: true
   },
 
+  //
   entry: {
     // To ensure these modules are grouped together in one file.
     'vendor': [
@@ -84,9 +88,9 @@ module.exports = {
   output: {
     path: srcDir('build'),
     publicPath: "build/",
-    filename: '[name].js',
-    sourceMapFilename: '[name].map',
-    chunkFilename: '[id].chunk.js'
+    filename: '[name].[chunkhash].js',
+    sourceMapFilename: '[name].[chunkhash].map',
+    chunkFilename: '[id].[chunkhash].chunk.js'
   },
 
   resolve: {
@@ -96,7 +100,8 @@ module.exports = {
     alias: {
       'app':    srcDir('app'),
       'jquery': nodeDir('jquery/dist/jquery')
-    }
+    },
+    cache: false
   },
 
   module: {
@@ -125,6 +130,12 @@ module.exports = {
 
         loader: 'ts',
 
+        // Remove TypeScript helpers to be injected below by DefinePlugin.
+        'compilerOptions': {
+          'removeComments': true,
+          'noEmitHelpers': true,
+        },
+
         query: {
           'ignoreWarnings': [
             //2403, // 2403 -> Subsequent variable declarations.
@@ -134,17 +145,26 @@ module.exports = {
           ]
         },
 
-        exclude: [/\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
+        exclude: [/\.(spec|e2e)\.ts$/]
       }
     ],
     noParse: [ /zone\.js\/dist\/.+/, /angular2\/bundles\/.+/ ]
   },
 
   plugins: [
+    new WebpackMd5Hash(),
+    new DedupePlugin(),
     new OccurenceOrderPlugin(true),
     new ProvidePlugin({
       "jQuery": "jquery",
-      "$":      "jquery"
+      "$":      "jquery",
+      // TypeScript helpers
+      '__metadata': 'ts-helper/metadata',
+      '__decorate': 'ts-helper/decorate',
+      '__awaiter': 'ts-helper/awaiter',
+      '__extends': 'ts-helper/extends',
+      '__param': 'ts-helper/param',
+      'Reflect': 'es7-reflect-metadata/dist/browser'
     }),
     new CommonsChunkPlugin({
       name: 'vendor',
@@ -154,15 +174,37 @@ module.exports = {
     // Copy assets.
     //new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
     // Generating html.
-    //new HtmlWebpackPlugin({ template: 'src/index.html', inject: false }),
-    // Replace.
+    //new HtmlWebpackPlugin({ template: 'src/index.html'}),
+    // Replace
     new DefinePlugin({
       'process.env': {
         'ENV': JSON.stringify(metadata.ENV),
         'NODE_ENV': JSON.stringify(metadata.ENV)
       }
+    }),
+    new UglifyJsPlugin({
+      // beautify: true,
+      mangle: false,
+      comments: false,
+      compress : {
+        screw_ie8 : true
+      },
+      // TODO(gdi2290): uncomment in beta.2.
+      //mangle: {
+      //  screw_ie8 : true
+      //}
     })
-  ]
+  ],
+
+  // We need this due to problems with es6-shim
+  node: {
+    global: 'window',
+    progress: false,
+    crypto: 'empty',
+    module: false,
+    clearImmediate: false,
+    setImmediate: false
+  }
 
 };
 
@@ -182,4 +224,3 @@ function srcDir(args) {
   args = Array.prototype.slice.call(arguments, 0);
   return rootDir.apply(path, ['src/main/resources/static'].concat(args));
 }
-
