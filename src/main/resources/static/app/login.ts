@@ -10,7 +10,7 @@ import {NgIf} from 'angular2/common';
   template: `
   <div class="ui middle aligned center aligned grid" style="height:100%">
     <div class="column" style="max-width:450px">
-      <form class="ui large form" action="/login" method="post" (submit)="onSubmit()">
+      <form #f="ngForm" class="ui large form" action="/login" method="post" (ngSubmit)="onSubmit(f)">
         <div class="ui segment">
           <div class="field">
             <div class="ui left icon input">
@@ -47,9 +47,10 @@ export class Login {
     constructor() {
     }
 
-    onSubmit() {
+    onSubmit(f) {
         this.loading = true;
+        return true;
     }
 }
 
-bootstrap(Login);
+//bootstrap(Login);
