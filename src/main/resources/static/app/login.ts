@@ -10,18 +10,18 @@ import {NgIf} from 'angular2/common';
   template: `
   <div class="ui middle aligned center aligned grid" style="height:100%">
     <div class="column" style="max-width:450px">
-      <form #f="ngForm" class="ui large form" action="/login" method="post" (ngSubmit)="onSubmit(f)">
+      <form #f="ngForm" class="ui large form" action="/login" method="post" (ngSubmit)="onSubmit(f.value)">
         <div class="ui segment">
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" id="personalNumber" name="personalNumber" placeholder="Personal Number" pattern="[0-9]*" required autofocus>
+              <input type="text" id="personalNumber" name="personalNumber" ngControl="personalNumber" placeholder="Personal Number" pattern="[0-9]*" required autofocus>
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input type="password" id="password" name="password" placeholder="Password" required>
+              <input type="password" id="password" name="password" ngControl="password" placeholder="Password" required>
             </div>
           </div>
           <button type="submit" [class.loading]="loading" class="ui fluid large primary button">Login</button>
@@ -47,10 +47,13 @@ export class Login {
     constructor() {
     }
 
-    onSubmit(f) {
+    onSubmit(data) {
         this.loading = true;
-        return true;
+        var f: HTMLFormElement = <HTMLFormElement> document.getElementById('wtf');
+        f.children[0].value = data.personalNumber;
+        f.children[1].value = data.password;
+        f.submit();
     }
 }
 
-//bootstrap(Login);
+bootstrap(Login);
