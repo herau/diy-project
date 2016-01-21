@@ -21,7 +21,7 @@ public class IndexController {
     @Inject
     private ObjectMapper mapper;
 
-    @RequestMapping("/")
+    @RequestMapping("/*")
     public String index(Map<String, Object> model, Authentication authentication) {
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
