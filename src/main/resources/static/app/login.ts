@@ -1,6 +1,7 @@
 import {bootstrap} from 'angular2/platform/browser';
 import {Component, View} from 'angular2/core';
-import {NgIf} from 'angular2/common';
+//import {NgIf} from 'angular2/common';
+import {FORM_DIRECTIVES} from 'angular2/common';
 
 @Component({
   selector: 'login'
@@ -10,18 +11,18 @@ import {NgIf} from 'angular2/common';
   template: `
   <div class="ui middle aligned center aligned grid" style="height:100%">
     <div class="column" style="max-width:450px">
-      <form #f="ngForm" class="ui large form" action="/login" method="post" (ngSubmit)="onSubmit(f.value)">
+      <form ngNoForm class="ui large form" action="/login" method="post" >
         <div class="ui segment">
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" id="personalNumber" name="personalNumber" ngControl="personalNumber" placeholder="Personal Number" pattern="[0-9]*" required autofocus>
+              <input type="text" id="personalNumber" name="personalNumber" placeholder="Personal Number" pattern="[0-9]*" required autofocus>
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input type="password" id="password" name="password" ngControl="password" placeholder="Password" required>
+              <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
           </div>
           <button type="submit" [class.loading]="loading" class="ui fluid large primary button">Login</button>
@@ -38,21 +39,15 @@ import {NgIf} from 'angular2/common';
     </div>
   </div>
   `,
+    directives: FORM_DIRECTIVES
 })
+
 
 export class Login {
 
     loading: Boolean = false;
 
     constructor() {
-    }
-
-    onSubmit(data) {
-        this.loading = true;
-        var f: HTMLFormElement = <HTMLFormElement> document.getElementById('wtf');
-        f.children[0].value = data.personalNumber;
-        f.children[1].value = data.password;
-        f.submit();
     }
 }
 
