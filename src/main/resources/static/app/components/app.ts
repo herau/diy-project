@@ -49,12 +49,10 @@ import {ProfileForm} from './user/profile';
 export class App {
 
     name: String;
-    router: Router;
     location: Location;
 
-    constructor(router: Router, location: Location) {
+    constructor(location: Location) {
         this.name = "DIY";
-        this.router = router;
         this.location = location;
     }
 

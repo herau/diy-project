@@ -9,6 +9,7 @@
     "noEmitHelpers": false
   },
   "files": [
+    "src/main/resources/static/app/custom.d.ts",
     "src/main/resources/static/app/vendor.ts",
     "src/main/resources/static/app/bootstrap.ts",
     "src/main/resources/static/app/login.ts",

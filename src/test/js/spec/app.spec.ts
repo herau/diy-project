@@ -1,23 +1,21 @@
 // Import necessary wrappers for Jasmine
+import {provide} from 'angular2/core';
 import { beforeEachProviders, describe, expect, inject, it } from 'angular2/testing';
-import { provide } from 'angular2/core';
-import { BaseRequestOptions, Http } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing';
+import { ROUTER_PROVIDERS, LocationStrategy, PathLocationStrategy, APP_BASE_HREF } from 'angular2/router';
 
 // Load the implementations that should be tested
 import { App } from '../../../main/resources/static/app/components/app';
 
 describe('App', () => {
-  // provide our implementations or mocks to the dependency injector
+
+  // Provide our implementations or mocks to the dependency injector
   beforeEachProviders(() => [
     App,
-    BaseRequestOptions,
-    MockBackend,
-    provide(Http, {
-      useFactory: function(backend, defaultOptions) {
-        return new Http(backend, defaultOptions);
-      },
-      deps: [MockBackend, BaseRequestOptions]})
+    // These providers are needed to be injected as dependencies for `Location` object, itself a dependency for the `App` component.
+    // Normally, this is performed by `bootstrap.ts` file.
+    ROUTER_PROVIDERS,
+    provide(APP_BASE_HREF, {useValue: '/'}),
+    provide(LocationStrategy, {useClass: PathLocationStrategy})
   ]);
 
   it('should have a title', inject([App], (app) => {

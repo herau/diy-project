@@ -23,8 +23,8 @@ To start, follow those steps:
 $ git clone https://github.com/herau/diy-project.git
 $ cd diy-project
 $ npm install
-$ ./node_modules/.bin/typings install
-$ npm run build:prod
+$ npm run typings-install
+$ npm run build
 $ npm start
 ```
 

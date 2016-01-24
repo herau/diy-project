@@ -4,6 +4,7 @@
  */
 var path = require('path');
 var webpack = require('webpack');
+var zlib = require('zlib');
 var ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 /**
@@ -17,6 +18,7 @@ var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CompressionPlugin = require('compression-webpack-plugin');
 var WebpackMd5Hash    = require('webpack-md5-hash');
 
 var metadata = {
@@ -88,9 +90,13 @@ module.exports = {
   output: {
     path: srcDir('build'),
     publicPath: "build/",
-    filename: '[name].[chunkhash].js',
-    sourceMapFilename: '[name].[chunkhash].map',
-    chunkFilename: '[id].[chunkhash].chunk.js'
+    //filename: '[name].[chunkhash].js',
+    filename: '[name].js',
+    //sourceMapFilename: '[name].[chunkhash].map',
+    //sourceMapFilename: '[name].map',
+    //chunkFilename: '[id].[chunkhash].chunk.js'
+    chunkFilename: '[id].chunk.js'
+
   },
 
   resolve: {
@@ -130,19 +136,12 @@ module.exports = {
 
         loader: 'ts',
 
-        // Remove TypeScript helpers to be injected below by DefinePlugin.
-        'compilerOptions': {
-          'removeComments': true,
-          'noEmitHelpers': true,
-        },
-
         query: {
-          'ignoreWarnings': [
-            //2403, // 2403 -> Subsequent variable declarations.
-            //2300, // 2300 -> Duplicate identifier.
-            //2374, // 2374 -> Duplicate number index signature.
-            //2375  // 2375 -> Duplicate string index signature.
-          ]
+          // Remove TypeScript helpers to be injected below by DefinePlugin.
+          'compilerOptions': {
+            removeComments: true,
+            noEmitHelpers: true
+          }
         },
 
         exclude: [/\.(spec|e2e)\.ts$/]
@@ -171,8 +170,12 @@ module.exports = {
       minChunks: Infinity,
       filename: 'vendor.js'
     }),
-    // Copy assets.
-    //new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
+    // Copy Semantic config (does not work because it's performed after build step).
+    //new CopyWebpackPlugin([
+    //  { from: nodeDir('semantic-ui-less'),      to: 'semantic'},               // Copy Semantic sources to build folder.
+    //  { from: srcDir('semantic/site'),          to: 'semantic/site' },         // Copy Semantic config to build folder.
+    //  { from: srcDir('semantic/theme.config'),  to: 'semantic/theme.config' }  // Copy Semantic config to build folder.
+    //]),
     // Generating html.
     //new HtmlWebpackPlugin({ template: 'src/index.html'}),
     // Replace
@@ -182,8 +185,9 @@ module.exports = {
         'NODE_ENV': JSON.stringify(metadata.ENV)
       }
     }),
+    // Include Uglify in production
     new UglifyJsPlugin({
-      // beautify: true,
+      beautify: false,
       mangle: false,
       comments: false,
       compress : {
@@ -193,6 +197,11 @@ module.exports = {
       //mangle: {
       //  screw_ie8 : true
       //}
+    }),
+    new CompressionPlugin({
+      algorithm: gzipMaxLevel,
+      regExp: /\.css$|\.html$|\.js$|\.map$/,
+      threshold: 2 * 1024
     })
   ],
 
@@ -223,4 +232,8 @@ function nodeDir(args) {
 function srcDir(args) {
   args = Array.prototype.slice.call(arguments, 0);
   return rootDir.apply(path, ['src/main/resources/static'].concat(args));
+}
+
+function gzipMaxLevel(buffer, callback) {
+  return zlib['gzip'](buffer, {level: 9}, callback)
 }

@@ -100,6 +100,24 @@ module.exports = {
   },
 
   module: {
+    preLoaders: [
+      // Enable lint before build.
+      /*{
+        test: /\.ts$/,
+        loader: 'tslint-loader',
+        exclude: [/node_modules/]
+      }*/,
+      // Rewire source map files of libraries, use to debug into 3rd party libraries.
+      {
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, "node_modules", "angular2")
+          // Add more as needed or replace to include all modules:
+          // path.resolve(__dirname, "node_modules")
+        ],
+        loader: "source-map-loader"
+      }
+    ],
     loaders: [
       // Support for *.json files.
       { test: /\.json$/, loader: 'json' },
@@ -125,15 +143,6 @@ module.exports = {
 
         loader: 'ts',
 
-        query: {
-          'ignoreWarnings': [
-            //2403, // 2403 -> Subsequent variable declarations.
-            //2300, // 2300 -> Duplicate identifier.
-            //2374, // 2374 -> Duplicate number index signature.
-            //2375  // 2375 -> Duplicate string index signature.
-          ]
-        },
-
         exclude: [/\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
       }
     ],
@@ -151,8 +160,12 @@ module.exports = {
       minChunks: Infinity,
       filename: 'vendor.js'
     }),
-    // Copy assets.
-    //new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
+    // Copy Semantic config (does not work because it's performed after build step).
+    //new CopyWebpackPlugin([
+    //  { from: nodeDir('semantic-ui-less'),      to: 'semantic'},               // Copy Semantic sources to build folder.
+    //  { from: srcDir('semantic/site'),          to: 'semantic/site' },         // Copy Semantic config to build folder.
+    //  { from: srcDir('semantic/theme.config'),  to: 'semantic/theme.config' }  // Copy Semantic config to build folder.
+    //]),
     // Generating html.
     //new HtmlWebpackPlugin({ template: 'src/index.html', inject: false }),
     // Replace.

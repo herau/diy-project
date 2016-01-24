@@ -35,19 +35,14 @@ module.exports = {
 
         loader: 'ts',
 
-        // Remove TypeScript helpers to be injected below by DefinePlugin.
-        'compilerOptions': {
-          'removeComments': true,
-          'noEmitHelpers': true,
-        },
-
         query: {
-          'ignoreWarnings': [
-            //2403, // 2403 -> Subsequent variable declarations.
-            //2300, // 2300 -> Duplicate identifier.
-            //2374, // 2374 -> Duplicate number index signature.
-            //2375  // 2375 -> Duplicate string index signature.
-          ]
+
+          // Remove TypeScript helpers to be injected below by DefinePlugin.
+          'compilerOptions': {
+            'removeComments': true,
+            'noEmitHelpers': true,
+          }
+
         },
 
         exclude: [/\.e2e\.ts$/, /node_modules/]
