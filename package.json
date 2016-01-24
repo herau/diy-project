@@ -19,7 +19,7 @@
     "doc": "typedoc  --options src/main/resources/static/typedoc.json  src/main/resources/static/app/**/*.ts",
     "webdriver:update": "webdriver-manager update",
     "webdriver:start": "webdriver-manager start",
-    "e2e": "protractor",
+    "e2e": "protractor src/test/js/protractor.conf.js",
     "test": "karma start src/test/js/karma.conf.js",
     "test:debug": "karma start src/test/js/karma.conf.js --browsers=Chrome --single-run=false",
     "start": "mvn spring-boot:run"

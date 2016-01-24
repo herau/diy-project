@@ -1,11 +1,9 @@
-// @AngularClass
-
 exports.config = {
 
   baseUrl: 'http://localhost:3000/',
 
   specs: [
-    'src/test/js/app/*.e2e.js'
+    'spec/*.e2e.js'
   ],
 
   exclude: [],
@@ -43,4 +41,5 @@ exports.config = {
    *
    */
   useAllAngular2AppRoots: true
+
 };
