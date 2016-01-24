@@ -1,6 +1,5 @@
 import {bootstrap} from 'angular2/platform/browser';
 import {Component, View} from 'angular2/core';
-//import {NgIf} from 'angular2/common';
 import {FORM_DIRECTIVES} from 'angular2/common';
 
 @Component({
@@ -11,7 +10,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
   template: `
   <div class="ui middle aligned center aligned grid" style="height:100%">
     <div class="column" style="max-width:450px">
-      <form ngNoForm class="ui large form" action="/login" method="post" >
+      <form ngNoForm class="ui large form" action="/login" method="post" (ngSubmit)="onSubmit">
         <div class="ui segment">
           <div class="field">
             <div class="ui left icon input">
@@ -39,7 +38,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
     </div>
   </div>
   `,
-    directives: FORM_DIRECTIVES
+  directives: FORM_DIRECTIVES
 })
 
 
@@ -47,8 +46,12 @@ export class Login {
 
     loading: Boolean = false;
 
-    constructor() {
+    constructor() {}
+
+    onSubmit() {
+        this.loading = true;
     }
 }
+
 
 bootstrap(Login);
