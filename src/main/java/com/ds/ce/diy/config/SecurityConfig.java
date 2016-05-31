@@ -1,5 +1,6 @@
 package com.ds.ce.diy.config;
 
+import com.ds.ce.diy.domain.Role;
 import com.ds.ce.diy.web.EntryPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/lib/**").permitAll()
             .antMatchers(String.format(EntryPoint.PROFILE_PWD, "**")).permitAll()
             .antMatchers("/api/users/token/**").permitAll()
+            .antMatchers("/admin").hasAuthority(Role.ADMIN.toString())
             .antMatchers(EntryPoint.TOKENS + "/**").permitAll()
             .anyRequest().fullyAuthenticated()
         .and()

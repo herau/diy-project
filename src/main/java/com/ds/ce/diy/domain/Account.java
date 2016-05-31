@@ -30,9 +30,9 @@ public class Account extends AbstractAuditableEntity implements Serializable {
     /**
      * credit the account
      *
-     * @param value
+     * @param value to add
      *
-     * @return
+     * @return the new balance
      */
     public Double credit(Double value) {
         balance += value;
@@ -42,9 +42,9 @@ public class Account extends AbstractAuditableEntity implements Serializable {
     /**
      * debit the account
      *
-     * @param value
+     * @param value to debit
      *
-     * @return
+     * @return the new balance
      */
     public Double debit(Double value) {
         balance -= value;

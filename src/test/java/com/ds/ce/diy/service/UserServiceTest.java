@@ -5,7 +5,6 @@ import com.ds.ce.diy.domain.Company;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.dto.UserDTO;
-import com.ds.ce.diy.repositories.AccountRepository;
 import com.ds.ce.diy.repositories.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +13,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -26,13 +29,13 @@ public class UserServiceTest {
     @Mock
     PasswordService passwordService;
     @Mock
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     UserService userService;
 
     @Before
     public void setUp(){
-        userService = new UserServiceImpl(repository, passwordService, accountRepository);
+        userService = new UserServiceImpl(repository, accountService, passwordService);
     }
 
 
@@ -59,6 +62,7 @@ public class UserServiceTest {
         when(userMock.getCompany()).thenReturn(Company.DS);
 
         when(passwordService.encode(anyString())).thenReturn("randomEncodedPassword");
+        when(accountService.create()).thenReturn(new Account());
 
         // test
         userService.create(userMock);
@@ -66,7 +70,7 @@ public class UserServiceTest {
         // assertions
         verify(passwordService).generateRandom();
         verify(passwordService).encode(anyString());
-        verify(accountRepository).save(any(Account.class));
+        verify(accountService).create();
         // retrieve generated user
         ArgumentCaptor<User> userToSave = ArgumentCaptor.forClass(User.class);
         verify(repository).save(userToSave.capture());

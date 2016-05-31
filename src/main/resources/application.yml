@@ -29,7 +29,7 @@ spring:
       WRITE_DATES_AS_TIMESTAMPS: false
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
-    serialization-inclusion: NON_NULL
+    default-property-inclusion: non_null
 
 security:
   enable-csrf: false
@@ -53,6 +53,10 @@ spring:
     host: smtp.paris.exalead.com
   freemarker:
     cache: false
+  h2:
+    console:
+      enabled: true
+
 
 logging:
   level:
