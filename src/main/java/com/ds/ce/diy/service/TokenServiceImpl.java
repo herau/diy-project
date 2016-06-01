@@ -33,7 +33,7 @@ import java.util.Map;
 import static com.ds.ce.diy.domain.security.VerificationTokenType.EMAIL_REGISTRATION;
 
 @Service
-public class TokenServiceImpl implements TokenService {
+class TokenServiceImpl implements TokenService {
 
     private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 

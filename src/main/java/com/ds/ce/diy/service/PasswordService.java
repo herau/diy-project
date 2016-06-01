@@ -4,7 +4,7 @@ package com.ds.ce.diy.service;
  * @author herau
  * @see org.springframework.security.crypto.password.PasswordEncoder
  */
-public interface PasswordService {
+interface PasswordService {
 
     String generateRandom();
 

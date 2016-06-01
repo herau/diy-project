@@ -55,7 +55,7 @@ import java.io.Serializable;
         filters = {@TokenFilterDef(factory = LowerCaseFilterFactory.class),
                    @TokenFilterDef(factory = StandardFilterFactory.class)})
 
-@JsonIgnoreProperties(value = {"token", "account", "role", "password"})
+@JsonIgnoreProperties(value = {"token", "account", "password"})
 public class User extends AbstractAuditableEntity implements Serializable {
 
     @Id

@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 @Setter
 public class AppSettings {
 
-    private Email email;
+    private Email email = new Email();
 
     @PostConstruct
     public void init() {
@@ -27,7 +27,7 @@ public class AppSettings {
     @Setter
     public static class Email {
 
-        private Registration registration;
+        private Registration registration = new Registration();
 
         @Getter
         @Setter

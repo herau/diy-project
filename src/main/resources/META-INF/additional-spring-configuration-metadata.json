@@ -3,7 +3,17 @@
     {
       "name": "app.email.registration.subject",
       "type": "java.lang.String",
-      "description": "Subject of the registration email"
+      "description": "Subject of the registration email."
+    },
+    {
+      "name": "app.email.registration.token-expiration",
+      "type": "java.lang.String",
+      "description": "Description for app.email.registration.token-expiration."
+    },
+    {
+      "name": "search.index.build-startup",
+      "type": "java.lang.String",
+      "description": "Description for search.index.build-startup."
     }
   ]
 }

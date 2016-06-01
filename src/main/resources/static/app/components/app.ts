@@ -1,12 +1,15 @@
-import {Component, View} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
-import {Router, Location, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {ToolList} from './tool/tools';
-import {UserList} from './user/users';
-import {ProfileForm} from './user/profile';
+import {Component, View} from "angular2/core";
+import {CORE_DIRECTIVES} from "angular2/common";
+import {Location, RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
+import {ToolList} from "./tool/tools";
+import {UserList} from "./user/users";
+import {ProfileForm} from "./user/profile";
+import {UserService} from "../services/user";
+import {ToolFormComponent} from "../tool-form.component";
 
 @Component({
-    selector: 'app'
+    selector: 'app',
+    providers: [UserService]
 })
 
 @View({
@@ -20,6 +23,8 @@ import {ProfileForm} from './user/profile';
         <a class="item" [class.active]="location.path() === '/tools'" [routerLink]="['/Tools']">Tools</a>
         <a class="item" [class.active]="location.path() === '/users'" [routerLink]="['/Users']">Users</a>
         <a class="item" [class.active]="location.path() === '/profile'" [routerLink]="['/Profile']">Profile</a>
+        <a *ngIf="user?.role === 'ADMIN'" class="item" 
+        [class.active]="location.path() === '/tools/add'" [routerLink]="['/ToolForm']">Ajouter un outil</a>
     </div>
     <div *ngIf="location.path() === '/tools'" class="ui vertical basic padded segment">
         <div class="ui fluid category search">
@@ -43,15 +48,18 @@ import {ProfileForm} from './user/profile';
     //{ path: '/artist/:id',        as: 'Artist',     component: Artist }
     { path: '/users',               as: 'Users',      component: UserList },
     { path: '/tools',               as: 'Tools',      component: ToolList },
-    { path: '/profile',             as: 'Profile',    component: ProfileForm }
+    {path: '/profile', as: 'Profile', component: ProfileForm},
+    {path: '/tools/add', as: 'ToolForm', component: ToolFormComponent}
 ])
 
 export class App {
 
     name: String;
     location: Location;
+    private user:Object;
 
-    constructor(location: Location) {
+    constructor(location:Location, userService:UserService) {
+        this.user = userService.current();
         this.name = "DIY";
         this.location = location;
     }

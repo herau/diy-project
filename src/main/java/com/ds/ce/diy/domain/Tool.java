@@ -21,7 +21,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -45,11 +44,9 @@ public class Tool extends AbstractRentable implements Serializable {
     @Getter
     private String name;
 
-    @Size
     @Column
     private Double weight;
 
-    @Size
     @Column(name = "max_size")
     private Double maxSize;
 

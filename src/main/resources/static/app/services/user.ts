@@ -1,5 +1,5 @@
-import {Http, HTTP_PROVIDERS} from 'angular2/http';
-import { Injectable } from 'angular2/core';
+import {Http} from "angular2/http";
+import {Injectable} from "angular2/core";
 //import 'rxjs/operators/map';
 
 @Injectable()
@@ -33,15 +33,8 @@ export class UserService {
         });
     }
 
-    current(): Promise<Object> {
+    current():Object {
         let self = this;
-
-        return new Promise((resolve, reject) => {
-            if (self.user){
-                resolve(self.user);
-            } else {
-                reject();
-            }
-        });
+        return self.user;
     }
 }

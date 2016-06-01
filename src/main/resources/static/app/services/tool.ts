@@ -1,5 +1,6 @@
-import { Http, HTTP_PROVIDERS } from 'angular2/http';
-import { Injectable } from 'angular2/core';
+import {Headers, Http} from "angular2/http";
+import {Injectable} from "angular2/core";
+import {Tool} from "../models/tool";
 //import 'rxjs/operators/map';
 
 @Injectable()
@@ -9,13 +10,13 @@ export class ToolService {
 
     http: Http;
 
-    tools: Array<Object>;
+    tools:Array<Tool>;
 
     constructor(http: Http) {
         this.http = http;
     }
 
-    all(): Promise<Array<Object>> {
+    all():Promise<Array<Tool>> {
 
         let self = this;
 
@@ -29,5 +30,43 @@ export class ToolService {
                 resolve(self.tools);
             })
         });
+    }
+
+    save(tool:Tool):Promise<Tool> {
+        if (tool.id) {
+            return this.put(tool);
+        }
+        return this.post(tool);
+    }
+
+    private post(tool:Tool):Promise<Tool> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http
+            .post(this.url, JSON.stringify(tool), {headers: headers})
+            .toPromise()
+            .then(() => tool)
+            .catch(this.handleError);
+    }
+
+    private put(tool:Tool):Promise<Tool> {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        let url = `${this.url}/${tool.id}`;
+
+        return this.http
+            .put(url, JSON.stringify(tool), {headers: headers})
+            .toPromise()
+            .then(() => tool)
+            .catch(this.handleError);
+    }
+
+    //TODO externalize it
+    private handleError(error:any) {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
     }
 }

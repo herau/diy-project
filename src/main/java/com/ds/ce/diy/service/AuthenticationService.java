@@ -17,7 +17,7 @@ import javax.inject.Inject;
  * @see UserDetailsService
  */
 @Service
-public class AuthenticationService implements UserDetailsService {
+class AuthenticationService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
     private final UserService userService;

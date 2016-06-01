@@ -1,10 +1,8 @@
 package com.ds.ce.diy.service;
 
-import com.ds.ce.diy.domain.Account;
 import com.ds.ce.diy.domain.State;
 import com.ds.ce.diy.domain.User;
 import com.ds.ce.diy.dto.UserDTO;
-import com.ds.ce.diy.repositories.AccountRepository;
 import com.ds.ce.diy.repositories.UserRepository;
 import com.ds.ce.diy.web.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,18 +16,19 @@ import java.util.Optional;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
     private final PasswordService passwordService;
-    private final AccountRepository accountRepository;
+
+    private final AccountService accountService;
 
     @Inject
-    public UserServiceImpl(UserRepository userRepository, PasswordService passwordService,
-                           AccountRepository accountRepository) {
+    public UserServiceImpl(UserRepository userRepository, AccountService accountService,
+                           PasswordService passwordService) {
         this.repository = userRepository;
+        this.accountService = accountService;
         this.passwordService = passwordService;
-        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -70,9 +69,7 @@ public class UserServiceImpl implements UserService {
             user.setPersonalEmail(userDTO.getPersonalEmail());
         }
 
-        Account userAccount = new Account();
-        accountRepository.save(userAccount);
-        user.setAccount(userAccount);
+        user.setAccount(accountService.create());
 
         return repository.save(user);
     }

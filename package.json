@@ -60,7 +60,7 @@
     "protractor": "^3.0.0",
     "object-assign": "^4.0.1",
     "typedoc": "^0.3.12",
-    "typescript": "^1.7.3",
+    "typescript": "1.7.3",
     "ts-helper": "0.0.1",
     "ts-loader": "^0.8.0",
     "typings": "^0.6.1",
