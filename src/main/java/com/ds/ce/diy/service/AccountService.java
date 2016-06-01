@@ -4,6 +4,8 @@ import com.ds.ce.diy.domain.Account;
 import com.ds.ce.diy.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
+
 /**
  * @author Aurélien Leboulanger
  */
@@ -12,7 +14,8 @@ class AccountService {
 
     private final AccountRepository repository;
 
-    private AccountService(AccountRepository repository) {
+    @Inject
+    public AccountService(AccountRepository repository) {
 
         this.repository = repository;
     }

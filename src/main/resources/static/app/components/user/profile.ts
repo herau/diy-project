@@ -1,6 +1,6 @@
-import {Component, View,} from 'angular2/core';
-import {NgFor, NgIf} from 'angular2/common';
-import {UserService} from '../../services/user';
+import {Component, View} from "angular2/core";
+import {NgFor, NgIf} from "angular2/common";
+import {UserService} from "../../services/user";
 
 @Component({
   selector: 'profile-form',
@@ -332,13 +332,15 @@ export class ProfileForm {
 
     constructor(ts: UserService) {
         this.fetching = true;
-        ts.current().then(user => {
+
+        var user = ts.current();
+        if (user) {
             this.fetching = false;
             this.logged = true;
             this.user = user;
-        }, () => {
+        } else {
             this.logged = false;
-        })
+        }
     }
 
 }
