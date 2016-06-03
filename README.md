@@ -22,8 +22,8 @@ To start, follow those steps:
 ```bash
 $ git clone https://github.com/herau/diy-project.git
 $ cd diy-project
+$ npm install typings webpack-dev-server rimraf webpack -g
 $ npm install
-$ npm run typings-install
 $ npm run build
 $ npm start
 ```

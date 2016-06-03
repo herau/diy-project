@@ -1,81 +1,155 @@
 {
   "name": "diy",
-  "description": "Do it yourself app",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "description": "Do It Yourself",
+  "keywords": [
+    "angular2",
+    "webpack",
+    "typescript"
+  ],
   "license": "Apache-2.0",
+  "scripts": {
+     "rimraf": "rimraf",
+     "tslint": "tslint",
+     "typedoc": "typedoc",
+     "typings": "typings",
+     "webpack": "webpack",
+     "webpack-dev-server": "webpack-dev-server",
+     "webdriver-manager": "webdriver-manager",
+     "protractor": "protractor",
+
+     "clean": "npm cache clean && npm run rimraf -- node_modules doc typings coverage src/main/webapp/main/resources/static/dist",
+       "clean:dist": "npm run rimraf -- src/main/webapp/main/resources/static/dist",
+         "preclean:install": "npm run clean",
+       "clean:install": "npm set progress=false && npm install",
+         "preclean:start": "npm run clean",
+       "clean:start": "npm start",
+
+     "watch": "npm run watch:dev",
+       "watch:dev": "npm run build:dev -- --watch",
+       "watch:dev:hmr": "npm run watch:dev -- --hot",
+       "watch:test": "npm run test -- --auto-watch --no-single-run",
+       "watch:prod": "npm run build:prod -- --watch",
+
+     "build": "npm run build:dev",
+         "prebuild:dev": "npm run clean:dist",
+       "build:dev": "webpack --config config/webpack.dev.js --progress --profile --colors --display-error-details --display-cached",
+         "prebuild:prod": "npm run clean:dist",
+       "build:prod": "webpack --config config/webpack.prod.js  --progress --profile --colors --display-error-details --display-cached --bail",
+
+     "server": "npm run server:dev",
+       "server:dev": "webpack-dev-server --config config/webpack.dev.js --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base src/main/webapp/",
+       "server:dev:hmr": "npm run server:dev -- --hot",
+       "server:prod": "http-server dist --cors",
+
+     "webdriver:update": "npm run webdriver-manager update",
+     "webdriver:start": "npm run webdriver-manager start",
+
+     "lint": "npm run tslint src/main/webapp/**/*.ts",
+
+       "pree2e": "npm run webdriver:update -- --standalone",
+     "e2e": "npm run protractor",
+       "e2e:live": "npm run e2e -- --elementExplorer",
+
+       "pretest": "npm run lint",
+     "test": "karma start",
+
+     "ci": "npm test && npm run e2e",
+
+     "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/main/webapp/",
+
+     "start": "npm run server:dev",
+       "start:hmr": "npm run server:dev:hmr",
+
+     "postinstall": "npm run typings -- install",
+
+       "preversion": "npm test",
+     "version": "npm run build",
+       "postversion": "git push && git push --tags"
+
+   },
+  "dependencies": {
+    "@angular/http": "2.0.0-rc.1",
+    "@angular/common": "2.0.0-rc.1",
+    "@angular/compiler": "2.0.0-rc.1",
+    "@angular/core": "2.0.0-rc.1",
+    "@angular/platform-browser": "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+    "@angular/platform-server": "2.0.0-rc.1",
+    "@angular/router": "2.0.0-rc.1",
+    "@angular/router-deprecated": "2.0.0-rc.1",
+
+    "core-js": "^2.4.0",
+    "normalize.css": "^4.1.1",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "~0.6.12"
+  },
+  "devDependencies": {
+    "@angularclass/angular2-beta-to-rc-alias": "~0.0.3",
+
+    "angular2-hmr": "~0.7.0",
+
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.35.0",
+    "es7-reflect-metadata": "^1.6.0",
+
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.0.0",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "1.7.0",
+
+    "protractor": "^3.2.2",
+
+    "parse5": "^1.5.1",
+    "phantomjs-polyfill": "0.0.2",
+    "phantomjs-prebuilt": "^2.1.7",
+    "remap-istanbul": "^0.6.3",
+    "rimraf": "^2.5.2",
+
+    "codelyzer": "~0.0.19",
+
+    "tslint": "^3.7.1",
+    "ts-helpers": "1.1.1",
+    "ts-node": "^0.7.3",
+    "typedoc": "^0.3.12",
+    "typescript": "~1.8.9",
+    "typings": "~1.0.3",
+
+    "awesome-typescript-loader": "~0.17.0",
+    "tslint-loader": "^2.1.3",
+    "url-loader": "^0.5.7",
+    "style-loader": "^0.13.1",
+    "raw-loader": "0.5.1",
+    "source-map-loader": "^0.1.5",
+    "imports-loader": "^0.6.5",
+    "istanbul-instrumenter-loader": "^0.2.0",
+    "json-loader": "^0.5.4",
+    "es6-promise-loader": "^1.0.1",
+    "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
+    "expose-loader": "^0.7.1",
+    "file-loader": "^0.8.5",
+    "http-server": "^0.9.0",
+
+    "html-webpack-plugin": "^2.17.0",
+    "compression-webpack-plugin": "^0.3.1",
+    "copy-webpack-plugin": "^3.0.0",
+
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-md5-hash": "^0.0.5",
+    "webpack-merge": "^0.13.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/herau/diy-project.git"
   },
-  "scripts": {
-    "clean": "rimraf coverage typings src/main/resources/static/build src/main/resources/static/doc node_modules",
-    "typings-install": "typings install",
-    "prebuild": "ncp src/main/resources/static/semantic/site node_modules/semantic-ui-less/site && ./node_modules/.bin/ncp src/main/resources/static/semantic/theme.config node_modules/semantic-ui-less/theme.config",
-    "build": "webpack --progress --profile --colors --display-error-details --display-cached",
-    "prebuild:watch": "npm run prebuild",
-    "build:watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
-    "prebuild:prod": "npm run prebuild",
-    "build:prod": "webpack --config webpack.prod.config.js --progress --profile --colors --display-error-details --display-cached",
-    "doc": "typedoc  --options src/main/resources/static/typedoc.json  src/main/resources/static/app/**/*.ts",
-    "webdriver:update": "webdriver-manager update",
-    "webdriver:start": "webdriver-manager start",
-    "e2e": "protractor src/test/js/protractor.conf.js",
-    "test": "karma start src/test/js/karma.conf.js",
-    "test:debug": "karma start src/test/js/karma.conf.js --browsers=Chrome --single-run=false",
-    "start": "mvn spring-boot:run"
-  },
-  "dependencies": {
-    "semantic-ui-less": "^2.1.4",
-    "angular2": "2.0.0-beta.1",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
-    "es7-reflect-metadata": "^1.4.0",
-    "rxjs": "5.0.0-beta.0",
-    "zone.js": "0.5.10"
-
-  },
-  "devDependencies": {
-    "css-loader": "^0.23.0",
-    "less-loader": "^2.2.1",
-    "exports-loader": "^0.6.2",
-    "expose-loader": "^0.7.1",
-    "file-loader": "^0.8.4",
-    "imports-loader": "^0.6.4",
-    "json-loader": "^0.5.3",
-    "url-loader": "^0.5.6",
-    "raw-loader": "^0.5.1",
-    "style-loader": "^0.13.0",
-    "istanbul-instrumenter-loader": "^0.1.3",
-    "source-map-loader": "^0.1.5",
-    "less": "^2.3.1",
-    "karma": "^0.13.15",
-    "karma-chrome-launcher": "^0.2.1",
-    "karma-phantomjs-launcher": "^0.2.1",
-    "karma-coverage": "^0.5.3",
-    "karma-jasmine": "^0.3.6",
-    "karma-sourcemap-loader": "^0.3.6",
-    "karma-webpack": "^1.7.0",
-    "phantomjs": "^1.9.18",
-    "phantomjs-polyfill": "0.0.1",
-    "protractor": "^3.0.0",
-    "object-assign": "^4.0.1",
-    "typedoc": "^0.3.12",
-    "typescript": "1.7.3",
-    "ts-helper": "0.0.1",
-    "ts-loader": "^0.8.0",
-    "typings": "^0.6.1",
-    "webpack": "^1.12.9",
-    "html-webpack-plugin": "^1.7.0",
-    "copy-webpack-plugin": "^0.3.3",
-    "compression-webpack-plugin": "^0.2.0",
-    "webpack-md5-hash": "0.0.4",
-    "rimraf": "^2.4.4",
-    "ncp": "^2.0.0",
-    "reflect-metadata": "0.1.2",
-    "remap-istanbul": "^0.5.1"
-  },
   "engines": {
-    "node": ">= 4.2.1 <= 5",
+    "node": ">= 4.2.1",
     "npm": ">= 3"
   }
 }
