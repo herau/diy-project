@@ -11,21 +11,9 @@ describe('App', function() {
     expect(subject).toEqual(result);
   });
 
-  it('should have <header>', function() {
-    let subject = element(by.deepCss('app /deep/ header')).isPresent();
+  it('should have a toolbar', function() {
+    let subject = element(by.css('app md-toolbar')).isPresent();
     let result  = true;
-    expect(subject).toEqual(result);
-  });
-
-  it('should have <main>', function() {
-    let subject = element(by.deepCss('app /deep/ main')).isPresent();
-    let result  = true;
-    expect(subject).toEqual(result);
-  });
-
-  it('should have <footer>', function() {
-    let subject = element(by.deepCss('app /deep/ footer')).getText();
-    let result  = 'footer';
     expect(subject).toEqual(result);
   });
 

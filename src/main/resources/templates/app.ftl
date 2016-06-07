@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-      <title>DIY - Welcome</title>
+      <title>DIY</title>
       <base href="/">
 
       <meta charset="utf-8">
