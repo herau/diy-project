@@ -16,7 +16,7 @@ import { ToolFormComponent } from "../tool-form.component.ts";
     ],
     template:`
     <md-sidenav-layout fullscreen>
-      <md-sidenav #start mode="push">
+      <md-sidenav #start mode="slide">
         <md-nav-list>
            <a md-list-item [class.active]="location.path() === '/tools'"  [routerLink]="['/Tools']">Tools</a>
            <a md-list-item [class.active]="location.path() === '/users'" [routerLink]="['/Users']">Users</a>
