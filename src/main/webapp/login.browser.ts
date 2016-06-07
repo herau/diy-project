@@ -22,7 +22,8 @@ import { Login } from './app/components/login';
 export function main(initialHmrState?: any): Promise<any> {
 
   return bootstrap(Login, [
-    ...DIRECTIVES
+    ...DIRECTIVES,
+    ...PROVIDERS
   ])
     .catch(err => console.error(err));
 

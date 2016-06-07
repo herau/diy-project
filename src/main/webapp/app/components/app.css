@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+.toolbar-filler {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding: 11px;
+}

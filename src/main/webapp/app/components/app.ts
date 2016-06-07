@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { CORE_DIRECTIVES, Location } from "@angular/common";
-import { RouteConfig, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
+import { Location } from "@angular/common";
+import { RouteConfig } from "@angular/router-deprecated";
 import { ToolList } from "./tool/tools";
 import { UserList } from "./user/users";
 import { ProfileForm } from "./user/profile";
@@ -10,33 +10,40 @@ import { ToolFormComponent } from "../tool-form.component.ts";
 @Component({
     selector: 'app',
     providers: [UserService],
-    template: `
-    <!-- Always shows a header, even in smaller screens. -->
-    <div class="ui secondary pointing main menu">
-        <a class="item" href="/">
-            <i class="configure icon"></i>
-            DIY
-        </a>
-        <a class="item" [class.active]="location.path() === '/tools'" [routerLink]="['/Tools']">Tools</a>
-        <a class="item" [class.active]="location.path() === '/users'" [routerLink]="['/Users']">Users</a>
-        <a class="item" [class.active]="location.path() === '/profile'" [routerLink]="['/Profile']">Profile</a>
-        <a *ngIf="user?.role === 'ADMIN'" class="item"
-        [class.active]="location.path() === '/tools/add'" [routerLink]="['/ToolForm']">Ajouter un outil</a>
-    </div>
-    <div *ngIf="location.path() === '/tools'" class="ui vertical basic padded segment">
-        <div class="ui fluid category search">
-            <div class="ui fluid big icon input">
-                <input type="text" placeholder="Search tools...">
-                <i class="search icon"></i>
-            </div>
-          <div class="results"></div>
-        </div>
-    </div>
-    <div class="ui container">
+    styles: [
+      require('normalize.css'),
+      require('./app.css')
+    ],
+    template:`
+    <md-sidenav-layout fullscreen>
+      <md-sidenav #start mode="push">
+        <md-nav-list>
+           <a md-list-item [class.active]="location.path() === '/tools'"  [routerLink]="['/Tools']">Tools</a>
+           <a md-list-item [class.active]="location.path() === '/users'" [routerLink]="['/Users']">Users</a>
+           <a md-list-item [class.active]="location.path() === '/profile'" [routerLink]="['/Profile']">Profile</a>
+           <a md-list-item *ngIf="user?.role === 'ADMIN'" [class.active]="location.path() === '/tools/add'" [routerLink]="['/ToolForm']">Add Tool</a>
+        </md-nav-list>
+      </md-sidenav>
+      <md-toolbar color="primary">
+        <button md-icon-button (click)="start.toggle()">
+          <md-icon class="md-24">menu</md-icon>
+        </button>
+
+        <span>DIY</span>
+
+        <span class="toolbar-filler"></span>
+
+        <md-input placeholder="search">
+        </md-input>
+
+        <span class="toolbar-filler"></span>
+      </md-toolbar>
+
+      <div class="container">
         <router-outlet></router-outlet>
-    </div>
-    `,
-    directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES]
+      </div>
+    </md-sidenav-layout>
+    `
 })
 
 @RouteConfig([

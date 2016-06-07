@@ -1,34 +1,28 @@
-<form class="ui form" (ngSubmit)="onSubmit()" #toolForm="ngForm">
-    <div class="field">
-        <label>Name</label>
-        <input type="text" [(ngModel)]="model.name" placeholder="Name" required>
-    </div>
-    <div class="field">
-        <label>Description</label>
-        <input type="text" [(ngModel)]="model.description" placeholder="Description" required>
-    </div>
-    <h4 class="ui dividing header">Identification</h4>
-    <div class="field">
-        <label>Brand</label>
-        <input type="text" [(ngModel)]="model.brand" placeholder="Brand" required>
-    </div>
-    <div class="field">
-        <label>Type</label>
-        <input type="text" [(ngModel)]="model.type" placeholder="Type" required>
-    </div>
-    <h4 class="ui dividing header">Purchase</h4>
-    <div class="field">
-        <label>Date</label>
-        <input type="date" [(ngModel)]="model.purchaseDate" required>
-    </div>
-    <div class="field">
-        <label>Price</label>
-        <input type="number" step="0.01" min="1" max="5000" [(ngModel)]="model.purchasePrice" required>
-    </div>
-    <h4 class="ui dividing header">Rental</h4>
-    <div class="field">
-        <label>Price</label>
-        <input type="number" step="0.01" min="1" max="5000" [(ngModel)]="model.rentalPrice" required>
-    </div>
-    <button type="submit" class="ui button" [disabled]="!toolForm.form.valid">Save</button>
+<form (ngSubmit)="onSubmit()" #toolForm="ngForm">
+
+  <md-input type="text" [(ngModel)]="model.name" name="data[email]" placeholder="Name" required></md-input>
+
+  <md-input type="text" [(ngModel)]="model.description" placeholder="Description" required></md-input>
+
+
+  <h4>Identification</h4>
+
+  <md-input type="text" [(ngModel)]="model.brand" placeholder="Brand" required></md-input>
+
+  <md-input type="text" [(ngModel)]="model.type" placeholder="Type" required></md-input>
+
+
+  <h4>Purchase</h4>
+
+  <md-input type="date" [(ngModel)]="model.purchaseDate" required></md-input>
+
+  <md-input type="number" step="0.01" min="1" max="5000" [(ngModel)]="model.purchasePrice" required></md-input>
+
+
+  <h4>Rental</h4>
+
+  <md-input type="number" step="0.01" min="1" max="5000" [(ngModel)]="model.rentalPrice" required></md-input>
+
+  <button md-button type="submit" [disabled]="!toolForm.form.valid">Save</button>
+  
 </form>

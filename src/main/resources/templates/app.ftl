@@ -28,5 +28,7 @@
     <script src="dist/vendor.bundle.js"></script>
     <!-- App scripts -->
     <script src="dist/main.bundle.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </body>
 </html>

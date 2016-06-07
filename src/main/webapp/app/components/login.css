@@ -1,0 +1,9 @@
+.login-card {
+  padding: 0;
+  width: 50%;
+  min-width: 350px;
+  max-width: 550px;
+}
+.login-card md-card-content {
+  padding: 16px;
+}

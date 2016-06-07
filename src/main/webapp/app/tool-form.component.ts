@@ -1,12 +1,10 @@
 import { Component } from "@angular/core";
-import { FORM_DIRECTIVES } from "@angular/common";
 import { ToolService } from "./services/tool";
 import { Tool } from "./models/tool";
 
 @Component({
     selector: 'tool-form',
     providers: [ToolService],
-    directives: [FORM_DIRECTIVES],
     templateUrl: 'app/tool-form.component.html'
 })
 
