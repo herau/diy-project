@@ -9,64 +9,64 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-     "rimraf": "rimraf",
-     "tslint": "tslint",
-     "typedoc": "typedoc",
-     "typings": "typings",
-     "webpack": "webpack",
-     "webpack-dev-server": "webpack-dev-server",
-     "webdriver-manager": "webdriver-manager",
-     "protractor": "protractor",
+    "rimraf": "rimraf",
+    "tslint": "tslint",
+    "typedoc": "typedoc",
+    "typings": "typings",
+    "webpack": "webpack",
+    "webpack-dev-server": "webpack-dev-server",
+    "webdriver-manager": "webdriver-manager",
+    "protractor": "protractor",
 
-     "clean": "npm cache clean && npm run rimraf -- node_modules doc typings coverage src/main/webapp/main/resources/static/dist",
-       "clean:dist": "npm run rimraf -- src/main/webapp/main/resources/static/dist",
-         "preclean:install": "npm run clean",
-       "clean:install": "npm set progress=false && npm install",
-         "preclean:start": "npm run clean",
-       "clean:start": "npm start",
+    "clean": "npm cache clean && npm run rimraf -- node_modules doc typings coverage src/main/webapp/main/resources/static/dist",
+    "clean:dist": "npm run rimraf -- src/main/webapp/main/resources/static/dist",
+    "preclean:install": "npm run clean",
+    "clean:install": "npm set progress=false && npm install",
+    "preclean:start": "npm run clean",
+    "clean:start": "npm start",
 
-     "watch": "npm run watch:dev",
-       "watch:dev": "npm run build:dev -- --watch",
-       "watch:dev:hmr": "npm run watch:dev -- --hot",
-       "watch:test": "npm run test -- --auto-watch --no-single-run",
-       "watch:prod": "npm run build:prod -- --watch",
+    "watch": "npm run watch:dev",
+    "watch:dev": "npm run build:dev -- --watch",
+    "watch:dev:hmr": "npm run watch:dev -- --hot",
+    "watch:test": "npm run test -- --auto-watch --no-single-run",
+    "watch:prod": "npm run build:prod -- --watch",
 
-     "build": "npm run build:dev",
-         "prebuild:dev": "npm run clean:dist",
-       "build:dev": "webpack --config config/webpack.dev.js --progress --profile --colors --display-error-details --display-cached",
-         "prebuild:prod": "npm run clean:dist",
-       "build:prod": "webpack --config config/webpack.prod.js  --progress --profile --colors --display-error-details --display-cached --bail",
+    "build": "npm run build:dev",
+    "prebuild:dev": "npm run clean:dist",
+    "build:dev": "webpack --config config/webpack.dev.js --progress --profile --colors --display-error-details --display-cached",
+    "prebuild:prod": "npm run clean:dist",
+    "build:prod": "webpack --config config/webpack.prod.js  --progress --profile --colors --display-error-details --display-cached --bail",
 
-     "server": "npm run server:dev",
-       "server:dev": "webpack-dev-server --config config/webpack.dev.js --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base src/main/webapp/",
-       "server:dev:hmr": "npm run server:dev -- --hot",
-       "server:prod": "http-server dist --cors",
+    "server": "npm run server:dev",
+    "server:dev": "webpack-dev-server --config config/webpack.dev.js --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base src/main/webapp/",
+    "server:dev:hmr": "npm run server:dev -- --hot",
+    "server:prod": "http-server dist --cors",
 
-     "webdriver:update": "npm run webdriver-manager update",
-     "webdriver:start": "npm run webdriver-manager start",
+    "webdriver:update": "npm run webdriver-manager update",
+    "webdriver:start": "npm run webdriver-manager start",
 
-     "lint": "npm run tslint 'src/main/webapp/**/*.ts'",
+    "lint": "npm run tslint 'src/main/webapp/**/*.ts'",
 
-       "pree2e": "npm run webdriver:update -- --standalone",
-     "e2e": "npm run protractor",
-       "e2e:live": "npm run e2e -- --elementExplorer",
-    
+    "pree2e": "npm run webdriver:update -- --standalone",
+    "e2e": "npm run protractor",
+    "e2e:live": "npm run e2e -- --elementExplorer",
+ 
     "pretest": "npm run lint",
     "test": "karma start",
     "test:debug": "npm run test -- --browsers=Chrome --single-run=false --debug",
 
-     "ci": "npm test && npm run e2e",
+    "ci": "npm test && npm run e2e",
 
-     "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/main/webapp/",
+    "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/main/webapp/",
 
-     "start": "npm run server:dev",
-       "start:hmr": "npm run server:dev:hmr",
+    "start": "npm run server:dev",
+    "start:hmr": "npm run server:dev:hmr",
 
-     "postinstall": "npm run typings -- install",
-
-       "preversion": "npm test",
-     "version": "npm run build",
-       "postversion": "git push && git push --tags"
+    "postinstall": "npm run typings -- install",
+    
+    "preversion": "npm test",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags"
 
    },
   "dependencies": {
