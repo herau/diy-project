@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'login',
   styles: [
-    require('normalize.css'),
+    //require('normalize.css')
     require('./login.css')
   ],
   template:`
@@ -16,9 +16,9 @@ import { Component } from '@angular/core';
           <md-input id="password" name="password" class="password-input" placeholder="Password" type="password" required></md-input>
         </p>
     </md-card-content>
-    <md-card-actions>
+    <md-card-actions align="end">
      <button md-button>Register</button>
-     <button md-raised-button [class.loading]="loading">LOGIN</button>
+     <button md-raised-button [class.loading]="loading" color="primary">LOGIN</button>
     </md-card-actions>
   </md-card>
   </form>

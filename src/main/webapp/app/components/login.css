@@ -1,9 +1,9 @@
-.login-card {
-  padding: 0;
+form {
   width: 50%;
-  min-width: 350px;
-  max-width: 550px;
+  min-width: 300px;
+  max-width: 450px;
 }
-.login-card md-card-content {
-  padding: 16px;
+
+.login-card md-toolbar {
+  margin-bottom: 16px;
 }

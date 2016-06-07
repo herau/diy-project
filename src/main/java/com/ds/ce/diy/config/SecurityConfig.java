@@ -51,8 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeRequests()
-            .antMatchers("/build/**").permitAll()
-            .antMatchers("/lib/**").permitAll()
+            .antMatchers("/dist/**").permitAll()
             .antMatchers(String.format(EntryPoint.PROFILE_PWD, "**")).permitAll()
             .antMatchers("/api/users/token/**").permitAll()
             .antMatchers(EntryPoint.TOKENS + "/**").permitAll()
