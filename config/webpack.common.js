@@ -8,13 +8,15 @@ const helpers = require('./helpers');
 var CopyWebpackPlugin = (CopyWebpackPlugin = require('copy-webpack-plugin'), CopyWebpackPlugin.default || CopyWebpackPlugin);
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const HtmlElementsPlugin = require('./html-elements-plugin');
 
 /*
  * Webpack Constants
  */
 const METADATA = {
   title: 'DIY',
-  baseUrl: '/'
+  baseUrl: '/',
+  isDevServer: helpers.isWebpackDevServer()
 };
 
 /*
@@ -48,8 +50,8 @@ module.exports = {
    */
   entry: {
 
-    'polyfills': helpers.webapp('polyfills.ts'),
-    'vendor': helpers.webapp('vendor.ts'),
+    'polyfills': helpers.webapp('polyfills.browser.ts'),
+    'vendor': helpers.webapp('vendor.browser.ts'),
     'main': helpers.webapp('main.browser.ts'),
     'login': helpers.webapp('login.browser.ts')
 
@@ -239,8 +241,33 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/main/webapp/index.html',
       chunksSortMode: 'dependency'
-    })
+    }),
 
+    /*
+     * Plugin: HtmlHeadConfigPlugin
+     * Description: Generate html tags based on javascript maps.
+     *
+     * If a publicPath is set in the webpack output configuration, it will be automatically added to
+     * href attributes, you can disable that by adding a "=href": false property.
+     * You can also enable it to other attribute by settings "=attName": true.
+     *
+     * The configuration supplied is map between a location (key) and an element definition object (value)
+     * The location (key) is then exported to the template under then htmlElements property in webpack configuration.
+     *
+     * Example:
+     *  Adding this plugin configuration
+     *  new HtmlElementsPlugin({
+     *    headTags: { ... }
+     *  })
+     *
+     *  Means we can use it in the template like this:
+     *  <%= webpackConfig.htmlElements.headTags %>
+     *
+     * Dependencies: HtmlWebpackPlugin
+     */
+    new HtmlElementsPlugin({
+      headTags: require('./head-config.common')
+    })
   ],
 
   /*

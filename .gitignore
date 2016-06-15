@@ -17,7 +17,7 @@ Thumbs.db
 lib-cov
 
 # Coverage directory used by tools like Istanbul
-src/test/js/coverage
+coverage
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -39,7 +39,7 @@ typings
 target
 
 # Webpack Build
-src/main/resources/static/build
+src/main/resources/static/dist
 .webpack.json
 
 # TSC Build

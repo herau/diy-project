@@ -7,17 +7,10 @@
     "sourceMap": true,
     "noEmitHelpers": true
   },
-  "filesGlob": [
-    "./src/main/webapp/app/**/*.ts",
-    "./src/main/webapp/platform/**/*.ts",
-    "./src/main/webapp/custom-typings.d.ts",
-    "./typings/index.d.ts",
-    "!./node_modules/**",
-    "!./typings/main.d.ts",
-    "!./typings/main/**"
+  "exclude": [
+    "node_modules"
   ],
   "awesomeTypescriptLoaderOptions": {
-    "resolveGlobs": true,
     "forkChecker": true
   },
   "compileOnSave": false,
